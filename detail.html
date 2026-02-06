@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détail du Projet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c5f2d;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+            --dark: #1a1a1a;
+            --light: #f8f6f3;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+            color: var(--dark);
+        }
+
+        /* Header fixe */
+        .detail-header {
+            background: var(--white);
+            color: var(--dark);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .detail-nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .back-button {
+            background: var(--primary);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            background: var(--secondary);
+            transform: translateX(-5px);
+        }
+
+        .detail-nav h1 {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 2rem 4rem;
+        }
+
+        /* Styles non utilisés - project-header supprimé
+        .project-header {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .project-title-section {
+            flex-shrink: 0;
+        }
+
+        .project-info-section {
+            flex: 1;
+        }
+        */
+
+        .project-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 0;
+        }
+
+        .meta-tag {
+            background: var(--accent);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .project-description {
+            color: var(--dark);
+            line-height: 1.4;
+            font-size: 0.85rem;
+            margin: 0;
+            flex: 1 1 100%;
+        }
+
+        .gallery-section {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .gallery-title {
+            font-size: 2em;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            text-align: center;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            background: var(--light);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 26, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: var(--white);
+            color: var(--dark);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .lightbox-close:hover {
+            background: var(--accent);
+            color: var(--white);
+            transform: rotate(90deg);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--white);
+            color: var(--dark);
+            border: none;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .lightbox-nav:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--white);
+            color: var(--dark);
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .no-images {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--secondary);
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 1.2rem;
+            }
+
+            .detail-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .back-button {
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+
+            .container {
+                padding: 200px 1rem 2rem;
+            }
+
+            .gallery-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .detail-nav {
+                padding: 0 1rem;
+            }
+
+            .detail-nav h1 {
+                font-size: 1.1rem;
+            }
+
+            .lightbox-nav {
+                width: 45px;
+                height: 45px;
+                font-size: 24px;
+            }
+
+            .lightbox-prev {
+                left: 10px;
+            }
+
+            .lightbox-next {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="detail-header">
+        <nav class="detail-nav">
+            <a href="site-complet.html#realisations" class="back-button">
+                ← Retour
+            </a>
+            <h1 class="project-title" id="projectTitle">Chargement...</h1>
+            <div class="project-meta" id="projectMeta"></div>
+            <p class="project-description" id="projectDescription"></p>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="gallery-section">
+            <!-- <h2 class="gallery-title">📸 Galerie Photos</h2> -->
+            <div class="image-gallery" id="imageGallery"></div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">×</button>
+            <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">‹</button>
+            <img src="" alt="" class="lightbox-image" id="lightboxImage">
+            <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">›</button>
+            <div class="lightbox-counter" id="lightboxCounter"></div>
+        </div>
+    </div>
+
+    <script>
+        // Données des projets
+        const projects = {
+            'remix': {
+                title: 'Remixes',
+                description: 'Arrangements à partir d\'une voix existante,',
+                tags: ['Musique', 'Remix'],
+                images: ['RemixSkoops.jpg', 'RemixBlackPeople.jpg', 'RemixLetMotiv.jpg', 'RemixAlabina.jpg', 'RemixMother.jpg', 'RemixWete.jpg', 'RemixBaker.jpg']
+            },
+            'single': {
+                title: 'Singles',
+                description: 'Co-composition avec un artiste sur un de ses morceaux,',
+                tags: ['Musique', 'Single'],
+                images: ['SingleKeita.jpg', 'SingleRewind.jpg', 'SingleSerge.jpg', 'SingleAkileus.jpg', 'SingleHommageGuru.jpg']
+            },
+            'album': {
+                title: 'Albums',
+                description: 'Participation à la réalisation d\'un album,',
+                tags: ['Musique', 'Album'],
+                images: ['AlbumJarre.jpg', 'AlbumYellowGauze.jpg', 'AlbumNobodys.jpg', 'AlbumLink.jpg', 'AlbumRedNose.jpg', 'AlbumOneToo.jpg', 'AlbumZeroToHero.jpg', 'AlbumTwilightZoners.jpg']
+            },
+            'albumperso': {
+                title: 'Mes albums',
+                description: 'Mon univers musical',
+                tags: ['Musique', 'Album'],
+                images: ['AlbumFlyingWorld.jpg', 'AlbumEnTrance.jpg', 'AlbumAfterTheStorm.jpg', 'AlbumMovies.jpg']
+            },
+            'cinetheatre': {
+                title: 'Cinéma TV Théâtre',
+                description: 'Musique pour écran ou pour la scène',
+                tags: ['Musique', 'Cinéma', 'TV', 'Théâtre'],
+                images: ['FilmTextiles.jpg', 'TheatreUbuRoi.jpg', 'TheatrePrive.jpg', 'TheatrePlacard.jpg', 'DocuHotelMarine.jpg', 'DocuLeonard.jpg']
+            },
+            'livre': {
+                title: 'Livre pour enfants',
+                description: 'Comptines pour les petits',
+                tags: ['Musique', 'Livre', 'Enfants'],
+                images: ['Livre30Chansons.jpg', 'LivreLaFontaine.jpg', 'LivrePrincesses.jpg', 'LivreToutPetits.jpg', 'Livre20chansons.jpg', 'LivreGestes.jpg', 'LivreAnimaux.jpg', 'LivreNoel.jpg']
+            },
+            'logiciel': {
+                title: 'Les Orthochansons',
+                description: 'Pour apprendre l\'orthographe en s\'amusant',
+                tags: ['Musique', 'Logiciel', 'Enfants'],
+                images: ['Orthochanson1.jpg','Orthochanson2.jpg','Orthochanson3.jpg','Orthochanson4.jpg','Orthochanson5.jpg','Orthochanson6.jpg','Orthochanson7.jpg','Orthochanson8.jpg','Orthochanson9.jpg']
+            },
+            'salon': {
+                title: 'Rénovation Salon',
+                description: 'Aménagement complet d\'un espace de vie moderne et chaleureux avec menuiserie sur mesure, raccords de sol et optimisation de l\'espace.',
+                tags: ['Menuiserie', 'Design', 'Agencement'],
+                images: ['Salon_0.jpg', 'Salon_1.jpg', 'Salon_2.jpg', 'Salon_3.jpg', 'Salon_4.jpg', 'Salon_5.jpg', 'Salon_6.jpg']
+            },
+            'cuisine': {
+                title: 'Cuisine sur Mesure',
+                description: 'Création d\'une cuisine fonctionnelle et élégante avec plans de travail personnalisés et rangements optimisés.',
+                tags: ['Menuiserie', 'Agencement', 'Design'],
+                images: ['Cuisine_1.jpg', 'Cuisine_2.jpg', 'Cuisine_3.jpg']
+            },
+            'escalier': {
+                title: 'Escalier Design',
+                description: 'Conception et réalisation d\'un escalier moderne en bois, alliant esthétique et fonctionnalité dans un espace restreint.',
+                tags: ['Bois', 'Structure', 'Design'],
+                images: ['Escalier.jpg', 'Escalier_0.jpg', 'Escalier_0b.jpg', 'Escalier_0c.jpg']
+            },
+            'fenetre': {
+                title: 'Fenêtres & Ouvertures',
+                description: 'Installation de portes et fenêtres sur mesure, découpe du bâti, isolation et finitions par étagère sur mesure.',
+                tags: ['Menuiserie', 'Rénovation', 'Isolation'],
+                images: ['Fenetre_0.jpg', 'Fenetre_1.jpg', 'Fenetre_2.jpg', 'Fenetre_3.jpg', 'Fenetre_4.jpg', 'Fenetre_5.jpg', 'Fenetre_6.jpg', 'Fenetre_7.jpg', 'Fenetre_8.jpg']
+            },
+            'studio': {
+                title: 'Aménagement Studio',
+                description: 'Transformation d\'un sous-sol en un studio de production sonore avec optimisation accoustique et mobilier multifonctions.',
+                tags: ['Agencement', 'Optimisation', 'Petit Espace'],
+                images: ['Studio_1.jpg', 'Studio_2.jpg', 'Studio_3.jpg', 'Studio_4.jpg', 'Studio_5.jpg']
+            },
+            'bureau': {
+                title: 'Bureau Intérieur',
+                description: 'Création d\'un espace de travail fonctionnel et inspirant avec mobilier sur mesure.',
+                tags: ['Mobilier', 'Design', 'Bureautique'],
+                images: ['Bureau_interieur.jpg']
+            },
+            'lit': {
+                title: 'Lit 2 Places avec Banc',
+                description: 'Lit sur mesure avec banc latéral intégré et tablette de tête, alliant confort et fonctionnalité.',
+                tags: ['Bois', 'Sur Mesure', 'Mobilier'],
+                images: ['Lit_2_places_avec_banc_sur_un_cote_et_tablette_a_la_tete.jpg']
+            },
+            'etageres': {
+                title: 'Étagères sur Mesure',
+                description: 'Système de rangement personnalisé adapté à vos besoins et à votre espace.',
+                tags: ['Rangement', 'Design', 'Bois'],
+                images: ['Etageres_sur_mesure.jpg']
+            },
+            'meuble-tiroirs': {
+                title: 'Meuble à Tiroirs',
+                description: 'Meuble de rangement multi-tiroirs avec finitions soignées et organisation optimale. Le contraste entre le pin clair de la structure et les façades de tiroirs en bois plus foncé crée un résultat dans un esprit mid-century moderne',
+                tags: ['Menuiserie', 'Rangement', 'Mobilier'],
+                images: ['Meuble_a_tiroirs.jpg']
+            },
+            'bancs': {
+                title: 'Collection de Bancs',
+                description: 'Différents styles de bancs en bois pour intérieur et extérieur, designs variés et robustes.',
+                tags: ['Extérieur', 'Bois', 'Mobilier'],
+                images: ['Banc_large.jpg', 'Banc_simple.jpg', 'Bancpotager.jpg', 'Banctronc.jpg']
+            },
+            'tables-tourets': {
+                title: 'Tables à partir de Tourets',
+                description: 'Upcycling créatif : transformation de tourets industriels en tables originales et fonctionnelles.',
+                tags: ['Recyclage', 'Créatif', 'Upcycling'],
+                images: ['Tables_a_partir_de_tourets.jpg']
+            },
+            'echelle-chat': {
+                title: 'Échelle pour Chat',
+                description: 'Accessoire malin pour permettre à vos chats d\'accéder facilement aux hauteurs. Avec ses plateformes alternées, c\'est une solution élégante et fonctionnelle - bien plus esthétique que les solutions commerciales habituelles.',
+                tags: ['Animaux', 'Original', 'Bois'],
+                images: ['Echelle_pour_chat.jpg']
+            },
+            'terrasse': {
+                title: 'Terrasse en Bois',
+                description: 'Construction d\'une terrasse extérieure en composite avec structure solide, éclairage de sol intégré et finitions durables.',
+                tags: ['Extérieur', 'Bois', 'Construction'],
+                images: ['Terrasse_1.jpg', 'Terrasse_2.jpg', 'Terrasse_3.jpg', 'Terrasse_4.jpg']
+            },
+            'potager-vertical': {
+                title: 'Potagers Verticaux',
+                description: 'Solutions de culture verticale innovantes pour optimiser l\'espace et faciliter le jardinage. Parfait pour tous les aromates',
+                tags: ['Jardin', 'Écologie', 'Innovation'],
+                images: ['Potager_vertical_1.jpg', 'Potager_vertical_2.jpg', 'Potager_vertical_3.jpg']
+            },
+            'potager-surreleve': {
+                title: 'Potagers Surélevés',
+                description: 'Bacs de culture ergonomiques pour jardiner sans se baisser, en bois traité ou non traité.',
+                tags: ['Jardin', 'Pratique', 'Bois'],
+                images: ['Potager_surreleve_1.jpg', 'Potager_surreleve_2.jpg', 'Potager_surreleve_3.jpg', 'Potager_surreleve.jpg', 'Planche_de_culture.jpg']
+            },
+            'aquaponique': {
+                title: 'Système Aquaponique',
+                description: 'Installation de culture aquaponique autonome combinant élevage de poissons et culture de plantes.',
+                tags: ['Innovation', 'Écologie', 'Autonomie'],
+                images: ['Systeme_aquaponique_1.jpg', 'Systeme_aquaponique_2.jpg', 'Systeme_aquaponique_3.jpg', 'Systeme_aquaponique_banc.jpg']
+            },
+            'poulailler': {
+                title: 'Poulailler',
+                description: 'Construction d\'un poulailler confortable et sécurisé pour vos volailles.',
+                tags: ['Animaux', 'Bois', 'Construction'],
+                images: ['Poulailler_exterieur.jpg', 'Poulailler_interieur.jpg']
+            },
+            'cabane-rucher': {
+                title: 'Cabane du Rucher',
+                description: 'Abri pour l\'apiculture offrant protection et espace de travail pour l\'entretien des ruches. Une vue panoramique sécurisée pour permettre aux écoliers d\'avoir un point de vue sur le rucher',
+                tags: ['Construction', 'Apiculture', 'Bois'],
+                images: ['Cabane_du_rucher_exterieur.jpg', 'Cabane_du_rucher_interieur.jpg']
+            },
+            'atelier': {
+                title: 'Atelier Extérieur',
+                description: 'Construction d\'un atelier fonctionnel avec plusieurs établis et de nombreux rangements.',
+                tags: ['Construction', 'Atelier', 'Bois'],
+                images: ['Atelier_exterieur.jpg', 'Atelier_interieur_1.jpg', 'Atelier_interieur_2.jpg', 'Atelier_detail.jpg']
+            },
+            'toilettes-seches': {
+                title: 'Toilettes Sèches',
+                description: 'Installation de toilettes sèches écologiques pour une solution sanitaire autonome et respectueuse de l\'environnement.',
+                tags: ['Écologie', 'Autonomie', 'Construction'],
+                images: ['Toilettes_seches_1.jpg', 'Toilettes_seches_2.jpg']
+            },
+            'abris-poubelles': {
+                title: 'Abris Poubelles Végétalisé',
+                description: 'Cache poubelles esthétique avec toit végétalisé pour intégration harmonieuse en bord de Seine.',
+                tags: ['Jardin', 'Végétal', 'Esthétique'],
+                images: ['Abris_poubelles_vegetalise_1.jpg', 'Abris_poubelles_vegetalise_2.jpg']
+            },
+            'nichoirs': {
+                title: 'Nichoirs',
+                description: 'Fabrication d\'abris pour oiseaux afin de favoriser la biodiversité dans le jardin.',
+                tags: ['Nature', 'Biodiversité', 'Bois'],
+                images: ['Nichoirs.jpg']
+            },
+            'solaire': {
+                title: 'Installation Solaire',
+                description: 'Mise en place d\'un système photovoltaïque autonome pour production d\'énergie renouvelable.',
+                tags: ['Énergie', 'Autonomie', 'Écologie'],
+                images: ['Installation_solaire_1.jpg', 'Installation_solaire_2.jpg', 'Installation_solaire_3.jpg', 'Installation_solaire_4.jpg']
+            },
+            'fosse-septique': {
+                title: 'Ancienne Fosse Septique',
+                description: 'Rénovation et transformation d\'une ancienne fosse septique en pièce de jonction entre 2 étages, pièce de stockage et toilettes.',
+                tags: ['Technique', 'Rénovation', 'Assainissement'],
+                images: ['Ancienne_fosse_septique_0.jpg', 'Ancienne_fosse_septique_1.jpg', 'Ancienne_fosse_septique_2.jpg', 'Ancienne_fosse_septique_3.jpg', 'Ancienne_fosse_septique_4.jpg', 'Ancienne_fosse_septique_5.jpg']
+            },
+            'broyeur': {
+                title: 'Broyeur Plastique',
+                description: 'Construction d\'une machine de recyclage DIY inspirée du projet Precious Plastic pour broyer et recycler le plastique.',
+                tags: ['Recyclage', 'Innovation', 'DIY'],
+                images: ['broyeur_plastique_1.jpg', 'broyeur_plastique_2.jpg', 'broyeur_plastique_3.jpg']
+            },
+            'panneaux': {
+                title: 'Panneaux Décoratifs',
+                description: 'Création de panneaux en bois avec gravure et pyrogravure pour signalétique et décoration.',
+                tags: ['Art', 'Gravure', 'Décoration'],
+                images: ['Panneau_Amour.jpg', 'Panneau_Amour_Confiance_Douceur.jpg', 'Panneau_Vous_etes_ici_et_maintenant.jpg']
+            },
+            'gravure': {
+                title: 'Gravure sur Bois',
+                description: 'Œuvres gravées personnalisées sur bois : textes, dessins, logos et motifs sur mesure.',
+                tags: ['Artisanat', 'Personnalisé', 'Art'],
+                images: ['Gravure_sur_bois.jpg', 'Bois_Clematite_1.jpg', 'Bois_Clematite_2.jpg', 'Bois_Clematite_3.jpg']
+            },
+            'crabe': {
+                title: 'Sculpture Crabe',
+                description: 'Création artistique représentant un crabe, travail détaillé du bois.',
+                tags: ['Sculpture', 'Art', 'Bois'],
+                images: ['Crabe.jpg']
+            },
+            'boites-coco': {
+                title: 'Boîtes Coco',
+                description: 'Rangements créatifs fabriqués à partir de noix de coco pour un style naturel et original.',
+                tags: ['Original', 'Naturel', 'Recyclage'],
+                images: ['Boites_Coco.jpg']
+            },
+            'mezzanine': {
+                title: 'Mezzanine Garage',
+                description: 'Construction d\'une mezzanine de rangement pour optimiser l\'espace vertical du garage.',
+                tags: ['Rangement', 'Structure', 'Bois'],
+                images: ['Mezzazine_rangements_garage_1.jpg', 'Mezzazine_rangements_garage_2.jpg']
+            },
+            'grainotheque': {
+                title: 'Grainothèque & Bureau',
+                description: 'Meuble multifonction combinant grainothèque pour le partage de graines et espace bureau.',
+                tags: ['Jardin', 'Pratique', 'Partage'],
+                images: ['Grainotheque_et_bureau.jpg']
+            },
+            'rangement-graines': {
+                title: 'Rangement des Graines',
+                description: 'Système d\'organisation dédié au stockage et à la conservation des graines de jardin.',
+                tags: ['Jardin', 'Organisation', 'Rangement'],
+                images: ['Meuble_de_rangement_des_graines.jpg']
+            },
+            'rangement-epices': {
+                title: 'Rangement Épices',
+                description: 'Organisation pratique et esthétique pour épices et condiments de cuisine.',
+                tags: ['Cuisine', 'Organisation', 'Pratique'],
+                images: ['Epices_0.jpg', 'Epices_1.jpg', 'Epices_2.jpg', 'Epices_3.jpg']
+            },
+            'portraits-musique': {
+                title: 'Parcours Musical',
+                description: 'Évolution d\'un pianiste à travers les années : du débutant en 1992 au musicien accompli, ingénieur du son, compositeur et formateur.',
+                tags: ['Musique', 'Portrait', 'Évolution'],
+                images: ['1992_Pianiste.jpg', '2001_Pianiste.jpg', '2016_Pianiste.jpg', '2018_Pianiste_.jpeg', 'Inge_son_01.jpg', 'Inge_son_02.jpg', 'Inge_son_03.jpg', 'Inge_son_04.jpg', 'Inge_son_05.jpg', 'Inge_son_06.jpg', 'Inge_son_07.jpg', 'Inge_son_08.jpg', 'Compositeur_theatre.jpg', 'Formateur_Production_musicale.jpg', 'Technicien_regie.JPG', 'Musicien.jpeg', '2025_DJ.jpg']
+            },
+            'portraits-activites': {
+                title: 'Diverses Activités',
+                description: 'Portfolio de compétences variées : bricolage, jardinage, navigation, aventure et plus encore.',
+                tags: ['Professionnel', 'Polyvalence', 'Compétences'],
+                images: ['Aventurier.jpg', 'Bricoleur_1.jpg', 'Bricoleur_2.jpg', 'Jardinier.jpg', 'Navigateur.jpg', 'Pilote.jpg', '2024_Guide.jpg', '2024_Guide_2.jpg', '2025_Pelletier.jpg', 'Cheveux.jpg']
+            },
+            'cinema-plein-air': {
+                title: 'Cinéma en Plein Air',
+                description: 'Installation d\'un système de projection extérieure pour soirées cinéma en plein air.',
+                tags: ['Loisirs', 'Événement', 'Projection'],
+                images: ['Cinema_en_plein_air_1.jpg', 'Cinema_en_plein_air_2.jpg']
+            },
+            'jeu-dames': {
+                title: 'Jeu de Dames Géant',
+                description: 'Fabrication d\'un plateau de jeu de dames extérieur en bois de grande taille.',
+                tags: ['Jeu', 'Bois', 'Loisirs'],
+                images: ['Jeu_de_dames.jpg']
+            },
+            'cendrier-vote': {
+                title: 'Cendrier à Voter',
+                description: 'Collecteur ludique et participatif où les fumeurs votent en jetant leur mégot.',
+                tags: ['Original', 'Urbain', 'Participatif'],
+                images: ['Cendrier_a_voter.jpg']
+            },
+            'masque-covid': {
+                title: 'Masque Anti-Covid',
+                description: 'Création artisanale de masque pendant la pandémie, avec message sur la dépression.',
+                tags: ['Innovation', 'Santé', 'Artisanal'],
+                images: ['Masque_antiCovid_et_antidepression.jpg']
+            },
+            'ramassage-dechets': {
+                title: 'Ramassage Berges de Seine',
+                description: 'Participation à une action de nettoyage environnemental sur les berges de Seine.',
+                tags: ['Écologie', 'Action', 'Environnement'],
+                images: ['Ramassage_de_dechets_sur_les_berges_de_Seine.jpg']
+            },
+            'west-coast': {
+                title: 'West Coast 2025',
+                description: 'Projet artistique ou récit de voyage sur la côte ouest.',
+                tags: ['Voyage', 'Création', 'Aventure'],
+                images: ['West_coast_2025.jpg']
+            },
+            'gratteterre': {
+                title: 'Gratte-terre',
+                description: 'Accessoire pratique pour nettoyer ses chaussures avant d\'entrer.',
+                tags: ['Pratique', 'Jardin', 'Utile'],
+                images: ['Gratteterre_sous_les_chaussures.jpg']
+            }
+        };
+
+        // Variables pour le lightbox
+        let currentImageIndex = 0;
+        let currentImages = [];
+
+        // Récupérer le paramètre de l'URL
+        function getProjectFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('project');
+        }
+
+        // Charger les données du projet
+        function loadProject() {
+            const projectId = getProjectFromUrl();
+            const project = projects[projectId];
+
+            if (!project) {
+                document.getElementById('projectTitle').textContent = 'Projet non trouvé';
+                document.getElementById('projectDescription').textContent = 'Ce projet n\'existe pas ou a été supprimé.';
+                return;
+            }
+
+            // Mettre à jour le titre
+            document.getElementById('projectTitle').textContent = project.title;
+            document.title = project.title + ' - Portfolio';
+
+            // Mettre à jour les tags
+            const metaContainer = document.getElementById('projectMeta');
+            metaContainer.innerHTML = project.tags.map(tag => 
+                `<span class="meta-tag">${tag}</span>`
+            ).join('');
+
+            // Mettre à jour la description
+            document.getElementById('projectDescription').textContent = project.description;
+
+            // Charger les images
+            loadGallery(project.images);
+        }
+
+        // Charger la galerie d'images
+        function loadGallery(images) {
+            const galleryContainer = document.getElementById('imageGallery');
+            currentImages = images;
+
+            if (images.length === 0) {
+                galleryContainer.innerHTML = '<div class="no-images">Aucune image disponible pour ce projet</div>';
+                return;
+            }
+
+            galleryContainer.innerHTML = images.map((img, index) => `
+                <div class="gallery-item" onclick="openLightbox(${index})">
+                    <img src="${img}" alt="Image ${index + 1}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Crect fill=%22%23ddd%22 width=%22300%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22%3EImage non disponible%3C/text%3E%3C/svg%3E'">
+                    <div class="gallery-item-number">Photo ${index + 1}</div>
+                </div>
+            `).join('');
+        }
+
+        // Ouvrir le lightbox
+        function openLightbox(index) {
+            currentImageIndex = index;
+            updateLightboxImage();
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fermer le lightbox
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Naviguer dans le lightbox
+        function navigateLightbox(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) currentImageIndex = currentImages.length - 1;
+            if (currentImageIndex >= currentImages.length) currentImageIndex = 0;
+            updateLightboxImage();
+        }
+
+        // Mettre à jour l'image du lightbox
+        function updateLightboxImage() {
+            const img = document.getElementById('lightboxImage');
+            img.src = '' + currentImages[currentImageIndex];
+            document.getElementById('lightboxCounter').textContent = 
+                `${currentImageIndex + 1} / ${currentImages.length}`;
+        }
+
+        // Fermer avec Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigateLightbox(-1);
+            if (e.key === 'ArrowRight') navigateLightbox(1);
+        });
+
+        // Fermer en cliquant en dehors de l'image
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+
+        // Charger le projet au chargement de la page
+        window.addEventListener('load', loadProject);
+    </script>
+</body>
+</html>
