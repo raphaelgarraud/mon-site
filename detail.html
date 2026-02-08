@@ -357,7 +357,7 @@
     <!-- Header -->
     <header class="detail-header">
         <nav class="detail-nav">
-            <a href="site-complet.html#realisations" class="back-button">
+            <a href="index.html#realisations" class="back-button">
                 ← Retour
             </a>
             <h1 class="project-title" id="projectTitle">Chargement...</h1>
@@ -387,29 +387,17 @@
     <script>
         // Données des projets
         const projects = {
-            'remix': {
-                title: 'Remixes',
-                description: 'Arrangements à partir d\'une voix existante,',
-                tags: ['Musique', 'Remix'],
-                images: ['medias/RemixSkoops.jpg', 'medias/RemixBlackPeople.jpg', 'medias/RemixLetMotiv.jpg', 'medias/RemixAlabina.jpg', 'medias/RemixMother.jpg', 'medias/RemixWete.jpg', 'medias/RemixBaker.jpg']
+           'portraits': {
+                title: 'Portraits',
+                description: 'Portfolio de compétences variées : bricolage, jardinage, navigation, aventure et plus encore.',
+                tags: ['Professionnel', 'Polyvalence', 'Compétences'],
+                images: ['medias/Portrait_1989_Musicien.jpg', 'medias/Portrait_1990_Musicien.jpg', 'medias/Portrait_1991_Musicien.jpg', 'medias/Portrait_1992_Pianiste.jpg', 'medias/Portrait_1992_Ingeson.jpg', 'medias/Portrait_2001_Pianiste.jpg', 'medias/Portrait_2016_Pianiste.jpg', 'medias/Portrait_2018_Pianiste.jpeg', 'medias/Portrait_Inge_son_01.jpg', 'medias/Portrait_Inge_son_02.jpg', 'medias/Portrait_Inge_son_03.jpg', 'medias/Portrait_Inge_son_04.jpg', 'medias/Portrait_Inge_son_05.jpg', 'medias/Portrait_Inge_son_06.jpg', 'medias/Portrait_Inge_son_07.jpg', 'medias/Portrait_Inge_son_08.jpg', 'medias/Portrait_Inge_son_09.jpg', 'medias/Portrait_Compositeur_theatre.jpg', 'medias/Portrait_2018_Formateur.jpg', 'medias/Technicien_regie.JPG', 'medias/Portrait_2024_Guide1.jpg', 'medias/Portrait_2024_Guide2.jpg', 'medias/Portrait_2024_Musicien.jpg', 'medias/Portrait_2025_DJ.jpg', 'medias/Portrait_2018_BurningMan.jpg', 'medias/Portrait_Bricoleur_1.jpg', 'medias/Portrait_Bricoleur_2.jpg', 'medias/Jardinier.jpg', 'medias/Portrait_2025_Navigateur.jpg', 'medias/Portrait_Pilote.jpg', 'medias/Portrait_2025_Bricoleur.jpg', 'medias/Portrait_2025_Cheveux.jpg']
             },
-            'single': {
-                title: 'Singles',
-                description: 'Co-composition avec un artiste sur un de ses morceaux,',
-                tags: ['Musique', 'Single'],
-                images: ['medias/SingleKeita.jpg', 'medias/SingleRewind.jpg', 'medias/SingleSerge.jpg', 'medias/SingleAkileus.jpg', 'medias/SingleHommageGuru.jpg']
-            },
-            'album': {
+            'musique': {
                 title: 'Albums',
-                description: 'Participation à la réalisation d\'un album,',
+                description: 'Participation à la réalisation d\'albums, de singles et de remixes.',
                 tags: ['Musique', 'Album'],
-                images: ['medias/AlbumJarre.jpg', 'medias/AlbumYellowGauze.jpg', 'medias/AlbumNobodys.jpg', 'medias/AlbumLink.jpg', 'medias/AlbumRedNose.jpg', 'medias/AlbumOneToo.jpg', 'medias/AlbumZeroToHero.jpg', 'medias/AlbumTwilightZoners.jpg']
-            },
-            'albumperso': {
-                title: 'Mes albums',
-                description: 'Mon univers musical',
-                tags: ['Musique', 'Album'],
-                images: ['medias/AlbumFlyingWorld.jpg', 'medias/AlbumEnTrance.jpg', 'medias/AlbumAfterTheStorm.jpg', 'medias/AlbumMovies.jpg']
+                images: ['medias/AlbumJarre.jpg', 'medias/AlbumFlyingWorld.jpg', 'medias/AlbumEnTrance.jpg', 'medias/AlbumAfterTheStorm.jpg', 'medias/AlbumMovies.jpg', 'medias/AlbumYellowGauze.jpg', 'medias/AlbumNobodys.jpg', 'medias/AlbumLink.jpg', 'medias/AlbumRedNose.jpg', 'medias/AlbumOneToo.jpg', 'medias/AlbumZeroToHero.jpg', 'medias/AlbumTwilightZoners.jpg', 'medias/SingleKeita.jpg', 'medias/SingleRewind.jpg', 'medias/SingleSerge.jpg', 'medias/SingleAkileus.jpg', 'medias/SingleHommageGuru.jpg', 'medias/RemixSkoops.jpg', 'medias/RemixBlackPeople.jpg', 'medias/RemixLetMotiv.jpg', 'medias/RemixAlabina.jpg', 'medias/RemixMother.jpg', 'medias/RemixWete.jpg', 'medias/RemixBaker.jpg']
             },
             'cinetheatre': {
                 title: 'Cinéma TV Théâtre',
@@ -430,7 +418,7 @@
                 images: ['medias/Orthochanson1.jpg','medias/Orthochanson2.jpg','medias/Orthochanson3.jpg','medias/Orthochanson4.jpg','medias/Orthochanson5.jpg','medias/Orthochanson6.jpg','medias/Orthochanson7.jpg','medias/Orthochanson8.jpg','medias/Orthochanson9.jpg']
             },
             'salon': {
-                title: 'Rénovation Salon',
+                title: 'Agrandissement d\'un salon',
                 description: 'Aménagement complet d\'un espace de vie moderne et chaleureux avec menuiserie sur mesure, raccords de sol et optimisation de l\'espace.',
                 tags: ['Menuiserie', 'Design', 'Agencement'],
                 images: ['medias/Salon_0.jpg', 'medias/Salon_1.jpg', 'medias/Salon_2.jpg', 'medias/Salon_3.jpg', 'medias/Salon_4.jpg', 'medias/Salon_5.jpg', 'medias/Salon_6.jpg']
@@ -439,67 +427,61 @@
                 title: 'Cuisine sur Mesure',
                 description: 'Création d\'une cuisine fonctionnelle et élégante avec plans de travail personnalisés et rangements optimisés.',
                 tags: ['Menuiserie', 'Agencement', 'Design'],
-                images: ['medias/Cuisine_1.jpg', 'medias/Cuisine_2.jpg', 'medias/Cuisine_3.jpg']
+                images: ['medias/Cuisine_00.jpg', 'medias/Cuisine_01.jpg', 'medias/Cuisine_02.jpg', 'medias/Cuisine_03.jpg', 'medias/Cuisine_04.jpg', 'medias/Cuisine_05.jpg', 'medias/Cuisine_06.jpg', 'medias/Cuisine_07.jpg', 'medias/Cuisine_08.jpg', 'medias/Cuisine_09.jpg', 'medias/Cuisine_10.jpg', 'medias/Cuisine_11.jpg', 'medias/Cuisine_12.jpg', 'medias/Cuisine_13.jpg', 'medias/Cuisine_14.jpg', 'medias/Cuisine_15.jpg', 'medias/Cuisine_16.jpg', 'medias/Cuisine_17.jpg', 'medias/Cuisine_18.jpg', 'medias/Cuisine_19.jpg']
             },
-            'escalier': {
-                title: 'Escalier Design',
-                description: 'Conception et réalisation d\'un escalier moderne en bois, alliant esthétique et fonctionnalité dans un espace restreint.',
-                tags: ['Bois', 'Structure', 'Design'],
-                images: ['medias/Escalier.jpg', 'medias/Escalier_0.jpg', 'medias/Escalier_0b.jpg', 'medias/Escalier_0c.jpg']
-            },
-            'fenetre': {
-                title: 'Fenêtres & Ouvertures',
-                description: 'Installation de portes et fenêtres sur mesure, découpe du bâti, isolation et finitions par étagère sur mesure.',
+            //'escalier': {
+            //    title: 'Escalier Design',
+            //    description: 'Conception et réalisation d\'un escalier moderne en bois, alliant esthétique et fonctionnalité dans un espace restreint.',
+            //    tags: ['Bois', 'Structure', 'Design'],
+            //    images: ['medias/Escalier.jpg', 'medias/Escalier_0.jpg', 'medias/Escalier_0b.jpg', 'medias/Escalier_0c.jpg']
+            //},
+            'ouvertures': {
+                title: 'Changement des ouvertures',
+                description: 'Installation de portes et fenêtres sur mesure, découpe du bâti, isolation et finitions.',
                 tags: ['Menuiserie', 'Rénovation', 'Isolation'],
-                images: ['medias/Fenetre_0.jpg', 'medias/Fenetre_1.jpg', 'medias/Fenetre_2.jpg', 'medias/Fenetre_3.jpg', 'medias/Fenetre_4.jpg', 'medias/Fenetre_5.jpg', 'medias/Fenetre_6.jpg', 'medias/Fenetre_7.jpg', 'medias/Fenetre_8.jpg']
+                images: ['medias/Fenetre_0.jpg', 'medias/Fenetre_1.jpg', 'medias/Fenetre_2.jpg', 'medias/Fenetre_3.jpg', 'medias/Fenetre_4.jpg', 'medias/Fenetre_5.jpg', 'medias/Fenetre_6.jpg', 'medias/Fenetre_7.jpg', 'medias/Fenetre_8.jpg', 'medias/Porte1.jpg', 'medias/Porte2.jpg', 'medias/Porte3.jpg', 'medias/Porte4.jpg', 'medias/Porte5.jpg']
             },
             'studio': {
                 title: 'Aménagement Studio',
                 description: 'Transformation d\'un sous-sol en un studio de production sonore avec optimisation accoustique et mobilier multifonctions.',
                 tags: ['Agencement', 'Optimisation', 'Petit Espace'],
-                images: ['medias/Studio_1.jpg', 'medias/Studio_2.jpg', 'medias/Studio_3.jpg', 'medias/Studio_4.jpg', 'medias/Studio_5.jpg']
-            },
-            'bureau': {
-                title: 'Bureau Intérieur',
-                description: 'Création d\'un espace de travail fonctionnel et inspirant avec mobilier sur mesure.',
-                tags: ['Mobilier', 'Design', 'Bureautique'],
-                images: ['medias/Bureau_interieur.jpg']
+                images: ['medias/Studio_1.jpg', 'medias/Studio_2.jpg', 'medias/Studio_3.jpg', 'medias/Studio_4.jpg', 'medias/Studio_5.jpg', 'medias/Studio_6.jpg', 'medias/Studio_7.jpg', 'medias/Studio_8.jpg']
             },
             'lit': {
-                title: 'Lit 2 Places avec Banc',
+                title: 'Lit 2 places avec banc et tablette',
                 description: 'Lit sur mesure avec banc latéral intégré et tablette de tête, alliant confort et fonctionnalité.',
                 tags: ['Bois', 'Sur Mesure', 'Mobilier'],
-                images: ['medias/Lit_2_places_avec_banc_sur_un_cote_et_tablette_a_la_tete.jpg']
+                images: ['medias/Lit01.jpg', 'medias/Lit02.jpg']
             },
-            'etageres': {
-                title: 'Étagères sur Mesure',
-                description: 'Système de rangement personnalisé adapté à vos besoins et à votre espace.',
+            'meuble': {
+                title: 'Meuble sur Mesure',
+                description: 'Système de rangement personnalisé en palettes recyclées adapté aux besoins et à l\'espace.',
                 tags: ['Rangement', 'Design', 'Bois'],
-                images: ['medias/Etageres_sur_mesure.jpg']
+                images: ['medias/Meuble_SurMesure1.jpg', 'medias/Meuble_SurMesure2.jpg', 'medias/Meuble_SurMesure3.jpg', 'medias/Meuble_SurMesure4.jpg']
             },
             'meuble-tiroirs': {
                 title: 'Meuble à Tiroirs',
                 description: 'Meuble de rangement multi-tiroirs avec finitions soignées et organisation optimale. Le contraste entre le pin clair de la structure et les façades de tiroirs en bois plus foncé crée un résultat dans un esprit mid-century moderne',
                 tags: ['Menuiserie', 'Rangement', 'Mobilier'],
-                images: ['medias/Meuble_a_tiroirs.jpg']
+                images: ['medias/Meuble_a_tiroirs0.jpg', 'medias/Meuble_a_tiroirs1.jpg', 'medias/Meuble_a_tiroirs2.jpg', 'medias/Meuble_a_tiroirs3.jpg', 'medias/Meuble_a_tiroirs4.jpg', 'medias/Meuble_a_tiroirs5.jpg']
             },
             'bancs': {
                 title: 'Collection de Bancs',
                 description: 'Différents styles de bancs en bois pour intérieur et extérieur, designs variés et robustes.',
                 tags: ['Extérieur', 'Bois', 'Mobilier'],
-                images: ['medias/Banc_large.jpg', 'medias/Banc_simple.jpg', 'medias/Bancpotager.jpg', 'medias/Banctronc.jpg']
+                images: ['medias/Banc_large.jpg', 'medias/Banc_simple.jpg', 'medias/Bancpotager.jpg', 'medias/Banctronc.jpg', 'medias/Banlancoire.jpg']
             },
             'tables-tourets': {
                 title: 'Tables à partir de Tourets',
-                description: 'Upcycling créatif : transformation de tourets industriels en tables originales et fonctionnelles.',
+                description: 'Surcyclage créatif : transformation de tourets industriels en tables originales et fonctionnelles.',
                 tags: ['Recyclage', 'Créatif', 'Upcycling'],
-                images: ['medias/Tables_a_partir_de_tourets.jpg']
+                images: ['medias/Tables_a_partir_de_tourets1.jpg', 'medias/Tables_a_partir_de_tourets2.jpg']
             },
             'echelle-chat': {
                 title: 'Échelle pour Chat',
                 description: 'Accessoire malin pour permettre à vos chats d\'accéder facilement aux hauteurs. Avec ses plateformes alternées, c\'est une solution élégante et fonctionnelle - bien plus esthétique que les solutions commerciales habituelles.',
                 tags: ['Animaux', 'Original', 'Bois'],
-                images: ['medias/Echelle_pour_chat.jpg']
+                images: ['medias/Echelle_pour_chat0.jpg', 'medias/Echelle_pour_chat1.jpg', 'medias/Echelle_pour_chat2.jpg']
             },
             'terrasse': {
                 title: 'Terrasse en Bois',
@@ -513,11 +495,11 @@
                 tags: ['Jardin', 'Écologie', 'Innovation'],
                 images: ['medias/Potager_vertical_1.jpg', 'medias/Potager_vertical_2.jpg', 'medias/Potager_vertical_3.jpg']
             },
-            'potager-surreleve': {
+            'potager-sureleve': {
                 title: 'Potagers Surélevés',
                 description: 'Bacs de culture ergonomiques pour jardiner sans se baisser, en bois traité ou non traité.',
                 tags: ['Jardin', 'Pratique', 'Bois'],
-                images: ['medias/Potager_surreleve_1.jpg', 'medias/Potager_surreleve_2.jpg', 'medias/Potager_surreleve_3.jpg', 'medias/Potager_surreleve.jpg', 'medias/Planche_de_culture.jpg']
+                images: ['medias/Potager_surreleve_1.jpg', 'medias/Potager_surreleve_2.jpg', 'medias/Potager_surreleve_3.jpg', 'medias/Potager_surreleve.jpg']
             },
             'aquaponique': {
                 title: 'Système Aquaponique',
@@ -533,9 +515,9 @@
             },
             'cabane-rucher': {
                 title: 'Cabane du Rucher',
-                description: 'Abri pour l\'apiculture offrant protection et espace de travail pour l\'entretien des ruches. Une vue panoramique sécurisée pour permettre aux écoliers d\'avoir un point de vue sur le rucher',
+                description: 'Abri pour l\'apiculture offrant protection et espace pédagogique. Une vue panoramique sécurisée pour permettre aux écoliers d\'avoir un point de vue sur le rucher',
                 tags: ['Construction', 'Apiculture', 'Bois'],
-                images: ['medias/Cabane_du_rucher_exterieur.jpg', 'medias/Cabane_du_rucher_interieur.jpg']
+                images: ['medias/Cabane_du_rucher1.jpg', 'medias/Cabane_du_rucher_exterieur.jpg', 'medias/Cabane_du_rucher_interieur.jpg','medias/Cabane_du_rucher2.jpg']
             },
             'atelier': {
                 title: 'Atelier Extérieur',
@@ -559,67 +541,49 @@
                 title: 'Nichoirs',
                 description: 'Fabrication d\'abris pour oiseaux afin de favoriser la biodiversité dans le jardin.',
                 tags: ['Nature', 'Biodiversité', 'Bois'],
-                images: ['medias/Nichoirs.jpg']
+                images: ['medias/Nichoir1.jpg', 'medias/Nichoir2.jpg', 'medias/Nichoir3.jpg', 'medias/Nichoir4.jpg']
             },
             'solaire': {
                 title: 'Installation Solaire',
                 description: 'Mise en place d\'un système photovoltaïque autonome pour production d\'énergie renouvelable.',
                 tags: ['Énergie', 'Autonomie', 'Écologie'],
-                images: ['medias/Installation_solaire_1.jpg', 'medias/Installation_solaire_2.jpg', 'medias/Installation_solaire_3.jpg', 'medias/Installation_solaire_4.jpg']
+                images: ['medias/Installation_solaire_1.jpg', 'medias/Installation_solaire_2.jpg', 'medias/Installation_solaire_3.jpg', 'medias/Installation_solaire_4.jpg', 'medias/Installation_solaire_5.jpg', 'medias/Installation_solaire_6.jpg']
             },
-            'fosse-septique': {
+            'sous-sol': {
                 title: 'Ancienne Fosse Septique',
                 description: 'Rénovation et transformation d\'une ancienne fosse septique en pièce de jonction entre 2 étages, pièce de stockage et toilettes.',
                 tags: ['Technique', 'Rénovation', 'Assainissement'],
-                images: ['medias/Ancienne_fosse_septique_0.jpg', 'medias/Ancienne_fosse_septique_1.jpg', 'medias/Ancienne_fosse_septique_2.jpg', 'medias/Ancienne_fosse_septique_3.jpg', 'medias/Ancienne_fosse_septique_4.jpg', 'medias/Ancienne_fosse_septique_5.jpg']
-            },
-            'broyeur': {
-                title: 'Broyeur Plastique',
-                description: 'Construction d\'une machine de recyclage DIY inspirée du projet Precious Plastic pour broyer et recycler le plastique.',
-                tags: ['Recyclage', 'Innovation', 'DIY'],
-                images: ['medias/broyeur_plastique_1.jpg', 'medias/broyeur_plastique_2.jpg', 'medias/broyeur_plastique_3.jpg']
+                images: ['medias/Ancienne_fosse_septique_0.jpg', 'medias/Ancienne_fosse_septique_1.jpg', 'medias/Ancienne_fosse_septique_2.jpg', 'medias/Ancienne_fosse_septique_3.jpg', 'medias/Ancienne_fosse_septique_4.jpg', 'medias/Ancienne_fosse_septique_5.jpg', 'medias/Ancienne_fosse_septique_6.jpg', 'medias/Ancienne_fosse_septique_7.jpg', 'medias/Escalier_0.jpg', 'medias/Escalier_0b.jpg', 'medias/Escalier_0c.jpg', 'medias/Escalier.jpg']
             },
             'panneaux': {
                 title: 'Panneaux Décoratifs',
                 description: 'Création de panneaux en bois avec gravure et pyrogravure pour signalétique et décoration.',
                 tags: ['Art', 'Gravure', 'Décoration'],
-                images: ['medias/Panneau_Amour.jpg', 'medias/Panneau_Amour_Confiance_Douceur.jpg', 'medias/Panneau_Vous_etes_ici_et_maintenant.jpg']
+                images: ['medias/Panneau_Jardineurs.jpg', 'medias/Panneau_Amour.jpg', 'medias/Panneau_Vous_etes_ici_et_maintenant.jpg', 'medias/Panneau_AmisPartageBonheur.jpg', 'medias/Panneau_Amour_Confiance_Douceur.jpg', 'medias/Panneau_ToInfinity.jpg']
             },
-            'gravure': {
-                title: 'Gravure sur Bois',
-                description: 'Œuvres gravées personnalisées sur bois : textes, dessins, logos et motifs sur mesure.',
+            'landart': {
+                title: 'Créations naturelles',
+                description: 'Œuvres naturelles personnalisées.',
                 tags: ['Artisanat', 'Personnalisé', 'Art'],
-                images: ['medias/Gravure_sur_bois.jpg', 'medias/Bois_Clematite_1.jpg', 'medias/Bois_Clematite_2.jpg', 'medias/Bois_Clematite_3.jpg']
+                images: ['medias/CreationNature_WestCoast2025.jpg', 'medias/CreationNature_CoquillagePlumes.jpg', 'medias/CreationNature_Bateau.jpg', 'medias/CreationNature_Passiflore.jpg', 'medias/CreationNature_Jardineurs.jpg']
             },
-            'crabe': {
-                title: 'Sculpture Crabe',
-                description: 'Création artistique représentant un crabe, travail détaillé du bois.',
-                tags: ['Sculpture', 'Art', 'Bois'],
-                images: ['medias/Crabe.jpg']
+            'animaux': {
+                title: 'Animaux',
+                description: 'Des animaux en matériaux naturels récupérés',
+                tags: ['Sculpture', 'Art', 'Animaux'],
+                images: ['medias/CreationNature_Crabe.jpg', 'medias/CreationNature_Grenouille.jpg', 'medias/CreationNature_Oiseau.jpg']
             },
             'boites-coco': {
                 title: 'Boîtes Coco',
                 description: 'Rangements créatifs fabriqués à partir de noix de coco pour un style naturel et original.',
                 tags: ['Original', 'Naturel', 'Recyclage'],
-                images: ['medias/Boites_Coco.jpg']
+                images: ['medias/Boites_Coco.jpg', 'medias/Boites_Coco2.jpg', 'medias/Boites_Coco3.jpg', 'medias/Boites_Coco4.jpg']
             },
-            'mezzanine': {
-                title: 'Mezzanine Garage',
-                description: 'Construction d\'une mezzanine de rangement pour optimiser l\'espace vertical du garage.',
-                tags: ['Rangement', 'Structure', 'Bois'],
-                images: ['medias/Mezzazine_rangements_garage_1.jpg', 'medias/Mezzazine_rangements_garage_2.jpg']
-            },
-            'grainotheque': {
+            'bureau': {
                 title: 'Grainothèque & Bureau',
-                description: 'Meuble multifonction combinant grainothèque pour le partage de graines et espace bureau.',
-                tags: ['Jardin', 'Pratique', 'Partage'],
-                images: ['medias/Grainotheque_et_bureau.jpg']
-            },
-            'rangement-graines': {
-                title: 'Rangement des Graines',
-                description: 'Système d\'organisation dédié au stockage et à la conservation des graines de jardin.',
-                tags: ['Jardin', 'Organisation', 'Rangement'],
-                images: ['medias/Meuble_de_rangement_des_graines.jpg']
+                description: 'Un bâtiment multifonction en platettes recyclées combinant un espace bureau et une grainothèque pour le partage de graines.',
+                tags: ['Jardin', 'Construction', 'Pratique'],
+                images: ['medias/Grainotheque_et_bureau.jpg', 'medias/Bureau_interieur.jpg', 'medias/Meuble_de_rangement_des_graines.jpg']
             },
             'rangement-epices': {
                 title: 'Rangement Épices',
@@ -627,60 +591,18 @@
                 tags: ['Cuisine', 'Organisation', 'Pratique'],
                 images: ['medias/Epices_0.jpg', 'medias/Epices_1.jpg', 'medias/Epices_2.jpg', 'medias/Epices_3.jpg']
             },
-            'portraits-musique': {
-                title: 'Parcours Musical',
-                description: 'Évolution d\'un pianiste à travers les années : du débutant en 1992 au musicien accompli, ingénieur du son, compositeur et formateur.',
-                tags: ['Musique', 'Portrait', 'Évolution'],
-                images: ['medias/1992_Pianiste.jpg', 'medias/2001_Pianiste.jpg', 'medias/2016_Pianiste.jpg', 'medias/2018_Pianiste_.jpeg', 'medias/Inge_son_01.jpg', 'medias/Inge_son_02.jpg', 'medias/Inge_son_03.jpg', 'medias/Inge_son_04.jpg', 'medias/Inge_son_05.jpg', 'medias/Inge_son_06.jpg', 'medias/Inge_son_07.jpg', 'medias/Inge_son_08.jpg', 'medias/Compositeur_theatre.jpg', 'medias/Formateur_Production_musicale.jpg', 'medias/Technicien_regie.JPG', 'medias/Musicien.jpeg', 'medias/2025_DJ.jpg']
-            },
-            'portraits-activites': {
-                title: 'Diverses Activités',
-                description: 'Portfolio de compétences variées : bricolage, jardinage, navigation, aventure et plus encore.',
-                tags: ['Professionnel', 'Polyvalence', 'Compétences'],
-                images: ['medias/Aventurier.jpg', 'medias/Bricoleur_1.jpg', 'medias/Bricoleur_2.jpg', 'medias/Jardinier.jpg', 'medias/Navigateur.jpg', 'medias/Pilote.jpg', 'medias/2024_Guide.jpg', 'medias/2024_Guide_2.jpg', 'medias/2025_Pelletier.jpg', 'medias/Cheveux.jpg']
-            },
             'cinema-plein-air': {
                 title: 'Cinéma en Plein Air',
                 description: 'Installation d\'un système de projection extérieure pour soirées cinéma en plein air.',
                 tags: ['Loisirs', 'Événement', 'Projection'],
                 images: ['medias/Cinema_en_plein_air_1.jpg', 'medias/Cinema_en_plein_air_2.jpg']
             },
-            'jeu-dames': {
-                title: 'Jeu de Dames Géant',
-                description: 'Fabrication d\'un plateau de jeu de dames extérieur en bois de grande taille.',
-                tags: ['Jeu', 'Bois', 'Loisirs'],
-                images: ['medias/Jeu_de_dames.jpg']
-            },
             'cendrier-vote': {
                 title: 'Cendrier à Voter',
                 description: 'Collecteur ludique et participatif où les fumeurs votent en jetant leur mégot.',
                 tags: ['Original', 'Urbain', 'Participatif'],
-                images: ['medias/Cendrier_a_voter.jpg']
+                images: ['medias/Meuble_Cendrier_a_voter1.jpg', 'medias/Meuble_Cendrier_a_voter2.jpg', 'medias/Meuble_Cendrier_a_voter3.jpg', 'medias/Meuble_Cendrier_a_voter4.jpg']
             },
-            'masque-covid': {
-                title: 'Masque Anti-Covid',
-                description: 'Création artisanale de masque pendant la pandémie, avec message sur la dépression.',
-                tags: ['Innovation', 'Santé', 'Artisanal'],
-                images: ['medias/Masque_antiCovid_et_antidepression.jpg']
-            },
-            'ramassage-dechets': {
-                title: 'Ramassage Berges de Seine',
-                description: 'Participation à une action de nettoyage environnemental sur les berges de Seine.',
-                tags: ['Écologie', 'Action', 'Environnement'],
-                images: ['medias/Ramassage_de_dechets_sur_les_berges_de_Seine.jpg']
-            },
-            'west-coast': {
-                title: 'West Coast 2025',
-                description: 'Projet artistique ou récit de voyage sur la côte ouest.',
-                tags: ['Voyage', 'Création', 'Aventure'],
-                images: ['medias/West_coast_2025.jpg']
-            },
-            'gratteterre': {
-                title: 'Gratte-terre',
-                description: 'Accessoire pratique pour nettoyer ses chaussures avant d\'entrer.',
-                tags: ['Pratique', 'Jardin', 'Utile'],
-                images: ['medias/Gratteterre_sous_les_chaussures.jpg']
-            }
         };
 
         // Variables pour le lightbox
