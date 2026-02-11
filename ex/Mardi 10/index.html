@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raphaël Garraud - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c5f2d;
+            --secondary: #8b6f47;
+            --accent: #d4a574;
+            --dark: #1a1a1a;
+            --light: #f8f6f3;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--white);
+            color: var(--dark);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero */
+        .hero {
+            background: var(--white);
+            color: var(--dark);
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        /* Sections */
+        section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+        }
+
+        /* About */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: var(--accent);
+        }
+
+        .timeline-item {
+            margin: 1.5rem 0;
+            position: relative;
+            width: 40%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: 60%;
+        }
+
+        .timeline-content {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .timeline-year {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Categories */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: var(--white);
+            padding: 1.2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .category-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .category-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.6rem;
+            font-size: 1.1rem;
+        }
+
+        .category-card p {
+            text-align: left;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .category-card strong {
+            color: var(--secondary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Portfolio Grid - COMPACT */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+        }
+
+        .portfolio-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+            background: #e0e0e0;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .portfolio-card:hover .portfolio-image img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-info {
+            padding: 12px;
+        }
+
+        .portfolio-info h3 {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+            line-height: 1.3;
+            height: 2.6rem;
+            overflow: hidden;
+        }
+
+        .portfolio-info p {
+            font-size: 0.8rem;
+            color: #666;
+            line-height: 1.3;
+            height: 2.6rem;
+            overflow: hidden;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .tag {
+            background: var(--accent);
+            color: var(--white);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+        }
+
+        /* Category Sections */
+        .category-section {
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            color: var(--secondary);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent);
+            display: inline-block;
+        }
+
+        /* Contact */
+        .contact-info {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-info p {
+            margin: 1rem 0;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 0;
+            }
+
+            .timeline-item {
+                width: 100%;
+                margin-left: 2rem !important;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .categories {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Modal Parcours */
+        .parcours-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s;
+        }
+
+        .parcours-modal-content {
+            position: relative;
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            animation: slideDown 0.3s;
+        }
+
+        .parcours-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: var(--dark);
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .parcours-modal-close:hover {
+            color: var(--primary);
+        }
+
+        .parcours-modal-gallery {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .parcours-modal-image {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: none;
+        }
+
+        .gallery-nav:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .gallery-nav.prev {
+            left: 10px;
+        }
+
+        .gallery-nav.next {
+            right: 10px;
+        }
+
+        .gallery-nav.active {
+            display: block;
+        }
+
+        .gallery-dots {
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .gallery-dots.active {
+            display: block;
+        }
+
+        .gallery-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .gallery-dot.active {
+            background: var(--primary);
+            width: 12px;
+            height: 12px;
+        }
+
+        .parcours-modal-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .parcours-modal-year {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .parcours-modal-description {
+            color: var(--dark);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .parcours-modal-link {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .parcours-modal-link:hover {
+            background: var(--secondary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <h1>Raphaël Garraud</h1>
+            <ul>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#apropos">À propos</a></li>
+                <li><a href="#competences">Compétences</a></li>
+                <li><a href="#parcours">Parcours</a></li>
+                <li><a href="#realisations">Réalisations</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section id="accueil" class="hero">
+        <h1>Raphaël Garraud</h1>
+        <p>Compositeur • Ingénieur du son • Formateur • Écopreneur</p>
+        <p style="font-size: 1.1rem; margin-top: 1rem; opacity: 0.9;">De la musique au bricolage, du jardin à l'innovation technique</p>
+    </section>
+
+    <!-- PORTRAITS-->
+    <section id="portraits">
+        <div class="portfolio-card" onclick="window.location.href='detail.html?project=portraits'">
+            <div class="portfolio-image">
+                <img src="medias/Portrait_Inge_son_07.jpg" alt="Portraits">
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="apropos">
+         <!--<h2>À Propos</h2>-->
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Qui suis-je ?</h3>
+                <p>Né en 1974, père de 3 enfants, je suis <strong>un créateur polyvalent passionné</strong> par la musique, l'artisanat et l'écologie. Mon parcours atypique m'a conduit du piano classique au Conservatoire de Nantes jusqu'à la composition pour Jean-Michel Jarre, en passant par la réalisation publicitaire, la production musicale, l'artisanat et l'engagement environnemental.</p>
+                <p>Basé à Sartrouville, je parle français et anglais, et je suis titulaire des permis B, fluvial et côtier. Mon expertise technique couvre aussi bien les studios d'enregistrement professionnels que les outils de création vidéo, la gestion réseau mais aussi la menuiserie, la plomberie, l'électricité et bien d'autre encore !</p>
+            </div>
+            <div class="about-text">
+                <h3>Ma Philosophie</h3>
+                <p>Je crois profondément en <strong>l'apprentissage continu</strong> et au <strong>partage des connaissances.</strong></p>
+                <p><strong>Chaque projet est une aventure</strong> qui combine créativité, technique et respect de l'environnement. De la formation technicien du son (INFA), production musicale à l'image (FNAMM), voix-off (Les Coachs Associés) aux interventions internationales (Éthiopie, Comores), je mets mon expérience au service de projets porteurs de sens.</p>
+                <p>Mon engagement dans le <strong>Pacte pour la Transition Écologique</strong> et la création de l'éco-lieu <strong>"Sol Majeur"</strong> avec l'association Les Jardineurs Sartrouvillois reflètent mes valeurs.</p>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Compétences -->
+    <section id="competences">
+        <h2>Compétences</h2>
+        <div class="categories">
+            <div class="category-card">
+                <div class="category-icon">🎵</div>
+                <h3>Musique & Son</h3>
+                <p>
+                <!--    <strong>Compositeur, Musicien, Ingénieur du son</strong><br> -->
+                Piano classique (Conservatoire), composition pour l'image (INA, Ellipsanime), albums (Jean-Michel Jarre, Bibi Tanga, Gentleman Jake), habillages radio/TV (RFI, Europe 1, Canal+), formation sonore et musicale (INFA,FNAMM, Les Coachs Associés), réalisation studio (ProTools, Logic, Ableton Live)</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🔨</div>
+                <h3>Bricolage & Création</h3>
+                <p>
+                <!--    <strong>Menuiserie, Électronique, Aménagement</strong><br> -->
+                Conception et fabrication de meubles sur mesure, rénovation intérieure, travail du bois, électricité, plomberie, construction de structures (terrasses, mezzanines, ateliers), recyclage créatif (tourets, palettes)</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🎓</div>
+                <h3>Formation & Transmission</h3>
+                <p>
+                <!--    <strong>Formateur, Pédagogue</strong><br> -->
+                Formation voix en studio (Les Coachs Associés depuis 2017), composition musicale à l'image (FNAMM 2023), habillage radio international (Éthiopie 2015, Comores 2018), sensibilisation écologique pour les écoles, ateliers jardin et compost</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🌱</div>
+                <h3>Jardinage & Écologie</h3>
+                <p>
+                <!--    <strong>Permaculture, Autonomie, Biodiversité</strong><br> -->
+                Potagers surélevés et verticaux, aquaponie, apiculture, compostage, vie du sol, création d'éco-lieu "Sol Majeur", animation d'ateliers de sensibilisation, membre du Pacte pour la Transition Écologique</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">💻</div>
+                <h3>Informatique</h3>
+                <p>
+                <!--    <strong>Maîtrise des outils informatiques</strong><br> -->
+                Création audiovisuelle, bureautique, modélisation 3D, réseau, nocode, HTML, agents IA, GIMP, OBS, Blender, DaVinci Resolve, Affinity... Utilisation avancée des environnements PC/Mac/Unix</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">⚙️</div>
+                <h3>Technique</h3>
+                <p>
+                <!--    <strong>Électricité, Énergie, Recyclage</strong><br> -->
+                Câblage et maintenance studio, régie technique audiovisuelle, installation solaire photovoltaïque</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Parcours -->
+    <section id="parcours">
+        <h2>Parcours</h2>
+        <div class="timeline">
+            <!-- Débuts musicaux -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="conservatoire">
+                    <div class="timeline-year">1980-1993</div>
+                    <h3>🎵 Formation musicale</h3>
+                    <p>Conservatoire de Nantes - Piano classique, jazz, variété</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="pianiste">
+                    <div class="timeline-year">1990-1994</div>
+                    <h3>🎹 Pianiste</h3>
+                    <p>Piano-bars dans la région nantaise - Premiers pas professionnels</p>
+                </div>
+            </div>
+
+            <!-- Début dans l'audiovisuel -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="square">
+                    <div class="timeline-year">1994-1995</div>
+                    <h3>🎙️ Square Prod</h3>
+                    <p>Prise de son, réalisation et mixage de bandes-annonces - Remix (Skoops, Black People, Alabina)</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="europe1">
+                    <div class="timeline-year">1995-1996</div>
+                    <h3>📻 Europe 1</h3>
+                    <p>Service auto-promotion et habillage sonore de l'antenne</p>
+                </div>
+            </div>
+
+            <!-- Réalisation publicitaire -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="graffiti">
+                    <div class="timeline-year">1996-1999</div>
+                    <h3>🎬 Graffiti 5&21</h3>
+                    <p>Réalisation publicitaire radio</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="trafalgar">
+                    <div class="timeline-year">1999-2003</div>
+                    <h3>📢 Trafalgar Créations</h3>
+                    <p>Directeur associé - Écriture et production de spots radio</p>
+                </div>
+            </div>
+
+            <!-- Album Jean-Michel Jarre -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="jarre">
+                    <div class="timeline-year">2000</div>
+                    <h3>⭐ Jean-Michel Jarre</h3>
+                    <p>Participation à l'album "Metamorphoses"</p>
+                </div>
+            </div>
+
+            <!-- Chez Jean -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="chezjean">
+                    <div class="timeline-year">2003-2013</div>
+                    <h3>🎧 Chez Jean</h3>
+                    <p>Réalisation de pubs, habillages (Radio, TV, Cinéma) et de multiples albums</p>
+                </div>
+            </div>
+
+            <!-- Tournée avec Bibi Tanga -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="bibi">
+                    <div class="timeline-year">2007-2008</div>
+                    <h3>🎹 Bibi Tanga et le Professeur Inlassable</h3>
+                    <p>Claviers - Tournée de 40 dates - Albums "Yellow Gauze"</p>
+                </div>
+            </div>
+
+            <!-- Formation technique -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="infa">
+                    <div class="timeline-year">2009-2010</div>
+                    <h3>🎓 Formateur Technicien du son</h3>
+                    <p>Institut National de la Formation Appliquée</p>
+                </div>
+            </div>
+
+            <!-- Théâtre -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="ubu">
+                    <div class="timeline-year">2011</div>
+                    <h3>🎭 Ubu Roi</h3>
+                    <p>Co-composition et ambiances sonores - Mise en scène Pierre Pradinas</p>
+                </div>
+            </div>
+
+            <!-- King Arthur -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="kingarthur">
+                    <div class="timeline-year">2013</div>
+                    <h3>👑 King Arthur</h3>
+                    <p>Création d'entreprise - Production musicale et sonore - Live Youtube/Facebook</p>
+                </div>
+            </div>
+
+            <!-- Production livres-CD -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="lito">
+                    <div class="timeline-year">2013-2017</div>
+                    <h3>📚 Éditions LITO</h3>
+                    <p>Production de plus de 30 livres de comptines pour enfants</p>
+                </div>
+            </div>
+
+            <!-- Albums personnels -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="albums">
+                    <div class="timeline-year">2014-2018</div>
+                    <h3>🎼 Albums solo</h3>
+                    <p>"Flying World" (2014), "En Trance" (2016), "After the Storm" (2017), "Movies" (2018)</p>
+                </div>
+            </div>
+
+            <!-- Formation internationale -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="afrique">
+                    <div class="timeline-year">2015-2018</div>
+                    <h3>🌍 Formateur en Afrique</h3>
+                    <p>Formation à la réalisation d'habillage radio en Éthiopie (EBC) et aux Comores (ORTC)</p>
+                </div>
+            </div>
+
+            <!-- Campagne présidentielle -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="presidentielle">
+                    <div class="timeline-year">2017</div>
+                    <h3>🗳️ Campagne Présidentielle</h3>
+                    <p>Direction artistique de la communication d'un candidat</p>
+                </div>
+            </div>
+
+            <!-- Formation voix -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="coachs">
+                    <div class="timeline-year">Depuis 2017</div>
+                    <h3>🎤 Les Coachs Associés</h3>
+                    <p>Formateur à la voix off en studio professionnel</p>
+                </div>
+            </div>
+
+            <!-- Éco-lieu Sol Majeur -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="jardineurs">
+                    <div class="timeline-year">Depuis 2018</div>
+                    <h3>🌱 Les Jardineurs Sartrouvillois</h3>
+                    <p>Création d'association - Valorisation d'une friche industrielle en "Sol Majeur", la Maison de l'Écologie de Sartrouville</p>
+                </div>
+            </div>
+
+            <!-- Documentaires INA -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="ina">
+                    <div class="timeline-year">2019</div>
+                    <h3>📺 INA</h3>
+                    <p>Composition musicale pour documentaires : "L'hôtel de la Marine", "Léonard de Vinci : Un homme en mouvement"</p>
+                </div>
+            </div>
+
+            <!-- Engagement écologique -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="ecopreneur">
+                    <div class="timeline-year">Depuis 2019</div>
+                    <h3>♻️ Écopreneur & Formateur</h3>
+                    <p>Pacte pour la Transition Écologique - Sensibilisation à la vie du sol - Compostage</p>
+                </div>
+            </div>
+
+            <!-- Areas Assurances -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="areas">
+                    <div class="timeline-year">Depuis 2020</div>
+                    <h3>🎥 Aréas Assurances</h3>
+                    <p>Réalisation audio/vidéo de tutoriaux internes</p>
+                </div>
+            </div>
+
+            <!-- Animation Akissi -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="akissi">
+                    <div class="timeline-year">2021</div>
+                    <h3>🎬 Ellipsanime Productions</h3>
+                    <p>Composition musicale pour la série d'animés "Akissi"</p>
+                </div>
+            </div>
+
+            <!-- FNAMM -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="fnamm">
+                    <div class="timeline-year">2023</div>
+                    <h3>🎬 FNAMM</h3>
+                    <p>Réalisation de tutoriaux sur la composition musicale à l'image</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Réalisations -->
+    <section id="realisations">
+        <h2>Réalisations</h2>
+
+        <!-- PRODUCTIONS SONORES -->
+        <div class="category-section">
+            <h3 class="category-title">🎶 Productions Musicales</h3>
+            <div class="portfolio-grid">
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=musique'">
+                    <div class="portfolio-image">
+                        <img src="medias/AlbumJarre.jpg" alt="Musiques">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Musique</h3>
+                        <p>Participation à différents projets musicaux</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Musique</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cinetheatre'">
+                    <div class="portfolio-image">
+                        <img src="medias/TheatreUbuRoi.jpg" alt="Cinéma Théâtre">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Cinéma TV Théâtre</h3>
+                        <p>Du son pour l'image et la scène</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Image</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=livre'">
+                    <div class="portfolio-image">
+                        <img src="medias/Livre30Chansons.jpg" alt="Livres">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Livres pour enfants</h3>
+                        <p>Petit enfants, grandes musiques</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Livre</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=logiciel'">
+                    <div class="portfolio-image">
+                        <img src="medias/Orthochanson1.jpg" alt="Logiciels">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Les Orthochansons</h3>
+                        <p>Apprendre l'orthographe par la musique</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Pédagogie</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CRÉATIONS NATURELLES -->
+        <div class="category-section">
+            <h3 class="category-title">🎨 Créations Naturelles</h3>
+            <div class="portfolio-grid">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=panneaux'">
+                    <div class="portfolio-image">
+                        <img src="medias/Panneau_Amour.jpg" alt="Panneaux">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Panneaux Décoratifs</h3>
+                        <p>Signalétique bois</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Art</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=landart'">
+                    <div class="portfolio-image">
+                        <img src="medias/CreationNature_WestCoast2025.jpg" alt="Land Art">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Land Art</h3>
+                        <p>Œuvres naturelles personnalisées</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Artisanat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=animaux'">
+                    <div class="portfolio-image">
+                        <img src="medias/CreationNature_Crabe.jpg" alt="Crabe">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Animaux</h3>
+                        <p>Créations artistiques en matériaux récupérés</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Animaux</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=boites-coco'">
+                    <div class="portfolio-image">
+                        <img src="medias/Boites_Coco.jpg" alt="Boîtes">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Boîtes Coco</h3>
+                        <p>Rangements naturels</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Original</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <!-- AMÉNAGEMENTS INTÉRIEURS -->
+        <div class="category-section">
+            <h3 class="category-title">🏠 Aménagements</h3>
+            <div class="portfolio-grid">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=salon'">
+                    <div class="portfolio-image">
+                        <img src="medias/Salon_5.jpg" alt="Salon">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Agrandissement Salon</h3>
+                        <p>Aménagement moderne et chaleureux</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Menuiserie</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=sous-sol'">
+                    <div class="portfolio-image">
+                        <img src="medias/Ancienne_fosse_septique_7.jpg" alt="Sous-sol">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Sous-sol</h3>
+                        <p>Rénovation fosse septique, création d'escalier et installation toilettes</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Technique</span>
+                        </div>
+                    </div>
+                </div>
+<!--
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=escalier'">
+                    <div class="portfolio-image">
+                        <img src="medias/Escalier_0.jpg" alt="Escalier">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Escalier Design</h3>
+                        <p>Moderne et structuré</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Bois</span>
+                        </div>
+                    </div>
+                </div>
+-->
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=ouvertures'">
+                    <div class="portfolio-image">
+                        <img src="medias/Fenetre_7.jpg" alt="Ouvertures">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Ouvertures</h3>
+                        <p>Installation et restauration</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Menuiserie</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=studio'">
+                    <div class="portfolio-image">
+                        <img src="medias/Studio_8.jpg" alt="Studio">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Studio Optimisé</h3>
+                        <p>Petit espace, grandes idées</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Optimisation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBILIER -->
+        <div class="category-section">
+            <h3 class="category-title">🪑 Mobilier</h3>
+            <div class="portfolio-grid">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=meuble-tiroirs'">
+                    <div class="portfolio-image">
+                        <img src="medias/Meuble_a_tiroirs5.jpg" alt="Meuble">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Meuble à Tiroirs</h3>
+                        <p>Multi-rangements</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Menuiserie</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=echelle-chat'">
+                    <div class="portfolio-image">
+                        <img src="medias/Echelle_pour_chat2.jpg" alt="Échelle">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Échelle pour chat</h3>
+                        <p>Accessoire malin</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Original</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=rangement-epices'">
+                    <div class="portfolio-image">
+                        <img src="medias/Epices_0.jpg" alt="Épices">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Rangement Épices</h3>
+                        <p>Organisation cuisine</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Cuisine</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=lit'">
+                    <div class="portfolio-image">
+                        <img src="medias/Lit02.jpg" alt="Lit">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Lit 2 Places</h3>
+                        <p>Avec banc et tablette</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Sur Mesure</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=meuble'">
+                    <div class="portfolio-image">
+                        <img src="medias/Meuble_SurMesure4.jpg" alt="Meuble sur mesure">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Meuble sur mesure</h3>
+                        <p>Rangement personnalisé</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Rangement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=bancs'">
+                    <div class="portfolio-image">
+                        <img src="medias/Banc_large.jpg" alt="Bancs">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Collection Bancs</h3>
+                        <p>Styles variés</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Bois</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cendrier-vote'">
+                    <div class="portfolio-image">
+                        <img src="medias/Meuble_Cendrier_a_voter3.jpg" alt="Cendrier">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Cendrier à Voter</h3>
+                        <p>Collecteur ludique</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Original</span>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="portfolio-card" onclick="window.location.href='detail.html?project=abris-poubelles'">
+                    <div class="portfolio-image">
+                        <img src="medias/Abris_poubelles_vegetalise_1.jpg" alt="Abris">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Abris Végétalisé</h3>
+                        <p>Cache poubelles naturel</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Végétal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=potager-vertical'">
+                    <div class="portfolio-image">
+                        <img src="medias/Potager_vertical_1.jpg" alt="Potager vertical">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Potagers Verticaux</h3>
+                        <p>Culture innovante</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Jardin</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=potager-sureleve'">
+                    <div class="portfolio-image">
+                        <img src="medias/Potager_surreleve_1.jpg" alt="Potager surélevé">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Potagers Surélevés</h3>
+                        <p>Bacs ergonomiques</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Pratique</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=nichoirs'">
+                    <div class="portfolio-image">
+                        <img src="medias/Nichoir1.jpg" alt="Nichoirs">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Nichoirs</h3>
+                        <p>Abris pour oiseaux</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Nature</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=tables-tourets'">
+                    <div class="portfolio-image">
+                        <img src="medias/Tables_a_partir_de_tourets1.jpg" alt="Tables">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Tables Tourets</h3>
+                        <p>Surcyclage créatif</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Recyclage</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXTÉRIEUR & JARDIN -->
+        <div class="category-section">
+            <h3 class="category-title">🪚 Constructions</h3>
+            <div class="portfolio-grid">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=terrasse'">
+                    <div class="portfolio-image">
+                        <img src="medias/Terrasse_4.jpg" alt="Terrasse">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Terrasse</h3>
+                        <p>Construction extérieure</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Extérieur</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cuisine'">
+                    <div class="portfolio-image">
+                        <img src="medias/Cuisine_17.jpg" alt="Cuisine">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Cuisine extérieure</h3>
+                        <p>Fonctionnelle et élégante</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Agencement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=aquaponique'">
+                    <div class="portfolio-image">
+                        <img src="medias/Systeme_aquaponique_1.jpg" alt="Aquaponie">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Système Aquaponique</h3>
+                        <p>Culture autonome</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Innovation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=poulailler'">
+                    <div class="portfolio-image">
+                        <img src="medias/Poulailler_exterieur.jpg" alt="Poulailler">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Poulailler</h3>
+                        <p>Confortable et sécurisé</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Animaux</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cabane-rucher'">
+                    <div class="portfolio-image">
+                        <img src="medias/Cabane_du_rucher2.jpg" alt="Rucher">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Cabane Rucher</h3>
+                        <p>Abri apiculture</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Apiculture</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=atelier'">
+                    <div class="portfolio-image">
+                        <img src="medias/Atelier_exterieur.jpg" alt="Atelier">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Atelier Extérieur</h3>
+                        <p>Espace de travail</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Construction</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=bureau'">
+                    <div class="portfolio-image">
+                        <img src="medias/Grainotheque_et_bureau.jpg" alt="Grainothèque">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Bureau et Grainothèque</h3>
+                        <p>Deux pièces dans un bâtiment en palettes</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Pratique</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=toilettes-seches'">
+                    <div class="portfolio-image">
+                        <img src="medias/Toilettes_seches_1.jpg" alt="Toilettes">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Toilettes Sèches</h3>
+                        <p>Installation écologique</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Écologie</span>
+                        </div>
+                    </div>
+                </div>
+
+               <div class="portfolio-card" onclick="window.location.href='detail.html?project=solaire'">
+                    <div class="portfolio-image">
+                        <img src="medias/Installation_solaire_3.jpg" alt="Solaire">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Installation Solaire</h3>
+                        <p>Système autonome</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Énergie</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cinema-plein-air'">
+                    <div class="portfolio-image">
+                        <img src="medias/Cinema_en_plein_air_1.jpg" alt="Cinéma">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Cinéma Plein Air</h3>
+                        <p>Projection extérieure</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Loisirs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <h2>Contact</h2>
+        <div class="contact-info">
+            <p>📧 <a href="/cdn-cgi/l/email-protection#14777b7a60757760546675647c757178737566667561703a777b79" style="color: var(--primary); text-decoration: none; font-weight: 600;"><span class="__cf_email__" data-cfemail="contact@raphaelgarraud.com"><span class="__cf_email__" data-cfemail="7a1915140e1b190e3a081b0a121b1f161d1b08081b0f1e54191517">[email&#160;protected]</span></span></a></p>
+            <p>📱 06 62 81 09 60</p>
+            <p style="margin-top: 2rem; font-style: italic; color: var(--secondary);">Disponible pour projets collaboratifs, formations, compositions musicales et partage de compétences</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 - Portfolio créé avec passion</p>
+    </footer>
+
+    <!-- Modal Parcours -->
+    <div id="parcoursModal" class="parcours-modal">
+        <div class="parcours-modal-content">
+            <span class="parcours-modal-close">&times;</span>
+            <div class="parcours-modal-gallery">
+                <button class="gallery-nav prev" onclick="changeGalleryImage(-1)">&#10094;</button>
+                <img id="parcoursModalImage" src="" alt="Parcours" class="parcours-modal-image">
+                <button class="gallery-nav next" onclick="changeGalleryImage(1)">&#10095;</button>
+            </div>
+            <div id="galleryDots" class="gallery-dots"></div>
+            <div class="parcours-modal-year" id="parcoursModalYear"></div>
+            <h2 class="parcours-modal-title" id="parcoursModalTitle"></h2>
+            <p class="parcours-modal-description" id="parcoursModalDescription"></p>
+            <div id="parcoursModalLinkContainer">
+                <a id="parcoursModalLink" href="#" target="_blank" class="parcours-modal-link">En savoir plus</a>
+            </div>
+        </div>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        // Données du parcours avec images et liens
+        const parcoursData = {
+            'conservatoire': {
+                year: '1980-1993',
+                title: '🎵 Formation musicale',
+                description: 'Conservatoire de Nantes - Piano classique, jazz, variété',
+                images: ['medias/Portrait_1992_Pianiste.jpg', 'medias/Portrait_2001_Pianiste.jpg', 'medias/Portrait_2016_Pianiste.jpg', 'medias/Portrait_2018_Pianiste.jpg'],
+                link: 'https://www.conservatoirenantes.fr'
+            },
+            'pianiste': {
+                year: '1990-1994',
+                title: '🎹 Pianiste',
+                description: 'Piano-bars dans la région nantaise - Premiers pas professionnels',
+                images: ['medias/Portrait_1990_Musicien.jpg','medias/Portrait_1991_Musicien.jpg', 'medias/Portrait_1992_Pianiste.jpg'],
+                link: ''
+            },
+            'square': {
+                year: '1994-1995',
+                title: '🎙️ Square Prod',
+                description: 'Prise de son, réalisation et mixage de bandes-annonces - Remix (Skoops, Black People, Alabina)',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'europe1': {
+                year: '1995-1996',
+                title: '📻 Europe 1',
+                description: 'Service auto-promotion et habillage sonore de l\'antenne',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: 'https://www.europe1.fr'
+            },
+            'graffiti': {
+                year: '1996-1999',
+                title: '🎬 Graffiti 5&21',
+                description: 'Réalisation publicitaire radio',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'trafalgar': {
+                year: '1999-2003',
+                title: '📢 Trafalgar Créations',
+                description: 'Directeur associé - Écriture et production de spots radio',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'jarre': {
+                year: '2000',
+                title: '⭐ Jean-Michel Jarre',
+                description: 'Participation à l\'album "Metamorphoses"',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: 'https://www.jeanmicheljarre.com'
+            },
+            'chezjean': {
+                year: '2003-2013',
+                title: '🎧 Chez Jean',
+                description: 'Réalisation de pubs, habillages (Radio, TV, Cinéma) et de multiples albums',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'bibi': {
+                year: '2007-2008',
+                title: '🎹 Bibi Tanga et le Professeur Inlassable',
+                description: 'Claviers - Tournée de 40 dates - Albums "Yellow Gauze"',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'infa': {
+                year: '2009-2010',
+                title: '🎓 Formateur Technicien du son',
+                description: 'Institut National de la Formation Appliquée',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'ubu': {
+                year: '2011',
+                title: '🎭 Ubu Roi',
+                description: 'Co-composition et ambiances sonores - Mise en scène Pierre Pradinas',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'kingarthur': {
+                year: '2013',
+                title: '👑 King Arthur',
+                description: 'Création d\'entreprise - Production musicale et sonore - Live Youtube/Facebook',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'lito': {
+                year: '2013-2017',
+                title: '📚 Éditions LITO',
+                description: 'Production de plus de 30 livres de comptines pour enfants',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: 'https://www.editionslito.com'
+            },
+            'albums': {
+                year: '2014-2018',
+                title: '🎼 Albums solo',
+                description: '"Flying World" (2014), "En Trance" (2016), "After the Storm" (2017), "Movies" (2018)',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: 'https://raphaelgarraud.bandcamp.com'
+            },
+            'afrique': {
+                year: '2015-2018',
+                title: '🌍 Formateur en Afrique',
+                description: 'Formation à la réalisation d\'habillage radio en Éthiopie (EBC) et aux Comores (ORTC)',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'presidentielle': {
+                year: '2017',
+                title: '🗳️ Campagne Présidentielle',
+                description: 'Direction artistique de la communication d\'un candidat',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'coachs': {
+                year: 'Depuis 2017',
+                title: '🎤 Les Coachs Associés',
+                description: 'Formateur à la voix off en studio professionnel',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: 'https://www.lescoachsassocies.com'
+            },
+            'jardineurs': {
+                year: 'Depuis 2018',
+                title: '🌱 Les Jardineurs Sartrouvillois',
+                description: 'Création d\'association - Valorisation d\'une friche industrielle en "Sol Majeur", la Maison de l\'Écologie de Sartrouville',
+                images: [
+                    'medias/Sol_Majeur_vue_generale.jpg',
+                    'medias/Terrasse_4.jpg',
+                    'medias/Jardin_communautaire_1.jpg'
+                ],
+                link: 'https://www.facebook.com/lesjardineurssartrouvillois'
+            },
+            'ina': {
+                year: '2019',
+                title: '📺 INA',
+                description: 'Composition musicale pour documentaires : "L\'hôtel de la Marine", "Léonard de Vinci : Un homme en mouvement"',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: 'https://www.ina.fr'
+            },
+            'ecopreneur': {
+                year: 'Depuis 2019',
+                title: '♻️ Écopreneur & Formateur',
+                description: 'Pacte pour la Transition Écologique - Sensibilisation à la vie du sol - Compostage',
+                images: ['medias/Compost_atelier.jpg'],
+                link: ''
+            },
+            'areas': {
+                year: 'Depuis 2020',
+                title: '🎥 Aréas Assurances',
+                description: 'Réalisation audio/vidéo de tutoriaux internes',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'akissi': {
+                year: '2021',
+                title: '🎬 Ellipsanime Productions',
+                description: 'Composition musicale pour la série d\'animés "Akissi"',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'fnamm': {
+                year: '2023',
+                title: '🎬 FNAMM',
+                description: 'Formation à la composition musicale à l\'image',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: 'https://www.fnamm.com'
+            }
+        };
+
+        let currentGalleryIndex = 0;
+        let currentGalleryImages = [];
+
+        // Fonction pour changer l'image de la galerie
+        function changeGalleryImage(direction) {
+            currentGalleryIndex += direction;
+            
+            if (currentGalleryIndex < 0) {
+                currentGalleryIndex = currentGalleryImages.length - 1;
+            } else if (currentGalleryIndex >= currentGalleryImages.length) {
+                currentGalleryIndex = 0;
+            }
+            
+            updateGalleryDisplay();
+        }
+
+        // Fonction pour aller à une image spécifique
+        function goToGalleryImage(index) {
+            currentGalleryIndex = index;
+            updateGalleryDisplay();
+        }
+
+        // Mettre à jour l'affichage de la galerie
+        function updateGalleryDisplay() {
+            document.getElementById('parcoursModalImage').src = currentGalleryImages[currentGalleryIndex];
+            
+            // Mettre à jour les dots
+            const dots = document.querySelectorAll('.gallery-dot');
+            dots.forEach((dot, index) => {
+                if (index === currentGalleryIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // Fonction pour ouvrir la modale du parcours
+        function openParcoursModal(parcoursId) {
+            const data = parcoursData[parcoursId];
+            if (!data) return;
+
+            const modal = document.getElementById('parcoursModal');
+            document.getElementById('parcoursModalYear').textContent = data.year;
+            document.getElementById('parcoursModalTitle').textContent = data.title;
+            document.getElementById('parcoursModalDescription').textContent = data.description;
+            
+            // Gérer les images (simple ou galerie)
+            currentGalleryImages = data.images || [data.image];
+            currentGalleryIndex = 0;
+            document.getElementById('parcoursModalImage').src = currentGalleryImages[0];
+            
+            // Afficher/masquer les contrôles de galerie
+            const prevBtn = document.querySelector('.gallery-nav.prev');
+            const nextBtn = document.querySelector('.gallery-nav.next');
+            const dotsContainer = document.getElementById('galleryDots');
+            
+            if (currentGalleryImages.length > 1) {
+                // Afficher les boutons de navigation
+                prevBtn.classList.add('active');
+                nextBtn.classList.add('active');
+                
+                // Créer les dots
+                dotsContainer.innerHTML = '';
+                currentGalleryImages.forEach((img, index) => {
+                    const dot = document.createElement('span');
+                    dot.className = 'gallery-dot' + (index === 0 ? ' active' : '');
+                    dot.onclick = () => goToGalleryImage(index);
+                    dotsContainer.appendChild(dot);
+                });
+                dotsContainer.classList.add('active');
+            } else {
+                // Masquer les contrôles pour une seule image
+                prevBtn.classList.remove('active');
+                nextBtn.classList.remove('active');
+                dotsContainer.classList.remove('active');
+            }
+            
+            const linkContainer = document.getElementById('parcoursModalLinkContainer');
+            if (data.link) {
+                document.getElementById('parcoursModalLink').href = data.link;
+                linkContainer.style.display = 'block';
+            } else {
+                linkContainer.style.display = 'none';
+            }
+            
+            modal.style.display = 'block';
+        }
+
+        // Fonction pour fermer la modale
+        function closeParcoursModal() {
+            document.getElementById('parcoursModal').style.display = 'none';
+        }
+
+        // Initialiser les événements au chargement
+        window.addEventListener('DOMContentLoaded', function() {
+            // Ajouter les écouteurs d'événements sur les cartes du parcours
+            document.querySelectorAll('.timeline-content').forEach(card => {
+                card.addEventListener('click', function() {
+                    const parcoursId = this.getAttribute('data-parcours-id');
+                    if (parcoursId) {
+                        openParcoursModal(parcoursId);
+                    }
+                });
+            });
+            
+            // Fermer en cliquant sur le X
+            document.querySelector('.parcours-modal-close').addEventListener('click', closeParcoursModal);
+            
+            // Fermer en cliquant en dehors de la modale
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('parcoursModal');
+                if (event.target === modal) {
+                    closeParcoursModal();
+                }
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
