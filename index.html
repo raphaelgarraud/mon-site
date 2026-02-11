@@ -156,6 +156,13 @@
             padding: 1rem;
             border-radius: 8px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
 
         .timeline-year {
@@ -391,6 +398,172 @@
                 transform: translateY(0);
             }
         }
+
+        /* Modal Parcours */
+        .parcours-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s;
+        }
+
+        .parcours-modal-content {
+            position: relative;
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            animation: slideDown 0.3s;
+        }
+
+        .parcours-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: var(--dark);
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .parcours-modal-close:hover {
+            color: var(--primary);
+        }
+
+        .parcours-modal-gallery {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .parcours-modal-image {
+            width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: none;
+        }
+
+        .gallery-nav:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .gallery-nav.prev {
+            left: 10px;
+        }
+
+        .gallery-nav.next {
+            right: 10px;
+        }
+
+        .gallery-nav.active {
+            display: block;
+        }
+
+        .gallery-dots {
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .gallery-dots.active {
+            display: block;
+        }
+
+        .gallery-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .gallery-dot.active {
+            background: var(--primary);
+            width: 12px;
+            height: 12px;
+        }
+
+        .parcours-modal-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .parcours-modal-year {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .parcours-modal-description {
+            color: var(--dark);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .parcours-modal-link {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .parcours-modal-link:hover {
+            background: var(--secondary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -500,7 +673,7 @@
         <div class="timeline">
             <!-- Débuts musicaux -->
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="conservatoire">
                     <div class="timeline-year">1980-1993</div>
                     <h3>🎵 Formation musicale</h3>
                     <p>Conservatoire de Nantes - Piano classique, jazz, variété</p>
@@ -508,7 +681,7 @@
             </div>
             
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="pianiste">
                     <div class="timeline-year">1990-1994</div>
                     <h3>🎹 Pianiste</h3>
                     <p>Piano-bars dans la région nantaise - Premiers pas professionnels</p>
@@ -517,7 +690,7 @@
 
             <!-- Début dans l'audiovisuel -->
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="square">
                     <div class="timeline-year">1994-1995</div>
                     <h3>🎙️ Square Prod</h3>
                     <p>Prise de son, réalisation et mixage de bandes-annonces - Remix (Skoops, Black People, Alabina)</p>
@@ -525,7 +698,7 @@
             </div>
 
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="europe1">
                     <div class="timeline-year">1995-1996</div>
                     <h3>📻 Europe 1</h3>
                     <p>Service auto-promotion et habillage sonore de l'antenne</p>
@@ -534,7 +707,7 @@
 
             <!-- Réalisation publicitaire -->
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="graffiti">
                     <div class="timeline-year">1996-1999</div>
                     <h3>🎬 Graffiti 5&21</h3>
                     <p>Réalisation publicitaire radio</p>
@@ -542,25 +715,25 @@
             </div>
 
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="trafalgar">
                     <div class="timeline-year">1999-2003</div>
                     <h3>📢 Trafalgar Créations</h3>
                     <p>Directeur associé - Écriture et production de spots radio</p>
                 </div>
             </div>
 
-            <!-- Album Jean-Michel Jarre -->
+            <!-- Réalisation e-learning -->
             <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-year">2000</div>
-                    <h3>⭐ Jean-Michel Jarre</h3>
-                    <p>Participation à l'album "Metamorphoses"</p>
+                <div class="timeline-content" data-parcours-id="amplitudes">
+                    <div class="timeline-year">2003-2008</div>
+                    <h3>💾 Amplitudes</h3>
+                    <p>Production de programmes d'e-learning</p>
                 </div>
             </div>
 
             <!-- Chez Jean -->
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="chezjean">
                     <div class="timeline-year">2003-2013</div>
                     <h3>🎧 Chez Jean</h3>
                     <p>Réalisation de pubs, habillages (Radio, TV, Cinéma) et de multiples albums</p>
@@ -569,7 +742,7 @@
 
             <!-- Tournée avec Bibi Tanga -->
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="bibi">
                     <div class="timeline-year">2007-2008</div>
                     <h3>🎹 Bibi Tanga et le Professeur Inlassable</h3>
                     <p>Claviers - Tournée de 40 dates - Albums "Yellow Gauze"</p>
@@ -578,61 +751,61 @@
 
             <!-- Formation technique -->
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="infa">
                     <div class="timeline-year">2009-2010</div>
                     <h3>🎓 Formateur Technicien du son</h3>
                     <p>Institut National de la Formation Appliquée</p>
                 </div>
             </div>
 
-            <!-- Théâtre -->
+            <!-- Théâtre 
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="ubu">
                     <div class="timeline-year">2011</div>
                     <h3>🎭 Ubu Roi</h3>
                     <p>Co-composition et ambiances sonores - Mise en scène Pierre Pradinas</p>
                 </div>
-            </div>
+            </div> -->
 
             <!-- King Arthur -->
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="kingarthur">
                     <div class="timeline-year">2013</div>
                     <h3>👑 King Arthur</h3>
                     <p>Création d'entreprise - Production musicale et sonore - Live Youtube/Facebook</p>
                 </div>
             </div>
 
-            <!-- Production livres-CD -->
+            <!-- Production livres-CD 
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="lito">
                     <div class="timeline-year">2013-2017</div>
                     <h3>📚 Éditions LITO</h3>
                     <p>Production de plus de 30 livres de comptines pour enfants</p>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Albums personnels -->
+            <!-- Albums personnels 
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="albums">
                     <div class="timeline-year">2014-2018</div>
                     <h3>🎼 Albums solo</h3>
                     <p>"Flying World" (2014), "En Trance" (2016), "After the Storm" (2017), "Movies" (2018)</p>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Formation internationale -->
             <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-year">2015-2018</div>
-                    <h3>🌍 Formateur en Afrique</h3>
-                    <p>Formation à la réalisation d'habillage radio en Éthiopie (EBC) et aux Comores (ORTC)</p>
+                <div class="timeline-content" data-parcours-id="ebc">
+                    <div class="timeline-year">2015</div>
+                    <h3>🌍 Formateur en Éthiopie</h3>
+                    <p>Formation à la réalisation d'habillage radio en Éthiopie (EBC)</p>
                 </div>
             </div>
 
             <!-- Campagne présidentielle -->
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="presidentielle">
                     <div class="timeline-year">2017</div>
                     <h3>🗳️ Campagne Présidentielle</h3>
                     <p>Direction artistique de la communication d'un candidat</p>
@@ -641,7 +814,7 @@
 
             <!-- Formation voix -->
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="coachs">
                     <div class="timeline-year">Depuis 2017</div>
                     <h3>🎤 Les Coachs Associés</h3>
                     <p>Formateur à la voix off en studio professionnel</p>
@@ -650,57 +823,66 @@
 
             <!-- Éco-lieu Sol Majeur -->
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="jardineurs">
                     <div class="timeline-year">Depuis 2018</div>
                     <h3>🌱 Les Jardineurs Sartrouvillois</h3>
                     <p>Création d'association - Valorisation d'une friche industrielle en "Sol Majeur", la Maison de l'Écologie de Sartrouville</p>
                 </div>
             </div>
 
-            <!-- Documentaires INA -->
+            <!-- Formation internationale -->
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="ortc">
+                    <div class="timeline-year">2018</div>
+                    <h3>🌍 Formateur aux Comores</h3>
+                    <p>Formation à la réalisation d'habillage radio à Grande Comores (ORTC)</p>
+                </div>
+            </div>
+
+            <!-- Documentaires INA 
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="ina">
                     <div class="timeline-year">2019</div>
                     <h3>📺 INA</h3>
                     <p>Composition musicale pour documentaires : "L'hôtel de la Marine", "Léonard de Vinci : Un homme en mouvement"</p>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Engagement écologique -->
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="ecopreneur">
                     <div class="timeline-year">Depuis 2019</div>
                     <h3>♻️ Écopreneur & Formateur</h3>
                     <p>Pacte pour la Transition Écologique - Sensibilisation à la vie du sol - Compostage</p>
                 </div>
             </div>
 
-            <!-- Areas Assurances -->
+            <!-- Areas Assurances 
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="areas">
                     <div class="timeline-year">Depuis 2020</div>
                     <h3>🎥 Aréas Assurances</h3>
                     <p>Réalisation audio/vidéo de tutoriaux internes</p>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Animation Akissi -->
+            <!-- Animation Akissi 
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="akissi">
                     <div class="timeline-year">2021</div>
                     <h3>🎬 Ellipsanime Productions</h3>
                     <p>Composition musicale pour la série d'animés "Akissi"</p>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- FNAMM -->
+            <!-- FNAMM 
             <div class="timeline-item">
-                <div class="timeline-content">
+                <div class="timeline-content" data-parcours-id="fnamm">
                     <div class="timeline-year">2023</div>
                     <h3>🎬 FNAMM</h3>
                     <p>Réalisation de tutoriaux sur la composition musicale à l'image</p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 
@@ -709,14 +891,14 @@
     <section id="realisations">
         <h2>Réalisations</h2>
 
-        <!-- PRODUCTIONS SONORES -->
+        <!-- PRODUCTIONS -->
         <div class="category-section">
-            <h3 class="category-title">🎶 Productions Musicales</h3>
+            <h3 class="category-title">🎶 Productions</h3>
             <div class="portfolio-grid">
 
                 <div class="portfolio-card" onclick="window.location.href='detail.html?project=musique'">
                     <div class="portfolio-image">
-                        <img src="medias/AlbumJarre.jpg" alt="Musiques">
+                        <img src="medias/MusicAlbumJarre.jpg" alt="Musiques">
                     </div>
                     <div class="portfolio-info">
                         <h3>Musique</h3>
@@ -753,13 +935,13 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=logiciel'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=formation'">
                     <div class="portfolio-image">
-                        <img src="medias/Orthochanson1.jpg" alt="Logiciels">
+                        <img src="medias/FormationOrthochansons.jpg" alt="Formation">
                     </div>
                     <div class="portfolio-info">
-                        <h3>Les Orthochansons</h3>
-                        <p>Apprendre l'orthographe par la musique</p>
+                        <h3>Formation</h3>
+                        <p>Aider à l'apprentissage</p>
                         <div class="portfolio-tags">
                             <span class="tag">Pédagogie</span>
                         </div>
@@ -1200,7 +1382,7 @@
     <section id="contact">
         <h2>Contact</h2>
         <div class="contact-info">
-            <p>📧 <a href="mailto:contact@raphaelgarraud.com" style="color: var(--primary); text-decoration: none; font-weight: 600;"><span class="__cf_email__" data-cfemail="contact@raphaelgarraud.com">contact@raphaelgarraud.com</span></a></p>
+            <p>📧 <a href="/cdn-cgi/l/email-protection#14777b7a60757760546675647c757178737566667561703a777b79" style="color: var(--primary); text-decoration: none; font-weight: 600;"><span class="__cf_email__" data-cfemail="contact@raphaelgarraud.com"><span class="__cf_email__" data-cfemail="7a1915140e1b190e3a081b0a121b1f161d1b08081b0f1e54191517">[email&#160;protected]</span></span></a></p>
             <p>📱 06 62 81 09 60</p>
             <p style="margin-top: 2rem; font-style: italic; color: var(--secondary);">Disponible pour projets collaboratifs, formations, compositions musicales et partage de compétences</p>
         </div>
@@ -1211,20 +1393,335 @@
         <p>&copy; 2026 - Portfolio créé avec passion</p>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+
+
+    <!-- Modal Parcours -->
+    <div id="parcoursModal" class="parcours-modal">
+        <div class="parcours-modal-content">
+            <span class="parcours-modal-close">&times;</span>
+            <div class="parcours-modal-gallery">
+                <button class="gallery-nav prev" onclick="changeGalleryImage(-1)">&#10094;</button>
+                <img id="parcoursModalImage" src="" alt="Parcours" class="parcours-modal-image">
+                <button class="gallery-nav next" onclick="changeGalleryImage(1)">&#10095;</button>
+            </div>
+            <div id="galleryDots" class="gallery-dots"></div>
+            <div class="parcours-modal-year" id="parcoursModalYear"></div>
+            <h2 class="parcours-modal-title" id="parcoursModalTitle"></h2>
+            <p class="parcours-modal-description" id="parcoursModalDescription"></p>
+            <div id="parcoursModalLinkContainer">
+                <a id="parcoursModalLink" href="#" target="_blank" class="parcours-modal-link">En savoir plus</a>
+            </div>
+        </div>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
+    <script>
+        // Données du parcours avec images et liens
+        const parcoursData = {
+            'conservatoire': {
+                year: '1980-1993',
+                title: '🎵 Formation musicale',
+                description: 'Conservatoire de Nantes - Piano classique, jazz, variété',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: 'https://www.conservatoirenantes.fr'
+            },
+            'pianiste': {
+                year: '1990-1994',
+                title: '🎹 Pianiste',
+                description: 'Piano-bars dans la région nantaise - Premiers pas professionnels',
+                images: ['medias/Portrait_1992_Pianiste.jpg', 'medias/Portrait_1991_Musicien.jpg', 'medias/Portrait_1990_Musicien.jpg'],
+                link: ''
+            },
+            'square': {
+                year: '1994-1995',
+                title: '🎙️ Square Prod',
+                description: 'Prise de son, réalisation et mixage de bandes-annonces - Remix (Skoops, Black People, Alabina)',
+                images: ['medias/SquareProd.jpg'],
+                link: ''
+            },
+            'europe1': {
+                year: '1995-1996',
+                title: '📻 Europe 1',
+                description: 'Service auto-promotion et habillage sonore de l\'antenne',
+                images: ['medias/Europe1.jpg'],
+                link: 'https://www.europe1.fr'
+            },
+            'graffiti': {
+                year: '1996-1999',
+                title: '🎬 Graffiti 5&21',
+                description: 'Réalisation publicitaire radio',
+                images: ['medias/Graffiti.jpg'],
+                link: ''
+            },
+            'trafalgar': {
+                year: '1999-2003',
+                title: '📢 Trafalgar Créations',
+                description: 'Directeur associé - Écriture et production de spots radio',
+                images: ['medias/Trafalgar.jpg'],
+                link: ''
+            },
+            'amplitudes': {
+                year: '2003-2008',
+                title: '💾 Amplitudes',
+                description: 'production de programmes d\'e-learning',
+                images: ['medias/FormationAmplitudes.jpg'],
+                link: 'https://www.jeanmicheljarre.com'
+            },
+            'chezjean': {
+                year: '2003-2013',
+                title: '🎧 Chez Jean',
+                description: 'Réalisation de pubs, habillages (Radio, TV, Cinéma) et de multiples albums',
+                images: ['medias/ChezJean.jpg'],
+                link: ''
+            },
+            'bibi': {
+                year: '2007-2008',
+                title: '🎹 Bibi Tanga et le Professeur Inlassable',
+                description: 'Claviers - Tournée de 40 dates - Albums "Yellow Gauze"',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'infa': {
+                year: '2009-2010',
+                title: '🎓 Formateur Technicien du son',
+                description: 'Institut National de la Formation Appliquée',
+                images: ['medias/FormationINFA.jpg'],
+                link: ''
+            },
+            //'ubu': {
+              //  year: '2011',
+                //title: '🎭 Ubu Roi',
+            //    description: 'Co-composition et ambiances sonores - Mise en scène Pierre Pradinas',
+              //  images: ['medias/Portrait_Inge_son_07.jpg'],
+                //link: ''
+            //},
+            'kingarthur': {
+                year: '2013',
+                title: '👑 King Arthur',
+                description: 'Création d\'entreprise - Production musicale et sonore',
+                images: ['medias/KingArthur.jpg'],
+                link: ''
+            },
+            //'lito': {
+              //  year: '2013-2017',
+                //title: '📚 Éditions LITO',
+            //    description: 'Production de plus de 30 livres de comptines pour enfants',
+              //  images: ['medias/Portrait_Inge_son_07.jpg'],
+                //link: 'https://www.editionslito.com'
+            //},
+            //'albums': {
+            //    year: '2014-2018',
+            //    title: '🎼 Albums solo',
+            //    description: '"Flying World" (2014), "En Trance" (2016), "After the Storm" (2017), "Movies" (2018)',
+            //    images: ['medias/AlbumMovies.jpg'],
+            //    link: 'https://raphaelgarraud.bandcamp.com'
+            //},
+            'ebc': {
+                year: '2015',
+                title: '🌍 Formateur en Éthiopie',
+                description: 'Formation à la réalisation d\'habillage radio en Éthiopie (EBC)',
+                images: ['medias/FormationEBC.jpg'],
+                link: ''
+            },
+            'ortc': {
+                year: '2018',
+                title: '🌍 Formateur aux Comores',
+                description: 'Formation à la réalisation d\'habillage radio à Grande Comores (ORTC)',
+                images: ['medias/FormationORTC.jpg'],
+                link: ''
+            },
+            'presidentielle': {
+                year: '2017',
+                title: '🗳️ Campagne Présidentielle',
+                description: 'Direction artistique de la communication d\'un candidat',
+                images: ['medias/Portrait_Inge_son_07.jpg'],
+                link: ''
+            },
+            'coachs': {
+                year: 'Depuis 2017',
+                title: '🎤 Les Coachs Associés',
+                description: 'Formateur à la voix off en studio professionnel',
+                images: ['medias/FormationCoachs.jpg'],
+                link: 'https://lescoachsassocies.com'
+            },
+            'jardineurs': {
+                year: 'Depuis 2018',
+                title: '🌱 Les Jardineurs Sartrouvillois',
+                description: 'Création d\'association - Valorisation d\'une friche industrielle en "Sol Majeur", la Maison de l\'Écologie de Sartrouville',
+                images: [
+                    'medias/LesJardineurs.jpg',
+                    'medias/Systeme_aquaponique_banc.jpg',
+                    'medias/Poulailler_exterieur.jpg'
+                ],
+                link: 'https://lesjardineurs.fr'
+            },
+            //'ina': {
+              //  year: '2019',
+                //title: '📺 INA',
+            //    description: 'Composition musicale pour documentaires : "L\'hôtel de la Marine", "Léonard de Vinci : Un homme en mouvement"',
+              //  images: ['medias/Portrait_Inge_son_07.jpg'],
+                //link: 'https://www.ina.fr'
+            //},
+            'ecopreneur': {
+                year: 'Depuis 2019',
+                title: '♻️ Écopreneur & Formateur',
+                description: 'Pacte pour la Transition Écologique - Sensibilisation à la vie du sol - Compostage',
+                images: ['medias/Compost_atelier.jpg'],
+                link: ''
+            }
+            //'areas': {
+              //  year: 'Depuis 2020',
+                //title: '🎥 Aréas Assurances',
+            //    description: 'Réalisation audio/vidéo de tutoriaux internes',
+              //  images: ['medias/Portrait_Inge_son_07.jpg'],
+                //link: ''
+            //},
+            //'akissi': {
+              //  year: '2021',
+                //title: '🎬 Ellipsanime Productions',
+            //    description: 'Composition musicale pour la série d\'animés "Akissi"',
+              //  images: ['medias/Portrait_Inge_son_07.jpg'],
+                //link: ''
+            //},
+            //'fnamm': {
+              //  year: '2023',
+                //title: '🎬 FNAMM',
+            //    description: 'Formation à la composition musicale à l\'image',
+              //  images: ['medias/Portrait_Inge_son_07.jpg'],
+                //link: 'https://www.fnamm.com'
+            //}
+        };
+
+        let currentGalleryIndex = 0;
+        let currentGalleryImages = [];
+
+        // Fonction pour changer l'image de la galerie
+        function changeGalleryImage(direction) {
+            currentGalleryIndex += direction;
+            
+            if (currentGalleryIndex < 0) {
+                currentGalleryIndex = currentGalleryImages.length - 1;
+            } else if (currentGalleryIndex >= currentGalleryImages.length) {
+                currentGalleryIndex = 0;
+            }
+            
+            updateGalleryDisplay();
+        }
+
+        // Fonction pour aller à une image spécifique
+        function goToGalleryImage(index) {
+            currentGalleryIndex = index;
+            updateGalleryDisplay();
+        }
+
+        // Mettre à jour l'affichage de la galerie
+        function updateGalleryDisplay() {
+            document.getElementById('parcoursModalImage').src = currentGalleryImages[currentGalleryIndex];
+            
+            // Mettre à jour les dots
+            const dots = document.querySelectorAll('.gallery-dot');
+            dots.forEach((dot, index) => {
+                if (index === currentGalleryIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // Fonction pour ouvrir la modale du parcours
+        function openParcoursModal(parcoursId) {
+            const data = parcoursData[parcoursId];
+            if (!data) return;
+
+            const modal = document.getElementById('parcoursModal');
+            document.getElementById('parcoursModalYear').textContent = data.year;
+            document.getElementById('parcoursModalTitle').textContent = data.title;
+            document.getElementById('parcoursModalDescription').textContent = data.description;
+            
+            // Gérer les images (simple ou galerie)
+            currentGalleryImages = data.images || [data.image];
+            currentGalleryIndex = 0;
+            document.getElementById('parcoursModalImage').src = currentGalleryImages[0];
+            
+            // Afficher/masquer les contrôles de galerie
+            const prevBtn = document.querySelector('.gallery-nav.prev');
+            const nextBtn = document.querySelector('.gallery-nav.next');
+            const dotsContainer = document.getElementById('galleryDots');
+            
+            if (currentGalleryImages.length > 1) {
+                // Afficher les boutons de navigation
+                prevBtn.classList.add('active');
+                nextBtn.classList.add('active');
+                
+                // Créer les dots
+                dotsContainer.innerHTML = '';
+                currentGalleryImages.forEach((img, index) => {
+                    const dot = document.createElement('span');
+                    dot.className = 'gallery-dot' + (index === 0 ? ' active' : '');
+                    dot.onclick = () => goToGalleryImage(index);
+                    dotsContainer.appendChild(dot);
+                });
+                dotsContainer.classList.add('active');
+            } else {
+                // Masquer les contrôles pour une seule image
+                prevBtn.classList.remove('active');
+                nextBtn.classList.remove('active');
+                dotsContainer.classList.remove('active');
+            }
+            
+            const linkContainer = document.getElementById('parcoursModalLinkContainer');
+            if (data.link) {
+                document.getElementById('parcoursModalLink').href = data.link;
+                linkContainer.style.display = 'block';
+            } else {
+                linkContainer.style.display = 'none';
+            }
+            
+            modal.style.display = 'block';
+        }
+
+        // Fonction pour fermer la modale
+        function closeParcoursModal() {
+            document.getElementById('parcoursModal').style.display = 'none';
+        }
+
+        // Initialiser les événements au chargement
+        window.addEventListener('DOMContentLoaded', function() {
+            // Ajouter les écouteurs d'événements sur les cartes du parcours
+            document.querySelectorAll('.timeline-content').forEach(card => {
+                card.addEventListener('click', function() {
+                    const parcoursId = this.getAttribute('data-parcours-id');
+                    if (parcoursId) {
+                        openParcoursModal(parcoursId);
+                    }
+                });
+            });
+            
+            // Fermer en cliquant sur le X
+            document.querySelector('.parcours-modal-close').addEventListener('click', closeParcoursModal);
+            
+            // Fermer en cliquant en dehors de la modale
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('parcoursModal');
+                if (event.target === modal) {
+                    closeParcoursModal();
+                }
+            });
+        });
+
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
-
-        // Animation au scroll
-        const observerOption
+    </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+x<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -192,6 +192,29 @@
             font-size: 0.85em;
         }
 
+        .media-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(44, 95, 45, 0.95);
+            color: var(--white);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
         /* Lightbox */
         .lightbox {
             display: none;
@@ -214,14 +237,65 @@
             position: relative;
             max-width: 90%;
             max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lightbox-media-container {
+            max-width: 100%;
+            max-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .lightbox-image {
             max-width: 100%;
-            max-height: 90vh;
+            max-height: 85vh;
             object-fit: contain;
             border-radius: 10px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-video {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-audio-player {
+            width: 100%;
+            max-width: 600px;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .lightbox-audio-cover {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.3);
+        }
+
+        .lightbox-audio-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .lightbox-audio-player audio {
+            width: 100%;
+            border-radius: 8px;
+            outline: none;
         }
 
         .lightbox-close {
@@ -283,15 +357,16 @@
 
         .lightbox-counter {
             position: absolute;
-            bottom: 20px;
+            top: 3px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--white);
             color: var(--dark);
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 25px;
             font-weight: 600;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 100;
         }
 
         .no-images {
@@ -378,7 +453,12 @@
         <div class="lightbox-content">
             <button class="lightbox-close" onclick="closeLightbox()">×</button>
             <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">‹</button>
-            <img src="" alt="" class="lightbox-image" id="lightboxImage">
+            
+            <div class="lightbox-media-container" id="lightboxMediaContainer">
+                <!-- Image par défaut -->
+                <img src="" alt="" class="lightbox-image" id="lightboxImage">
+            </div>
+            
             <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">›</button>
             <div class="lightbox-counter" id="lightboxCounter"></div>
         </div>
@@ -397,25 +477,78 @@
                 title: 'Albums',
                 description: 'Participation à la réalisation d\'albums, de singles et de remixes.',
                 tags: ['Musique', 'Album'],
-                images: ['medias/AlbumJarre.jpg', 'medias/AlbumFlyingWorld.jpg', 'medias/AlbumEnTrance.jpg', 'medias/AlbumAfterTheStorm.jpg', 'medias/AlbumMovies.jpg', 'medias/AlbumYellowGauze.jpg', 'medias/AlbumNobodys.jpg', 'medias/AlbumLink.jpg', 'medias/AlbumRedNose.jpg', 'medias/AlbumOneToo.jpg', 'medias/AlbumZeroToHero.jpg', 'medias/AlbumTwilightZoners.jpg', 'medias/SingleKeita.jpg', 'medias/SingleRewind.jpg', 'medias/SingleSerge.jpg', 'medias/SingleAkileus.jpg', 'medias/SingleHommageGuru.jpg', 'medias/RemixSkoops.jpg', 'medias/RemixBlackPeople.jpg', 'medias/RemixLetMotiv.jpg', 'medias/RemixAlabina.jpg', 'medias/RemixMother.jpg', 'medias/RemixWete.jpg', 'medias/RemixBaker.jpg']
+                items: [
+                    { image: 'medias/MusicAlbumJarre.jpg', media: { type: 'audio', src: 'medias/MusicAlbumJarre.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumFlyingWorld.jpg', media: { type: 'audio', src: 'medias/MusicAlbumFlyingWorld.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumEnTrance.jpg', media: { type: 'audio', src: 'medias/MusicAlbumEnTrance.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumAfterTheStorm.jpg', media: { type: 'audio', src: 'medias/MusicAlbumAfterTheStorm.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumMovies.jpg', media: { type: 'audio', src: 'medias/MusicAlbumMovies.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumYellowGauze.jpg', media: { type: 'audio', src: 'medias/MusicAlbumYellowGauze.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumRewind.jpg', media: { type: 'audio', src: 'medias/MusicAlbumRewind.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumLink.jpg', media: { type: 'audio', src: 'medias/MusicAlbumLink.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumRedNose.jpg', media: { type: 'audio', src: 'medias/MusicAlbumRedNose.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumOneToo.jpg', media: { type: 'audio', src: 'medias/MusicAlbumOneToo.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumZeroToHero.jpg', media: { type: 'audio', src: 'medias/MusicAlbumZeroToHero.mp3', title: 'EExtrait' } },
+                    { image: 'medias/MusicAlbumPiment.jpg', media: { type: 'audio', src: 'medias/MusicAlbumPiment.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumNow.jpg', media: { type: 'audio', src: 'medias/MusicAlbumNow.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumRevoluzion.jpg', media: { type: 'audio', src: 'medias/MusicAlbumRevoluzion.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicSingleSerge.jpg', media: { type: 'audio', src: 'medias/MusicSingleSerge.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicSingleAkileus.jpg', media: { type: 'audio', src: 'medias/MusicSingleAkileus.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumBlackSheep.jpg', media: { type: 'audio', src: 'medias/MusicAlbumBlackSheep.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicRemixSkoops.jpg', media: { type: 'audio', src: 'medias/MusicRemixSkoops.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicRemixBlackPeople.jpg', media: { type: 'audio', src: 'medias/MusicRemixBlackPeople.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicRemixAlabina.jpg', media: { type: 'audio', src: 'medias/MusicRemixAlabina.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicRemixMother.jpg', media: { type: 'audio', src: 'medias/MusicRemixMother.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicRemixWete.jpg', media: { type: 'audio', src: 'medias/MusicRemixWete.mp3', title: 'EExtrait' } },
+                    { image: 'medias/MusicRemixBaker.jpg', media: { type: 'audio', src: 'medias/MusicRemixBaker.mp3', title: 'Extrait' } },
+                    { image: 'medias/MusicAlbumShambolic.jpg', media: { type: 'audio', src: 'medias/MusicAlbumShambolic.mp3', title: 'Extrait' } }
+                ]
             },
             'cinetheatre': {
                 title: 'Cinéma TV Théâtre',
                 description: 'Musique pour écran ou pour la scène',
                 tags: ['Musique', 'Cinéma', 'TV', 'Théâtre'],
-                images: ['medias/FilmTextiles.jpg', 'medias/TheatreUbuRoi.jpg', 'medias/TheatrePrive.jpg', 'medias/TheatrePlacard.jpg', 'medias/DocuHotelMarine.jpg', 'medias/DocuLeonard.jpg']
+                items: [
+                    { image: 'medias/FilmTextiles.jpg' },
+                    { image: 'medias/TheatreUbuRoi.jpg' },
+                    { image: 'medias/TVAkissi.jpg' },
+                    { image: 'medias/TheatrePrive.jpg' },
+                    { image: 'medias/TheatrePlacard.jpg' },
+                    { image: 'medias/DocuHotelMarine.jpg' },
+                    { image: 'medias/DocuLeonard.jpg' }
+                ]
             },
             'livre': {
                 title: 'Livre pour enfants',
                 description: 'Comptines pour les petits',
                 tags: ['Musique', 'Livre', 'Enfants'],
-                images: ['medias/Livre30Chansons.jpg', 'medias/LivreLaFontaine.jpg', 'medias/LivrePrincesses.jpg', 'medias/LivreToutPetits.jpg', 'medias/Livre20chansons.jpg', 'medias/LivreGestes.jpg', 'medias/LivreAnimaux.jpg', 'medias/LivreNoel.jpg']
+                items: [
+                    { image: 'medias/Livre30Chansons.jpg', media: { type: 'audio', src: 'medias/Livre30chansons.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivreLaFontaine.jpg', media: { type: 'audio', src: 'medias/LivreLaFontaine.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivreToutPetits.jpg', media: { type: 'audio', src: 'medias/LivreToutPetits.mp3', title: 'Extrait' } },
+                    { image: 'medias/Livre20chansons.jpg', media: { type: 'audio', src: 'medias/Livre20chansons.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivreGestes.jpg', media: { type: 'audio', src: 'medias/LivreGestes.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivreAnimaux.jpg', media: { type: 'audio', src: 'medias/LivreAnimaux.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivreNoel.jpg', media: { type: 'audio', src: 'medias/LivreNoel.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivreAventuriers.jpg', media: { type: 'audio', src: 'medias/LivreAventuriers.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivreJazz.jpg', media: { type: 'audio', src: 'medias/LivreJazz.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivreRock.jpeg', media: { type: 'audio', src: 'medias/LivreRock.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivreMimer.jpg', media: { type: 'audio', src: 'medias/LivreMimer.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivrePourRire.jpg', media: { type: 'audio', src: 'medias/LivrePourRire.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivrePyjama.jpg', media: { type: 'audio', src: 'medias/LivrePyjama.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivreRigolote.jpg', media: { type: 'audio', src: 'medias/LivreRigolote.mp3', title: 'Extrait' } },
+                    { image: 'medias/LivreRondes.jpg', media: { type: 'audio', src: 'medias/LivreRondes.mp3', title: 'Extrait' } }
+                ]
             },
-            'logiciel': {
-                title: 'Les Orthochansons',
-                description: 'Pour apprendre l\'orthographe en s\'amusant',
+            'formation': {
+                title: 'Formation',
+                description: 'Aider à apprendre',
                 tags: ['Musique', 'Logiciel', 'Enfants'],
-                images: ['medias/Orthochanson1.jpg','medias/Orthochanson2.jpg','medias/Orthochanson3.jpg','medias/Orthochanson4.jpg','medias/Orthochanson5.jpg','medias/Orthochanson6.jpg','medias/Orthochanson7.jpg','medias/Orthochanson8.jpg','medias/Orthochanson9.jpg']
+                items: [
+                    { image: 'medias/FormationOrthochansons.jpg', media: { type: 'video', src: 'medias/FormationOrthochansons.mp4', title: 'Apprentissage de l\'orthographe à l\'aide de chansons' } },
+                    { image: 'medias/FormationFNAMM.jpg', media: { type: 'video', src: 'medias/FormationFNAMM.mp4', title: 'Formation en ligne de la composition musicale à l\'image' } },
+                    {image: 'medias/FormationAréas.jpg', media: { type: 'video', src: 'medias/FormationAréas.mp4', title: 'Tutoriaux internes d\'entreprise' } }
+                ]
             },
             'salon': {
                 title: 'Agrandissement d\'un salon',
@@ -565,7 +698,7 @@
                 title: 'Créations naturelles',
                 description: 'Œuvres naturelles personnalisées.',
                 tags: ['Artisanat', 'Personnalisé', 'Art'],
-                images: ['medias/CreationNature_WestCoast2025.jpg', 'medias/CreationNature_CoquillagePlumes.jpg', 'medias/CreationNature_Bateau.jpg', 'medias/CreationNature_Passiflore.jpg', 'medias/CreationNature_Jardineurs.jpg']
+                images: ['medias/CreationNature_WestCoast2025.jpg', 'medias/CreationNature_CoquillagePlumes.jpg', 'medias/CreationNature_Bateau.jpg', 'medias/CreationNature_Passiflore.jpg', 'medias/CreationNature_Jardineurs.jpg', 'medias/CreationNature_Boisflotté.jpg']
             },
             'animaux': {
                 title: 'Animaux',
@@ -607,7 +740,7 @@
 
         // Variables pour le lightbox
         let currentImageIndex = 0;
-        let currentImages = [];
+        let currentItems = [];
 
         // Récupérer le paramètre de l'URL
         function getProjectFromUrl() {
@@ -639,32 +772,43 @@
             // Mettre à jour la description
             document.getElementById('projectDescription').textContent = project.description;
 
-            // Charger les images
-            loadGallery(project.images);
+            // Charger la galerie (nouveau format avec items ou ancien format avec images)
+            if (project.items) {
+                loadGalleryWithMedia(project.items);
+            } else if (project.images) {
+                // Rétrocompatibilité avec l'ancien format
+                const items = project.images.map(img => ({ image: img }));
+                loadGalleryWithMedia(items);
+            }
         }
 
-        // Charger la galerie d'images
-        function loadGallery(images) {
+        // Charger la galerie avec support médias
+        function loadGalleryWithMedia(items) {
             const galleryContainer = document.getElementById('imageGallery');
-            currentImages = images;
+            currentItems = items;
 
-            if (images.length === 0) {
+            if (items.length === 0) {
                 galleryContainer.innerHTML = '<div class="no-images">Aucune image disponible pour ce projet</div>';
                 return;
             }
 
-            galleryContainer.innerHTML = images.map((img, index) => `
-                <div class="gallery-item" onclick="openLightbox(${index})">
-                    <img src="${img}" alt="Image ${index + 1}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Crect fill=%22%23ddd%22 width=%22300%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22%3EImage non disponible%3C/text%3E%3C/svg%3E'">
-                    <div class="gallery-item-number">Photo ${index + 1}</div>
-                </div>
-            `).join('');
+            galleryContainer.innerHTML = items.map((item, index) => {
+                const hasMedia = item.media && item.media.src;
+                const mediaIcon = hasMedia ? (item.media.type === 'audio' ? '🎵' : '🎬') : '';
+                
+                return `
+                    <div class="gallery-item ${hasMedia ? 'has-media' : ''}" onclick="openLightbox(${index})">
+                        <img src="${item.image}" alt="Image ${index + 1}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Crect fill=%22%23ddd%22 width=%22300%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22%3EImage non disponible%3C/text%3E%3C/svg%3E'">
+                        ${hasMedia ? `<div class="media-indicator">${mediaIcon}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
         }
 
         // Ouvrir le lightbox
         function openLightbox(index) {
             currentImageIndex = index;
-            updateLightboxImage();
+            updateLightboxContent();
             document.getElementById('lightbox').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -673,22 +817,61 @@
         function closeLightbox() {
             document.getElementById('lightbox').classList.remove('active');
             document.body.style.overflow = 'auto';
+            
+            // Arrêter les médias en cours
+            const container = document.getElementById('lightboxMediaContainer');
+            const audio = container.querySelector('audio');
+            const video = container.querySelector('video');
+            if (audio) audio.pause();
+            if (video) video.pause();
         }
 
         // Naviguer dans le lightbox
         function navigateLightbox(direction) {
             currentImageIndex += direction;
-            if (currentImageIndex < 0) currentImageIndex = currentImages.length - 1;
-            if (currentImageIndex >= currentImages.length) currentImageIndex = 0;
-            updateLightboxImage();
+            if (currentImageIndex < 0) currentImageIndex = currentItems.length - 1;
+            if (currentImageIndex >= currentItems.length) currentImageIndex = 0;
+            updateLightboxContent();
         }
 
-        // Mettre à jour l'image du lightbox
-        function updateLightboxImage() {
-            const img = document.getElementById('lightboxImage');
-            img.src = '' + currentImages[currentImageIndex];
+        // Mettre à jour le contenu du lightbox
+        function updateLightboxContent() {
+            const item = currentItems[currentImageIndex];
+            const container = document.getElementById('lightboxMediaContainer');
+            
+            // Mettre à jour le compteur
             document.getElementById('lightboxCounter').textContent = 
-                `${currentImageIndex + 1} / ${currentImages.length}`;
+                `${currentImageIndex + 1} / ${currentItems.length}`;
+            
+            // Si l'item a un média associé
+            if (item.media && item.media.src) {
+                if (item.media.type === 'audio') {
+                    // Créer un lecteur audio avec la jaquette
+                    container.innerHTML = `
+                        <div class="lightbox-audio-player">
+                            <img src="${item.image}" alt="${item.media.title}" class="lightbox-audio-cover">
+                            <div class="lightbox-audio-title">${item.media.title}</div>
+                            <audio controls autoplay preload="metadata">
+                                <source src="${item.media.src}" type="audio/mpeg">
+                                Votre navigateur ne supporte pas l'élément audio.
+                            </audio>
+                        </div>
+                    `;
+                } else if (item.media.type === 'video') {
+                    // Créer un lecteur vidéo
+                    container.innerHTML = `
+                        <video controls autoplay preload="metadata" class="lightbox-video">
+                            <source src="${item.media.src}" type="video/mp4">
+                            Votre navigateur ne supporte pas l'élément vidéo.
+                        </video>
+                    `;
+                }
+            } else {
+                // Afficher juste l'image
+                container.innerHTML = `
+                    <img src="${item.image}" alt="Image ${currentImageIndex + 1}" class="lightbox-image" id="lightboxImage">
+                `;
+            }
         }
 
         // Fermer avec Escape
