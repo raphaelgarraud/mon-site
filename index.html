@@ -120,6 +120,7 @@
                 box-shadow: -5px 0 15px rgba(0,0,0,0.1);
                 transition: right 0.3s ease;
                 overflow-y: auto;
+                z-index: 2000; /* Ajouté pour passer devant les cartes de portfolio */
             }
 
             nav ul.active {
@@ -176,6 +177,13 @@
         .hero p {
             font-size: 1.3rem;
             opacity: 0.9;
+        }
+
+        /* Ajoutez ceci vers la ligne 180, près des styles de section */
+        #portraits {
+            padding-top: 2rem; 
+            position: relative;
+            z-index: 1; /* On s'assure qu'il reste sous le menu */
         }
 
         /* Sections */
@@ -2053,5 +2061,8 @@
             }
         })();
     </script>
+
+
+
 </body>
 </html>
