@@ -69,6 +69,96 @@
             color: var(--primary);
         }
 
+        /* Menu Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--dark);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Navigation mobile */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                max-width: 300px;
+                background: var(--white);
+                flex-direction: column;
+                gap: 0;
+                padding: 80px 0 20px;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                transition: right 0.3s ease;
+                overflow-y: auto;
+            }
+
+            nav ul.active {
+                right: 0;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            nav ul a {
+                display: block;
+                padding: 1rem 2rem;
+                border-bottom: 1px solid var(--light);
+                transition: all 0.3s ease;
+            }
+
+            nav ul a:hover {
+                background: var(--light);
+                padding-left: 2.5rem;
+            }
+
+            /* Overlay pour fermer le menu en cliquant à côté */
+            .menu-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+            .menu-overlay.active {
+                display: block;
+            }
+        }
+
         /* Hero */
         .hero {
             background: var(--white);
@@ -342,11 +432,6 @@
         }
 
         @media (max-width: 768px) {
-            nav ul {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
             .hero h1 {
                 font-size: 2rem;
             }
@@ -384,6 +469,36 @@
 
             .hero h1 {
                 font-size: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            nav h1 {
+                font-size: 1.2rem;
+            }
+
+            section h2 {
+                font-size: 1.8rem;
+            }
+
+            .parcours-modal-content {
+                margin: 2% auto;
+                padding: 1.5rem;
+                width: 95%;
+            }
+
+            .parcours-modal-close {
+                font-size: 30px;
+            }
+
+            .timeline-item {
+                margin-left: 1rem !important;
+            }
+
+            nav ul {
+                width: 80%;
             }
         }
 
@@ -641,6 +756,24 @@
             box-shadow: 0 2px 8px rgba(44, 95, 45, 0.3);
         }
 
+        /* Améliorations mobile pour les médias */
+        @media (max-width: 768px) {
+            .media-nav-btn {
+                padding: 0.6rem 1rem;
+                font-size: 1rem;
+                min-width: 70px;
+            }
+
+            .parcours-modal-video-player,
+            .parcours-modal-audio-player {
+                width: 100%;
+            }
+
+            .parcours-modal-media-title {
+                font-size: 0.95rem;
+            }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -663,15 +796,21 @@
     <header>
         <nav>
             <h1>Raphaël Garraud</h1>
-            <ul>
-                <li><a href="#accueil">Accueil</a></li>
-                <li><a href="#apropos">À propos</a></li>
-                <li><a href="#competences">Compétences</a></li>
-                <li><a href="#parcours">Parcours</a></li>
-                <li><a href="#realisations">Réalisations</a></li>
-                <li><a href="#contact">Contact</a></li>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="navMenu">
+                <li><a href="#accueil" class="nav-link">Accueil</a></li>
+                <li><a href="#apropos" class="nav-link">À propos</a></li>
+                <li><a href="#competences" class="nav-link">Compétences</a></li>
+                <li><a href="#parcours" class="nav-link">Parcours</a></li>
+                <li><a href="#realisations" class="nav-link">Réalisations</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
         </nav>
+        <div class="menu-overlay" id="menuOverlay"></div>
     </header>
 
     <!-- Hero -->
@@ -683,7 +822,7 @@
 
     <!-- PORTRAITS-->
     <section id="portraits">
-        <div class="portfolio-card" onclick="window.location.href='detail.html?project=portraits'">
+        <div class="portfolio-card" onclick="window.location.href='detail.html?project=portraits&category=portraits'">
             <div class="portfolio-image">
                 <img src="medias/Portrait_KingArthur.jpg" alt="Portraits">
             </div>
@@ -696,14 +835,14 @@
         <div class="about-content">
             <div class="about-text">
                 <h3>Qui suis-je ?</h3>
-                <p>Né en 1974, père de 3 enfants, je suis <strong>un créateur polyvalent passionné</strong> par la musique, l'artisanat et l'écologie. Mon parcours atypique m'a conduit du piano classique au Conservatoire de Nantes jusqu'à la composition pour Jean-Michel Jarre, en passant par la réalisation publicitaire, la production musicale, l'artisanat et l'engagement environnemental.</p>
-                <p>Basé à Sartrouville, je parle français et anglais, et je suis titulaire des permis B, fluvial et côtier. Mon expertise technique couvre aussi bien les studios d'enregistrement professionnels que les outils de création vidéo, la gestion réseau mais aussi la menuiserie, la plomberie, l'électricité et bien d'autre encore !</p>
+                <p>Né en 1974, père de 3 enfants, je suis <strong>un créateur polyvalent passionné</strong> par la musique, l'artisanat et l'écologie. Mon parcours atypique m'a conduit du piano classique au Conservatoire de Nantes jusqu'à la composition pour Jean-Michel Jarre, en passant par la réalisation publicitaire, la production d'infographies, la construction de meubles et l'engagement environnemental.</p>
+                <p>Basé à Sartrouville, je parle français et anglais, et je suis titulaire des permis B, fluvial et côtier. Mon expertise technique couvre aussi bien les studios d'enregistrement professionnels que les outils de création vidéo, la gestion réseau mais aussi la menuiserie, la plomberie, l'électricité et bien d'autres domaines encore !</p>
             </div>
             <div class="about-text">
                 <h3>Ma Philosophie</h3>
                 <p>Je crois profondément en <strong>l'apprentissage continu</strong> et au <strong>partage des connaissances.</strong></p>
-                <p><strong>Chaque projet est une aventure</strong> qui combine créativité, technique et respect de l'environnement. De la formation technicien du son (INFA), production musicale à l'image (FNAMM), voix-off (Les Coachs Associés) aux interventions internationales (Éthiopie, Comores), je mets mon expérience au service de projets porteurs de sens.</p>
-                <p>Mon engagement dans le <strong>Pacte pour la Transition Écologique</strong> et la création de l'éco-lieu <strong>"Sol Majeur"</strong> avec l'association Les Jardineurs Sartrouvillois reflètent mes valeurs.</p>
+                <p><strong>Chaque projet est une nouvelle aventure</strong> qui combine créativité et technique. De la formation de techniciens du son, de production musicale à l'image, de voix-off aux interventions internationales, je mets mon expérience au service de projets porteurs de sens.</p>
+                <p>Mon engagement dans le <strong>Pacte pour la Transition Écologique</strong> et la création de la Maison de l'Écologie <strong>"Sol Majeur"</strong> avec l'association Les Jardineurs reflètent mes valeurs environnementales.</p>
             </div>
         </div>
     </section>
@@ -718,7 +857,7 @@
                 <h3>Musique & Son</h3>
                 <p>
                 <!--    <strong>Compositeur, Musicien, Ingénieur du son</strong><br> -->
-                Piano classique (Conservatoire), composition pour l'image (INA, Ellipsanime), albums (Jean-Michel Jarre, Bibi Tanga, Gentleman Jake), habillages radio/TV (RFI, Europe 1, Canal+), formation sonore et musicale (INFA,FNAMM, Les Coachs Associés), réalisation studio (ProTools, Logic, Ableton Live)</p>
+                Piano classique, jazz et variété, composition pour l'image, albums, habillages radio/TV, réalisation musicale et sonore</p>
             </div>
             <div class="category-card">
                 <div class="category-icon">🔨</div>
@@ -732,7 +871,7 @@
                 <h3>Formation & Transmission</h3>
                 <p>
                 <!--    <strong>Formateur, Pédagogue</strong><br> -->
-                Formation voix en studio (Les Coachs Associés depuis 2017), composition musicale à l'image (FNAMM 2023), habillage radio international (Éthiopie 2015, Comores 2018), sensibilisation écologique pour les écoles, ateliers jardin et compost</p>
+                Formation voix en studio, composition musicale à l'image, habillage radio international, sensibilisation écologique pour les écoles, ateliers jardin et compost</p>
             </div>
             <div class="category-card">
                 <div class="category-icon">🌱</div>
@@ -828,7 +967,7 @@
                 <div class="timeline-content" data-parcours-id="bibi">
                     <div class="timeline-year">2007-2008</div>
                     <h3>🎹 Bibi Tanga et le Professeur Inlassable</h3>
-                    <p>Claviers sur une tournée de 40 dates - Album "Yellow Gauze"</p>
+                    <p>Claviers sur une tournée en Europe - Album "Yellow Gauze"</p>
                 </div>
             </div>
 
@@ -927,21 +1066,25 @@
     </section>
 
 
+
+
     <!-- Réalisations -->
     <section id="realisations">
         <h2>Réalisations</h2>
 
+
+
         <!-- PRODUCTIONS -->
-        <div class="category-section">
+        <div class="category-section" id="productions">
             <h3 class="category-title">🎶 Productions</h3>
             <div class="portfolio-grid">
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=musique'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=musique&category=productions'">
                     <div class="portfolio-image">
                         <img src="medias/MusicAlbumJarre.jpg" alt="Musiques">
                     </div>
                     <div class="portfolio-info">
-                        <h3>Musique</h3>
+                        <h3>Albums</h3>
                         <p>Participation à différents projets musicaux</p>
                         <div class="portfolio-tags">
                             <span class="tag">Musique</span>
@@ -949,7 +1092,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cinetheatre'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cinetheatre&category=productions'">
                     <div class="portfolio-image">
                         <img src="medias/TheatreUbuRoi.jpg" alt="Cinéma Théâtre">
                     </div>
@@ -962,7 +1105,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=livre'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=livre&category=productions'">
                     <div class="portfolio-image">
                         <img src="medias/Livre30Chansons.jpg" alt="Livres">
                     </div>
@@ -975,7 +1118,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=formation'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=formation&category=productions'">
                     <div class="portfolio-image">
                         <img src="medias/FormationOrthochansons.jpg" alt="Formation">
                     </div>
@@ -990,11 +1133,14 @@
             </div>
         </div>
 
+
+
+
         <!-- CRÉATIONS NATURELLES -->
-        <div class="category-section">
+        <div class="category-section" id="creations-naturelles">
             <h3 class="category-title">🎨 Créations Naturelles</h3>
             <div class="portfolio-grid">
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=panneaux'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=panneaux&category=creations-naturelles'">
                     <div class="portfolio-image">
                         <img src="medias/Panneau_Amour.jpg" alt="Panneaux">
                     </div>
@@ -1007,7 +1153,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=landart'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=landart&category=creations-naturelles'">
                     <div class="portfolio-image">
                         <img src="medias/CreationNature_WestCoast2025.jpg" alt="Land Art">
                     </div>
@@ -1020,7 +1166,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=animaux'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=animaux&category=creations-naturelles'">
                     <div class="portfolio-image">
                         <img src="medias/CreationNature_Crabe.jpg" alt="Crabe">
                     </div>
@@ -1033,7 +1179,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=boites-coco'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=boites-coco&category=creations-naturelles'">
                     <div class="portfolio-image">
                         <img src="medias/Boites_Coco.jpg" alt="Boîtes">
                     </div>
@@ -1048,11 +1194,14 @@
             </div>
         </div>
 
+
+
          <!-- AMÉNAGEMENTS INTÉRIEURS -->
-        <div class="category-section">
+        <div class="category-section" id="amenagements">
             <h3 class="category-title">🏠 Aménagements</h3>
             <div class="portfolio-grid">
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=salon'">
+                
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=salon&category=amenagements'">
                     <div class="portfolio-image">
                         <img src="medias/Salon_5.jpg" alt="Salon">
                     </div>
@@ -1065,7 +1214,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=sous-sol'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=sous-sol&category=amenagements'">
                     <div class="portfolio-image">
                         <img src="medias/Ancienne_fosse_septique_7.jpg" alt="Sous-sol">
                     </div>
@@ -1077,21 +1226,8 @@
                         </div>
                     </div>
                 </div>
-<!--
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=escalier'">
-                    <div class="portfolio-image">
-                        <img src="medias/Escalier_0.jpg" alt="Escalier">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Escalier Design</h3>
-                        <p>Moderne et structuré</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Bois</span>
-                        </div>
-                    </div>
-                </div>
--->
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=ouvertures'">
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=ouvertures&category=amenagements'">
                     <div class="portfolio-image">
                         <img src="medias/Fenetre_7.jpg" alt="Ouvertures">
                     </div>
@@ -1104,7 +1240,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=studio'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=studio&category=amenagements'">
                     <div class="portfolio-image">
                         <img src="medias/Studio_8.jpg" alt="Studio">
                     </div>
@@ -1119,11 +1255,15 @@
             </div>
         </div>
 
+
+
+
         <!-- MOBILIER -->
-        <div class="category-section">
+        <div class="category-section" id="mobilier">
             <h3 class="category-title">🪑 Mobilier</h3>
             <div class="portfolio-grid">
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=meuble-tiroirs'">
+                
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=meuble-tiroirs&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Meuble_a_tiroirs5.jpg" alt="Meuble">
                     </div>
@@ -1136,7 +1276,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=echelle-chat'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=echelle-chat&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Echelle_pour_chat2.jpg" alt="Échelle">
                     </div>
@@ -1149,7 +1289,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=rangement-epices'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=rangement-epices&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Epices_0.jpg" alt="Épices">
                     </div>
@@ -1162,7 +1302,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=lit'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=lit&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Lit02.jpg" alt="Lit">
                     </div>
@@ -1175,7 +1315,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=meuble'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=meuble&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Meuble_SurMesure4.jpg" alt="Meuble sur mesure">
                     </div>
@@ -1188,7 +1328,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=bancs'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=bancs&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Banc_large.jpg" alt="Bancs">
                     </div>
@@ -1201,7 +1341,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cendrier-vote'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cendrier-vote&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Meuble_Cendrier_a_voter3.jpg" alt="Cendrier">
                     </div>
@@ -1214,7 +1354,7 @@
                     </div>
                 </div>
 
-                 <div class="portfolio-card" onclick="window.location.href='detail.html?project=abris-poubelles'">
+                 <div class="portfolio-card" onclick="window.location.href='detail.html?project=abris-poubelles&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Abris_poubelles_vegetalise_1.jpg" alt="Abris">
                     </div>
@@ -1227,7 +1367,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=potager-vertical'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=potager-vertical&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Potager_vertical_1.jpg" alt="Potager vertical">
                     </div>
@@ -1240,7 +1380,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=potager-sureleve'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=potager-sureleve&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Potager_surreleve_1.jpg" alt="Potager surélevé">
                     </div>
@@ -1253,7 +1393,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=pupitrophone'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=pupitrophone&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Pupitrophone4.jpg" alt="Pupitrophone">
                     </div>
@@ -1266,7 +1406,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=nichoirs'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=nichoirs&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Nichoir1.jpg" alt="Nichoirs">
                     </div>
@@ -1279,7 +1419,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=tables-tourets'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=tables-tourets&category=mobilier'">
                     <div class="portfolio-image">
                         <img src="medias/Tables_a_partir_de_tourets1.jpg" alt="Tables">
                     </div>
@@ -1294,12 +1434,15 @@
             </div>
         </div>
 
+
+
+
         <!-- EXTÉRIEUR & JARDIN -->
-        <div class="category-section">
+        <div class="category-section" id="constructions">
             <h3 class="category-title">🪚 Constructions</h3>
             <div class="portfolio-grid">
                 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cuisine'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cuisine&category=constructions'">
                     <div class="portfolio-image">
                         <img src="medias/Cuisine_19.jpg" alt="Cuisine">
                     </div>
@@ -1312,7 +1455,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=atelier'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=atelier&category=constructions'">
                     <div class="portfolio-image">
                         <img src="medias/Atelier10.jpg" alt="Atelier">
                     </div>
@@ -1325,7 +1468,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=bureau'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=bureau&category=constructions'">
                     <div class="portfolio-image">
                         <img src="medias/Grainotheque_et_bureau6.jpg" alt="Grainothèque">
                     </div>
@@ -1338,7 +1481,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=poulailler'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=poulailler&category=constructions'">
                     <div class="portfolio-image">
                         <img src="medias/Poulailler8.jpg" alt="Poulailler">
                     </div>
@@ -1351,7 +1494,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cabane-rucher'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cabane-rucher&category=constructions'">
                     <div class="portfolio-image">
                         <img src="medias/Cabane_du_rucher5.jpg" alt="Rucher">
                     </div>
@@ -1364,7 +1507,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=solaire'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=solaire&category=constructions'">
                     <div class="portfolio-image">
                         <img src="medias/Installation_solaire_3.jpg" alt="Solaire">
                     </div>
@@ -1377,7 +1520,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=aquaponique'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=aquaponique&category=constructions'">
                     <div class="portfolio-image">
                         <img src="medias/Systeme_aquaponique_1.jpg" alt="Aquaponie">
                     </div>
@@ -1390,7 +1533,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=toilettes-seches'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=toilettes-seches&category=constructions'">
                     <div class="portfolio-image">
                         <img src="medias/Toilettes_seches_6.jpg" alt="Toilettes">
                     </div>
@@ -1403,7 +1546,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cinema-plein-air'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cinema-plein-air&category=constructions'">
                     <div class="portfolio-image">
                         <img src="medias/Cinema_en_plein_air_4.jpg" alt="Cinéma">
                     </div>
@@ -1416,7 +1559,7 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=terrasse'">
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=terrasse&category=constructions'">
                     <div class="portfolio-image">
                         <img src="medias/Terrasse_4.jpg" alt="Terrasse">
                     </div>
@@ -1431,6 +1574,8 @@
             </div>
         </div>
     </section>
+
+
 
     <!-- Contact -->
     <section id="contact">
@@ -1540,8 +1685,7 @@
                 title: '📢 Trafalgar Créations',
                 description: 'Directeur associé - Écriture et production de spots radio',
                 media: [
-                    { type: 'image', src: 'medias/Parcours1999Trafalgar.jpg' },
-                    { type: 'audio', src: 'medias/Parcours1999Trafalgar.mp3', title: 'À Trafalgar, c\'est vous qui êtes la star 😁' }
+                    { type: 'image', src: 'medias/Parcours1999Trafalgar.jpg', audio: { src: 'medias/Parcours1999Trafalgar.mp3'} }
                 ]
             },
             'intermittent': {
@@ -1578,7 +1722,8 @@
                     { type: 'image', src: 'medias/ParcoursFormationINFA.jpg' },
                     { type: 'image', src: 'medias/ParcoursFormationINFA1.jpg' },
                     { type: 'image', src: 'medias/ParcoursFormationINFA2.jpg' }
-                ]
+                ],
+                link: 'https://www.infa-formation.com'
             },
             'kingarthur': {
                 year: '2013',
@@ -1613,8 +1758,7 @@
                 title: '📻 Habillage antenne pour RFI',
                 description: 'Production musicale pour l\'antenne de Radio France International',
                 media: [
-                    { type: 'image', src: 'medias/ParcoursRFI.jpg'},
-                    { type: 'audio', src: 'medias/ParcoursRFI.mp3', title: 'Quelques génériques et bandes-annonces' }
+                    { type: 'image', src: 'medias/ParcoursRFI.jpg', audio: { src: 'medias/ParcoursRFI.mp3' } }
                 ]
             },
             'ortc': {
@@ -1640,8 +1784,10 @@
                     { type: 'image', src: 'medias/Parcours2017Presidentielle4.jpg' },
                     { type: 'image', src: 'medias/Parcours2017Presidentielle5.jpg' },
                     { type: 'image', src: 'medias/Parcours2017Presidentielle6.jpg' },
-                    { type: 'image', src: 'medias/Parcours2017Presidentielle7.jpg' }
-                ]
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle7.jpg' },
+                    { type: 'video', src: 'medias/Parcours2017Presidentielle8.mp4' }
+                ],
+                link: 'https://www.upr.fr'
             },
             'coachs': {
                 year: 'Depuis 2017',
@@ -1673,10 +1819,11 @@
                     { type: 'image', src: 'medias/Parcours2018LesJardineurs13.jpg' },
                     { type: 'image', src: 'medias/Parcours2018LesJardineurs14.jpg' },
                     { type: 'image', src: 'medias/Parcours2018LesJardineurs15.jpg' },
-                    { type: 'image', src: 'medias/Parcours2018LesJardineurs16.jpg' }
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs16.jpg' },
                 ],
+                link: 'https://lesjardineurs.fr'
             }
-        };
+        }
 
         // Fonction pour créer l'élément média (image, audio ou vidéo)
         function createMediaElement(mediaItem) {
@@ -1687,6 +1834,21 @@
                 container.innerHTML = `
                     <img src="${mediaItem.src}" alt="Parcours" class="parcours-modal-image">
                 `;
+                
+                // Si l'image a un audio attaché, l'ajouter sous l'image
+                if (mediaItem.audio && mediaItem.audio.src) {
+                    const audioContainer = document.createElement('div');
+                    audioContainer.className = 'parcours-modal-media-container';
+                    audioContainer.style.marginTop = '20px';
+                    audioContainer.innerHTML = `
+                        ${mediaItem.audio.title ? `<div class="parcours-modal-media-title">🎵 ${mediaItem.audio.title}</div>` : ''}
+                        <audio controls class="parcours-modal-audio-player">
+                            <source src="${mediaItem.audio.src}" type="audio/mpeg">
+                            Votre navigateur ne supporte pas la lecture audio.
+                        </audio>
+                    `;
+                    container.appendChild(audioContainer);
+                }
             } else if (mediaItem.type === 'audio') {
                 container.className = 'parcours-modal-media-container';
                 container.innerHTML = `
@@ -1740,6 +1902,8 @@
                     let icon = '📷';
                     if (item.type === 'audio') icon = '🎵';
                     if (item.type === 'video') icon = '🎬';
+                    // Si l'image a un audio attaché, afficher les deux icônes
+                    if (item.type === 'image' && item.audio && item.audio.src) icon = '📷🎵';
                     
                     button.textContent = `${icon} ${index + 1}`;
                     button.onclick = () => goToMedia(index);
@@ -1842,6 +2006,36 @@
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Gestion du menu hamburger
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Fonction pour ouvrir/fermer le menu
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            // Empêcher le scroll du body quand le menu est ouvert
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        // Clic sur le hamburger
+        hamburger.addEventListener('click', toggleMenu);
+
+        // Clic sur l'overlay pour fermer
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // Fermer le menu quand on clique sur un lien
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navMenu.classList.contains('active')) {
+                    toggleMenu();
                 }
             });
         });

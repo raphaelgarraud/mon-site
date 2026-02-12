@@ -69,6 +69,96 @@
             color: var(--primary);
         }
 
+        /* Menu Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--dark);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Navigation mobile */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                max-width: 300px;
+                background: var(--white);
+                flex-direction: column;
+                gap: 0;
+                padding: 80px 0 20px;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                transition: right 0.3s ease;
+                overflow-y: auto;
+            }
+
+            nav ul.active {
+                right: 0;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            nav ul a {
+                display: block;
+                padding: 1rem 2rem;
+                border-bottom: 1px solid var(--light);
+                transition: all 0.3s ease;
+            }
+
+            nav ul a:hover {
+                background: var(--light);
+                padding-left: 2.5rem;
+            }
+
+            /* Overlay pour fermer le menu en cliquant à côté */
+            .menu-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+            .menu-overlay.active {
+                display: block;
+            }
+        }
+
         /* Hero */
         .hero {
             background: var(--white);
@@ -342,11 +432,6 @@
         }
 
         @media (max-width: 768px) {
-            nav ul {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
             .hero h1 {
                 font-size: 2rem;
             }
@@ -384,6 +469,36 @@
 
             .hero h1 {
                 font-size: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            nav h1 {
+                font-size: 1.2rem;
+            }
+
+            section h2 {
+                font-size: 1.8rem;
+            }
+
+            .parcours-modal-content {
+                margin: 2% auto;
+                padding: 1.5rem;
+                width: 95%;
+            }
+
+            .parcours-modal-close {
+                font-size: 30px;
+            }
+
+            .timeline-item {
+                margin-left: 1rem !important;
+            }
+
+            nav ul {
+                width: 80%;
             }
         }
 
@@ -586,11 +701,35 @@
         /* Navigation entre médias */
         .media-nav-buttons {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 1rem;
             margin: 0 0 1.5rem 0;
-            padding: 1rem 0;
+            padding: 1rem;
             border-bottom: 2px solid var(--light);
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollbar personnalisée pour les boutons de navigation */
+        .media-nav-buttons::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .media-nav-buttons::-webkit-scrollbar-track {
+            background: var(--light);
+            border-radius: 3px;
+        }
+
+        .media-nav-buttons::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+
+        .media-nav-buttons::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
 
         .media-nav-btn {
@@ -603,6 +742,7 @@
             font-size: 0.9rem;
             transition: all 0.3s;
             min-width: 60px;
+            flex-shrink: 0;
         }
 
         .media-nav-btn:hover {
@@ -614,6 +754,24 @@
             background: var(--primary);
             font-weight: bold;
             box-shadow: 0 2px 8px rgba(44, 95, 45, 0.3);
+        }
+
+        /* Améliorations mobile pour les médias */
+        @media (max-width: 768px) {
+            .media-nav-btn {
+                padding: 0.6rem 1rem;
+                font-size: 1rem;
+                min-width: 70px;
+            }
+
+            .parcours-modal-video-player,
+            .parcours-modal-audio-player {
+                width: 100%;
+            }
+
+            .parcours-modal-media-title {
+                font-size: 0.95rem;
+            }
         }
 
         @keyframes fadeIn {
@@ -638,15 +796,21 @@
     <header>
         <nav>
             <h1>Raphaël Garraud</h1>
-            <ul>
-                <li><a href="#accueil">Accueil</a></li>
-                <li><a href="#apropos">À propos</a></li>
-                <li><a href="#competences">Compétences</a></li>
-                <li><a href="#parcours">Parcours</a></li>
-                <li><a href="#realisations">Réalisations</a></li>
-                <li><a href="#contact">Contact</a></li>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="navMenu">
+                <li><a href="#accueil" class="nav-link">Accueil</a></li>
+                <li><a href="#apropos" class="nav-link">À propos</a></li>
+                <li><a href="#competences" class="nav-link">Compétences</a></li>
+                <li><a href="#parcours" class="nav-link">Parcours</a></li>
+                <li><a href="#realisations" class="nav-link">Réalisations</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
         </nav>
+        <div class="menu-overlay" id="menuOverlay"></div>
     </header>
 
     <!-- Hero -->
@@ -660,14 +824,14 @@
     <section id="portraits">
         <div class="portfolio-card" onclick="window.location.href='detail.html?project=portraits'">
             <div class="portfolio-image">
-                <img src="medias/Portrait_2015_Ingeson2.jpg" alt="Portraits">
+                <img src="medias/Portrait_KingArthur.jpg" alt="Portraits">
             </div>
         </div>
     </section>
 
     <!-- About -->
     <section id="apropos">
-         <!--<h2>À Propos</h2>-->
+         <h2>À Propos</h2>
         <div class="about-content">
             <div class="about-text">
                 <h3>Qui suis-je ?</h3>
@@ -707,7 +871,7 @@
                 <h3>Formation & Transmission</h3>
                 <p>
                 <!--    <strong>Formateur, Pédagogue</strong><br> -->
-                Formation voix en studio (Les Coachs Associés depuis 2017), composition musicale à l'image (FNAMM 2023), habillage radio international (Éthiopie 2015, Comores 2018), sensibilisation écologique pour les écoles, ateliers jardin et compost</p>
+                Formation voix en studio (Les Coachs Associés depuis 2017), composition musicale à l'image (FNAMM 2023), habillage radio international (Éthiopie 2015, Comores 2018), réalisation de tutoriaux vidéos et d'infographies, sensibilisation écologique pour les écoles, ateliers recyclage, jardin et compost</p>
             </div>
             <div class="category-card">
                 <div class="category-icon">🌱</div>
@@ -760,7 +924,7 @@
                 <div class="timeline-content" data-parcours-id="square">
                     <div class="timeline-year">1994-1995</div>
                     <h3>🎙️ Square Prod</h3>
-                    <p>Prise de son, réalisation et mixage de bandes-annonces - Remix (Skoops, Black People, Alabina)</p>
+                    <p>Réalisation de remix et bandes-annonces</p>
                 </div>
             </div>
 
@@ -768,7 +932,7 @@
                 <div class="timeline-content" data-parcours-id="europe1">
                     <div class="timeline-year">1995-1996</div>
                     <h3>📻 Europe 1</h3>
-                    <p>Service auto-promotion et habillage sonore de l'antenne</p>
+                    <p>Production des auto-promotions et de l'habillage sonore de l'antenne</p>
                 </div>
             </div>
 
@@ -794,7 +958,7 @@
                 <div class="timeline-content" data-parcours-id="intermittent">
                     <div class="timeline-year">2003-2013</div>
                     <h3>🎧 Intermittent du spectacle</h3>
-                    <p>Mixage, réalisation d'albums et pubs Radio, TV, Cinéma dans de nombreux studios</p>
+                    <p>Mixage et réalisation de pubs Radio, TV, Cinéma dans de nombreux studios</p>
                 </div>
             </div>
 
@@ -803,7 +967,7 @@
                 <div class="timeline-content" data-parcours-id="bibi">
                     <div class="timeline-year">2007-2008</div>
                     <h3>🎹 Bibi Tanga et le Professeur Inlassable</h3>
-                    <p>Claviers - Tournée de 40 dates - Albums "Yellow Gauze"</p>
+                    <p>Claviers sur une tournée en Europe - Album "Yellow Gauze"</p>
                 </div>
             </div>
 
@@ -820,8 +984,8 @@
             <div class="timeline-item">
                 <div class="timeline-content" data-parcours-id="infa">
                     <div class="timeline-year">2009-2010</div>
-                    <h3>🎓 Formateur Technicien du son</h3>
-                    <p>Institut National de la Formation Appliquée</p>
+                    <h3>🎓 Institut National de la Formation Appliquée</h3>
+                    <p>Formateur Technicien du son</p>
                 </div>
             </div>
 
@@ -916,7 +1080,7 @@
                         <img src="medias/MusicAlbumJarre.jpg" alt="Musiques">
                     </div>
                     <div class="portfolio-info">
-                        <h3>Musique</h3>
+                        <h3>Albums</h3>
                         <p>Participation à différents projets musicaux</p>
                         <div class="portfolio-tags">
                             <span class="tag">Musique</span>
@@ -1228,6 +1392,19 @@
                     </div>
                 </div>
 
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=pupitrophone'">
+                    <div class="portfolio-image">
+                        <img src="medias/Pupitrophone4.jpg" alt="Pupitrophone">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Pupitrophone</h3>
+                        <p>Pupitre de chargement pour smartphone et tablette</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Pratique</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="portfolio-card" onclick="window.location.href='detail.html?project=nichoirs'">
                     <div class="portfolio-image">
                         <img src="medias/Nichoir1.jpg" alt="Nichoirs">
@@ -1260,28 +1437,81 @@
         <div class="category-section">
             <h3 class="category-title">🪚 Constructions</h3>
             <div class="portfolio-grid">
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=terrasse'">
-                    <div class="portfolio-image">
-                        <img src="medias/Terrasse_4.jpg" alt="Terrasse">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Terrasse</h3>
-                        <p>Construction extérieure</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Extérieur</span>
-                        </div>
-                    </div>
-                </div>
                 
                 <div class="portfolio-card" onclick="window.location.href='detail.html?project=cuisine'">
                     <div class="portfolio-image">
-                        <img src="medias/Cuisine_17.jpg" alt="Cuisine">
+                        <img src="medias/Cuisine_19.jpg" alt="Cuisine">
                     </div>
                     <div class="portfolio-info">
                         <h3>Cuisine extérieure</h3>
                         <p>Fonctionnelle et élégante</p>
                         <div class="portfolio-tags">
                             <span class="tag">Agencement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=atelier'">
+                    <div class="portfolio-image">
+                        <img src="medias/Atelier10.jpg" alt="Atelier">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Atelier</h3>
+                        <p>Espace de travail</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Construction</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=bureau'">
+                    <div class="portfolio-image">
+                        <img src="medias/Grainotheque_et_bureau6.jpg" alt="Grainothèque">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Bureau et Grainothèque</h3>
+                        <p>Deux pièces dans un bâtiment en palettes</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Pratique</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=poulailler'">
+                    <div class="portfolio-image">
+                        <img src="medias/Poulailler8.jpg" alt="Poulailler">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Poulailler</h3>
+                        <p>Confortable et sécurisé</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Animaux</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cabane-rucher'">
+                    <div class="portfolio-image">
+                        <img src="medias/Cabane_du_rucher5.jpg" alt="Rucher">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Cabane Rucher</h3>
+                        <p>Abri apiculture</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Apiculture</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=solaire'">
+                    <div class="portfolio-image">
+                        <img src="medias/Installation_solaire_3.jpg" alt="Solaire">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Installation Solaire</h3>
+                        <p>Système autonome</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Énergie</span>
                         </div>
                     </div>
                 </div>
@@ -1299,61 +1529,9 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=poulailler'">
-                    <div class="portfolio-image">
-                        <img src="medias/Poulailler_exterieur.jpg" alt="Poulailler">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Poulailler</h3>
-                        <p>Confortable et sécurisé</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Animaux</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cabane-rucher'">
-                    <div class="portfolio-image">
-                        <img src="medias/Cabane_du_rucher2.jpg" alt="Rucher">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Cabane Rucher</h3>
-                        <p>Abri apiculture</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Apiculture</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=atelier'">
-                    <div class="portfolio-image">
-                        <img src="medias/Atelier_exterieur.jpg" alt="Atelier">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Atelier Extérieur</h3>
-                        <p>Espace de travail</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Construction</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=bureau'">
-                    <div class="portfolio-image">
-                        <img src="medias/Grainotheque_et_bureau.jpg" alt="Grainothèque">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Bureau et Grainothèque</h3>
-                        <p>Deux pièces dans un bâtiment en palettes</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Pratique</span>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="portfolio-card" onclick="window.location.href='detail.html?project=toilettes-seches'">
                     <div class="portfolio-image">
-                        <img src="medias/Toilettes_seches_1.jpg" alt="Toilettes">
+                        <img src="medias/Toilettes_seches_6.jpg" alt="Toilettes">
                     </div>
                     <div class="portfolio-info">
                         <h3>Toilettes Sèches</h3>
@@ -1364,28 +1542,28 @@
                     </div>
                 </div>
 
-               <div class="portfolio-card" onclick="window.location.href='detail.html?project=solaire'">
-                    <div class="portfolio-image">
-                        <img src="medias/Installation_solaire_3.jpg" alt="Solaire">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Installation Solaire</h3>
-                        <p>Système autonome</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Énergie</span>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="portfolio-card" onclick="window.location.href='detail.html?project=cinema-plein-air'">
                     <div class="portfolio-image">
-                        <img src="medias/Cinema_en_plein_air_1.jpg" alt="Cinéma">
+                        <img src="medias/Cinema_en_plein_air_4.jpg" alt="Cinéma">
                     </div>
                     <div class="portfolio-info">
                         <h3>Cinéma Plein Air</h3>
                         <p>Projection extérieure</p>
                         <div class="portfolio-tags">
                             <span class="tag">Loisirs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=terrasse'">
+                    <div class="portfolio-image">
+                        <img src="medias/Terrasse_4.jpg" alt="Terrasse">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Terrasse</h3>
+                        <p>Construction extérieure</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Extérieur</span>
                         </div>
                     </div>
                 </div>
@@ -1446,9 +1624,9 @@
                 title: '🎵 Formation musicale',
                 description: 'Conservatoire de Nantes - Piano classique, jazz, variété',
                 media: [
-                    { type: 'image', src: 'medias/Portrait_1980_Pianiste.jpg' },
-                    { type: 'image', src: 'medias/1980Diplome.jpg' },
-                    { type: 'image', src: 'medias/1981Diplome.jpg' }
+                    { type: 'image', src: 'medias/Parcours1980_Pianiste.jpg' },
+                    { type: 'image', src: 'medias/Parcours1980Diplome.jpg' },
+                    { type: 'image', src: 'medias/Parcours1981Diplome.jpg' }
                 ]
             },
             'pianiste': {
@@ -1456,17 +1634,17 @@
                 title: '🎹 Pianiste',
                 description: 'Piano-bars dans la région nantaise - Premiers pas professionnels',
                 media: [
-                    { type: 'image', src: 'medias/Portrait_1990_Pianiste.jpg' },
-                    { type: 'image', src: 'medias/Portrait_1991_Pianiste.jpg' },
-                    { type: 'image', src: 'medias/Portrait_1992_Pianiste.jpg' }
+                    { type: 'image', src: 'medias/Parcours1990_Pianiste.jpg' },
+                    { type: 'image', src: 'medias/Parcours1991_Pianiste.jpg' },
+                    { type: 'image', src: 'medias/Parcours1992_Pianiste.jpg' }
                 ]
             },
             'square': {
                 year: '1994-1995',
                 title: '🎙️ Square Prod',
-                description: 'Prise de son, réalisation et mixage de bandes-annonces - Remix (Skoops, Black People, Alabina)',
+                description: 'Réalisation de remix et de bandes-annonces',
                 media: [
-                    { type: 'image', src: 'medias/SquareProd.jpg' },
+                    { type: 'image', src: 'medias/Parcours1994SquareProd.jpg' },
                     { type: 'image', src: 'medias/MusicRemixBaker.jpg' },
                     { type: 'image', src: 'medias/MusicRemixMother.jpg' },
                     { type: 'image', src: 'medias/MusicRemixAlabina.jpg' },
@@ -1481,16 +1659,19 @@
                 title: '📻 Europe 1',
                 description: 'Service auto-promotion et habillage sonore de l\'antenne',
                 media: [
-                    { type: 'image', src: 'medias/Europe1.jpg' }
+                    { type: 'image', src: 'medias/Parcours1995Europe1.jpg' },
+                    { type: 'image', src: 'medias/Parcours1995Europe2.jpg' },
+                    { type: 'image', src: 'medias/Parcours1995Europe3.jpg' },
+                    { type: 'image', src: 'medias/Parcours1995Europe4.jpg' }
                 ],
                 link: 'https://www.europe1.fr'
             },
             'graffiti': {
                 year: '1996-1999',
                 title: '🎬 Graffiti 5&21',
-                description: 'Réalisation publicitaire radio',
+                description: 'Réalisation de spots publicitaires pour de très nombreux annonceurs (Super U, Volswagen, Itineris, Decathlon, Renault, Carrefour...',
                 media: [
-                    { type: 'image', src: 'medias/Graffiti.jpg' }
+                    { type: 'image', src: 'medias/ParcoursGraffiti.jpg' }
                 ]
             },
             'trafalgar': {
@@ -1498,28 +1679,33 @@
                 title: '📢 Trafalgar Créations',
                 description: 'Directeur associé - Écriture et production de spots radio',
                 media: [
-                    { type: 'image', src: 'medias/Trafalgar.jpg' },
-                    { type: 'audio', src: 'medias/Trafalgar.mp3', title: 'À Trafalgar, c\'est vous qui êtes la star 😁' }
+                    { type: 'image', src: 'medias/Parcours1999Trafalgar.jpg', audio: { src: 'medias/Parcours1999Trafalgar.mp3'} }
                 ]
             },
             'intermittent': {
                 year: '2003-2013',
                 title: '🎧 Intermittent du spectacle',
-                description: 'Mixage, réalisation d\'albums et de pubs (Radio, TV, Cinéma) dans de nombreux studios (RFI, Regie 1, Aurevoircharlie, Chez Jean, Graffiti 5&21, Medialab, Amplitudes, La Maison de Production, Musicalement Votre...)',
+                description: 'Mixage, réalisation de pubs (Radio, TV, Cinéma) dans de nombreux studios (RFI, Regie 1, Aurevoircharlie, Stuio Line, Chez Jean, Medialab, La Maison de Production, Studio Hauts de Gamme, Musicalement Votre...)',
                 media: [
-                    { type: 'image', src: 'medias/Portrait_2003_Ingeson.jpg' },
-                    { type: 'image', src: 'medias/Portrait_2005_Ingeson.jpg' },
-                    { type: 'image', src: 'medias/Portrait_2008_Ingeson.jpg' },
-                    { type: 'image', src: 'medias/Portrait_2009_Ingeson.jpg' },
-                    { type: 'image', src: 'medias/Portrait_2013_Ingeson.jpg' }
+                    { type: 'image', src: 'medias/Parcours2003_Ingeson.jpg' },
+                    { type: 'image', src: 'medias/Parcours2005_Ingeson.jpg' },                    
+                    { type: 'image', src: 'medias/Parcours2010_Ingeson.jpg' },
+                    { type: 'image', src: 'medias/Parcours2011_Ingeson.jpg' },
+                    { type: 'image', src: 'medias/Parcours2012_Ingeson.jpg' },
+                    { type: 'image', src: 'medias/Parcours2007_Ingeson.jpg' },
+                    { type: 'image', src: 'medias/Parcours2006_Ingeson.jpg' },
+                    { type: 'image', src: 'medias/Parcours2008_Ingeson.jpg' }
                 ]
             },
             'bibi': {
                 year: '2007-2008',
                 title: '🎹 Bibi Tanga et le Professeur Inlassable',
-                description: 'Claviers - Tournée de 40 dates - Albums "Yellow Gauze"',
+                description: 'Claviers sur une tournée en Europe - Album "Yellow Gauze"',
                 media: [
-                    { type: 'image', src: 'medias/Portrait_Inge_son_07.jpg' }
+                    { type: 'image', src: 'medias/Parcours2007Bibi1.jpg' },
+                    { type: 'image', src: 'medias/Parcours2007Bibi2.jpg' },
+                    { type: 'image', src: 'medias/Parcours2007Bibi3.jpg' },
+                    { type: 'video', src: 'medias/Parcours2007Bibi.mp4' }
                 ]
             },
             'infa': {
@@ -1527,18 +1713,26 @@
                 title: '🎓 Formateur Technicien du son',
                 description: 'Institut National de la Formation Appliquée',
                 media: [
-                    { type: 'image', src: 'medias/FormationINFA.jpg' }
-                ]
+                    { type: 'image', src: 'medias/ParcoursFormationINFA.jpg' },
+                    { type: 'image', src: 'medias/ParcoursFormationINFA1.jpg' },
+                    { type: 'image', src: 'medias/ParcoursFormationINFA2.jpg' }
+                ],
+                link: 'https://www.infa-formation.com'
             },
             'kingarthur': {
                 year: '2013',
                 title: '👑 King Arthur',
                 description: 'Création d\'entreprise - Production musicale et sonore',
                 media: [
-                    { type: 'image', src: 'medias/KingArthur.jpg' },
-                    { type: 'image', src: 'medias/Portrait_2015_Ingeson.jpg' },
-                    { type: 'image', src: 'medias/Portrait_2015_Ingeson2.jpg' },
-                    { type: 'image', src: 'medias/Portrait_2020_Ingeson.jpg' }
+                    { type: 'image', src: 'medias/Parcours2015KingArthur1.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur2.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur3.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur4.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur5.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur6.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur7.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur8.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur9.jpg' }
                 ]
             },
             'ebc': {
@@ -1546,7 +1740,11 @@
                 title: '🌍 Formateur en Éthiopie',
                 description: 'Formation à la réalisation d\'habillage radio en Éthiopie (EBC)',
                 media: [
-                    { type: 'image', src: 'medias/FormationEBC.jpg'}
+                    { type: 'image', src: 'medias/ParcoursFormationEBC1.jpg'},
+                    { type: 'image', src: 'medias/ParcoursFormationEBC3.jpg'},
+                    { type: 'image', src: 'medias/ParcoursFormationEBC2.jpg'},
+                    { type: 'image', src: 'medias/ParcoursFormationEBC4.jpg'},
+                    { type: 'audio', src: 'medias/ParcoursFormationEBC.mp3', title: 'Habillages réalisés par les stagiaires'}
                 ]
             },
             'rfi': {
@@ -1554,8 +1752,7 @@
                 title: '📻 Habillage antenne pour RFI',
                 description: 'Production musicale pour l\'antenne de Radio France International',
                 media: [
-                    { type: 'image', src: 'medias/RFI.jpg'},
-                    { type: 'audio', src: 'medias/RFI.mp3', title: 'Quelques génériques et bandes-annonces' }
+                    { type: 'image', src: 'medias/ParcoursRFI.jpg', audio: { src: 'medias/ParcoursRFI.mp3' } }
                 ]
             },
             'ortc': {
@@ -1563,11 +1760,11 @@
                 title: '🌍 Formateur aux Comores',
                 description: 'Formation à la réalisation d\'habillage radio à Grande Comores (ORTC)',
                 media: [
-                    { type: 'image', src: 'medias/FormationORTC.jpg', title: 'Devant la radio' },
-                    { type: 'image', src: 'medias/Portrait_2018_ORTC1.jpg', title: 'Les stagiaires' },
-                    { type: 'image', src: 'medias/Portrait_2018_ORTC2.jpg', title: 'Dans le studio de la radio' },
-                    { type: 'image', src: 'medias/Portrait_2018_ORTC3.jpg', title: 'Une des salle de classe 😁' },
-                    { type: 'audio', src: 'medias/FormationORTC.mp3', title: 'Habillages réalisés par les stagiaires' }
+                    { type: 'image', src: 'medias/Parcours2018FormationORTC.jpg', title: 'Devant la radio' },
+                    { type: 'image', src: 'medias/Parcours2018FormationORTC1.jpg', title: 'Les stagiaires' },
+                    { type: 'image', src: 'medias/Parcours2018FormationORTC2.jpg', title: 'Dans le studio de la radio' },
+                    { type: 'image', src: 'medias/Parcours2018FormationORTC3.jpg', title: 'Une des salle de classe 😁' },
+                    { type: 'audio', src: 'medias/Parcours2018FormationORTC.mp3', title: 'Habillages réalisés par les stagiaires' }
                 ]
             },
             'presidentielle': {
@@ -1575,15 +1772,23 @@
                 title: '🗳️ Campagne présidentielle',
                 description: 'Mise en place de directs sur Youtube et facebook, réalisations d\'infographies sur quelques points du programme, réalisation d\'une application mobile, régisseur son sur les réunions publiques',
                 media: [
-                    { type: 'image', src: 'medias/Technicien_regie.jpg' }
-                ]
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle3.jpg' },
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle1.jpg' },
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle2.jpg' },
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle4.jpg' },
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle5.jpg' },
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle6.jpg' },
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle7.jpg' },
+                    { type: 'video', src: 'medias/Parcours2017Presidentielle8.mp4' }
+                ],
+                link: 'https://www.upr.fr'
             },
             'coachs': {
                 year: 'Depuis 2017',
                 title: '🎤 Les Coachs Associés',
                 description: 'Formateur à la voix off en studio professionnel',
                 media: [
-                    { type: 'image', src: 'medias/FormationCoachs.jpg' }
+                    { type: 'image', src: 'medias/ParcoursFormationCoachs.jpg' }
                 ],
                 link: 'https://lescoachsassocies.com'
             },
@@ -1592,19 +1797,27 @@
                 title: '🌱 Les Jardineurs',
                 description: 'Fondateur et président de l\'association - Création et animation d\'un éco-lieu de 5600m² en permaculture, accueil des écoles, des scouts et des collaborateurs d\'entreprises lors de journées team-building',
                 media: [
-                    { type: 'image', src: 'medias/LesJardineurs.jpg' },
-                    { type: 'image', src: 'medias/Systeme_aquaponique_banc.jpg' },
-                    { type: 'image', src: 'medias/Poulailler_exterieur.jpg' },
-                    { type: 'image', src: 'medias/Portrait_2024_Guide1.jpg' },
-                    { type: 'image', src: 'medias/Portrait_2024_Guide2.jpg' },
-                    { type: 'image', src: 'medias/Portrait_Bricoleur_1.jpg' },
-                    { type: 'image', src: 'medias/Portrait_Bricoleur_2.jpg' },
-                    { type: 'image', src: 'medias/Jardinier.jpg' },
-                    { type: 'image', src: 'medias/Portrait_2025_Bricoleur.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs01.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs02.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs03.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs04.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs05.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs06.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs07.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs08.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs09.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs10.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs11.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs12.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs13.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs14.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs15.jpg' },
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs16.jpg' },
                 ],
                 link: 'https://lesjardineurs.fr'
             }
-        };
+        }
 
         // Fonction pour créer l'élément média (image, audio ou vidéo)
         function createMediaElement(mediaItem) {
@@ -1615,6 +1828,21 @@
                 container.innerHTML = `
                     <img src="${mediaItem.src}" alt="Parcours" class="parcours-modal-image">
                 `;
+                
+                // Si l'image a un audio attaché, l'ajouter sous l'image
+                if (mediaItem.audio && mediaItem.audio.src) {
+                    const audioContainer = document.createElement('div');
+                    audioContainer.className = 'parcours-modal-media-container';
+                    audioContainer.style.marginTop = '20px';
+                    audioContainer.innerHTML = `
+                        ${mediaItem.audio.title ? `<div class="parcours-modal-media-title">🎵 ${mediaItem.audio.title}</div>` : ''}
+                        <audio controls class="parcours-modal-audio-player">
+                            <source src="${mediaItem.audio.src}" type="audio/mpeg">
+                            Votre navigateur ne supporte pas la lecture audio.
+                        </audio>
+                    `;
+                    container.appendChild(audioContainer);
+                }
             } else if (mediaItem.type === 'audio') {
                 container.className = 'parcours-modal-media-container';
                 container.innerHTML = `
@@ -1668,10 +1896,23 @@
                     let icon = '📷';
                     if (item.type === 'audio') icon = '🎵';
                     if (item.type === 'video') icon = '🎬';
+                    // Si l'image a un audio attaché, afficher les deux icônes
+                    if (item.type === 'image' && item.audio && item.audio.src) icon = '📷🎵';
                     
                     button.textContent = `${icon} ${index + 1}`;
                     button.onclick = () => goToMedia(index);
                     navContainer.appendChild(button);
+                    
+                    // Scroller vers le bouton actif
+                    if (index === currentMediaIndex) {
+                        setTimeout(() => {
+                            button.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'nearest',
+                                inline: 'center'
+                            });
+                        }, 100);
+                    }
                 });
             } else {
                 navContainer.style.display = 'none';
@@ -1759,6 +2000,36 @@
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Gestion du menu hamburger
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Fonction pour ouvrir/fermer le menu
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            // Empêcher le scroll du body quand le menu est ouvert
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        // Clic sur le hamburger
+        hamburger.addEventListener('click', toggleMenu);
+
+        // Clic sur l'overlay pour fermer
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // Fermer le menu quand on clique sur un lien
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navMenu.classList.contains('active')) {
+                    toggleMenu();
                 }
             });
         });

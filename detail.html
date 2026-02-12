@@ -161,6 +161,8 @@ x<!DOCTYPE html>
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             background: var(--light);
+            display: flex;
+            flex-direction: column;
         }
 
         .gallery-item:hover {
@@ -178,6 +180,17 @@ x<!DOCTYPE html>
 
         .gallery-item:hover img {
             transform: scale(1.05);
+        }
+
+        .gallery-item-caption {
+            padding: 12px 15px;
+            background: var(--white);
+            color: var(--dark);
+            font-size: 0.85rem;
+            line-height: 1.4;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
         }
 
         .gallery-item-number {
@@ -397,11 +410,11 @@ x<!DOCTYPE html>
             }
 
             .container {
-                padding: 200px 1rem 2rem;
+                padding: 160px 1rem 2rem;
             }
 
             .gallery-section {
-                padding: 2rem 1.5rem;
+                padding: 1.5rem 1rem;
             }
 
             .detail-nav {
@@ -410,6 +423,15 @@ x<!DOCTYPE html>
 
             .detail-nav h1 {
                 font-size: 1.1rem;
+            }
+
+            .project-description {
+                font-size: 0.8rem;
+            }
+
+            .meta-tag {
+                font-size: 0.7rem;
+                padding: 3px 10px;
             }
 
             .lightbox-nav {
@@ -425,6 +447,107 @@ x<!DOCTYPE html>
             .lightbox-next {
                 right: 10px;
             }
+
+            .lightbox-close {
+                width: 40px;
+                height: 40px;
+                font-size: 24px;
+                top: -45px;
+                right: 5px;
+            }
+
+            .lightbox-counter {
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+
+            .gallery-item img {
+                height: 200px;
+            }
+
+            .gallery-item-caption {
+                font-size: 0.8rem;
+                padding: 10px 12px;
+                min-height: 45px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 140px 0.5rem 1rem;
+            }
+
+            .gallery-section {
+                padding: 1rem 0.5rem;
+            }
+
+            .detail-nav {
+                padding: 0 0.5rem;
+            }
+
+            .project-title {
+                font-size: 1rem;
+            }
+
+            .detail-nav h1 {
+                font-size: 0.95rem;
+            }
+
+            .back-button {
+                padding: 6px 12px;
+                font-size: 0.85em;
+            }
+
+            .project-description {
+                font-size: 0.75rem;
+                line-height: 1.3;
+            }
+
+            .meta-tag {
+                font-size: 0.65rem;
+                padding: 2px 8px;
+            }
+
+            .gallery-item img {
+                height: 180px;
+            }
+
+            .gallery-item-caption {
+                font-size: 0.75rem;
+                padding: 8px 10px;
+                min-height: 40px;
+            }
+
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .lightbox-close {
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+            }
+
+            .lightbox-counter {
+                font-size: 0.85rem;
+                padding: 6px 12px;
+            }
+
+            .lightbox-image,
+            .lightbox-video {
+                max-height: 70vh;
+            }
+
+            .lightbox-audio-player {
+                max-width: 95%;
+                padding: 1.5rem;
+            }
+
+            .lightbox-audio-title {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -432,7 +555,7 @@ x<!DOCTYPE html>
     <!-- Header -->
     <header class="detail-header">
         <nav class="detail-nav">
-            <a href="index.html#realisations" class="back-button">
+            <a href="#" class="back-button" id="backButton" onclick="goBack(); return false;">
                 ← Retour
             </a>
             <h1 class="project-title" id="projectTitle">Chargement...</h1>
@@ -465,12 +588,27 @@ x<!DOCTYPE html>
     </div>
 
     <script>
+        // Fonction pour retourner à la bonne catégorie
+        function goBack() {
+            // Récupérer la catégorie depuis l'URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            
+            // Si une catégorie est spécifiée, retourner à cette catégorie
+            if (category) {
+                window.location.href = `index.html#${category}`;
+            } else {
+                // Sinon, retourner à la section réalisations par défaut
+                window.location.href = 'index.html#realisations';
+            }
+        }
+
         // Données des projets
         const projects = {
            'portraits': {
                 title: 'Portraits',
-                description: 'Portfolio de compétences variées : bricolage, jardinage, navigation, aventure et plus encore.',
-                tags: ['Professionnel', 'Polyvalence', 'Compétences'],
+                description: '',
+                tags: [],
                 images: ['medias/Portrait_1989_Musicien.jpg', 'medias/Portrait_2001_Pianiste.jpg', 'medias/Portrait_2016_Pianiste.jpg', 'medias/Portrait_2018_Pianiste.jpeg', 'medias/Portrait_2024_Musicien.jpg', 'medias/Portrait_2025_DJ.jpg', 'medias/Portrait_2018_BurningMan.jpg', 'medias/Portrait_2025_Navigateur.jpg', 'medias/Portrait_Pilote.jpg']
             },
             'musique': {
@@ -500,13 +638,13 @@ x<!DOCTYPE html>
                 description: 'Musique pour écran ou pour la scène',
                 tags: ['Musique', 'Cinéma', 'TV', 'Théâtre'],
                 items: [
-                    { image: 'medias/FilmTextiles.jpg' },
-                    { image: 'medias/TheatreUbuRoi.jpg' },
-                    { image: 'medias/TVAkissi.jpg' },
-                    { image: 'medias/TheatrePrive.jpg' },
-                    { image: 'medias/TheatrePlacard.jpg' },
-                    { image: 'medias/DocuHotelMarine.jpg' },
-                    { image: 'medias/DocuLeonard.jpg' }
+                    { image: 'medias/FilmTextiles.jpg', caption: 'Film "Textiles" - Composition de la bande originale' },
+                    { image: 'medias/TheatreUbuRoi.jpg', caption: 'Théâtre "Ubu Roi" - Création sonore et musique de scène' },
+                    { image: 'medias/TVAkissi.jpg', caption: 'Série TV "Akissi" - Habillage musical pour France 4' },
+                    { image: 'medias/TheatrePrive.jpg', caption: 'Théâtre "Privé" - Ambiances sonores et musique originale' },
+                    { image: 'medias/TheatrePlacard.jpg', caption: 'Théâtre "Le Placard" - Design sonore et composition musicale' },
+                    { image: 'medias/DocuHotelMarine.jpg', caption: 'Documentaire "Hôtel Marine" - Musique et post-production audio' },
+                    { image: 'medias/DocuLeonard.jpg', caption: 'Documentaire "Léonard" - Illustration musicale' }
                 ]
             },
             'livre': {
@@ -536,10 +674,10 @@ x<!DOCTYPE html>
                 description: 'Aider à apprendre',
                 tags: ['Musique', 'Logiciel', 'Enfants'],
                 items: [
-                    { image: 'medias/FormationOrthochansons.jpg', media: { type: 'video', src: 'medias/FormationOrthochansons.mp4', title: 'Apprentissage de l\'orthographe à l\'aide de chansons' } },
-                    { image: 'medias/FormationAmplitudes1.jpg', media: { type: 'video', src: 'medias/FormationAmplitudes.mp4', title: 'Production de logiciels d\'e-learning' } },
-                    { image: 'medias/FormationFNAMM.jpg', media: { type: 'video', src: 'medias/FormationFNAMM.mp4', title: 'Formation en ligne de la composition musicale à l\'image' } },
-                    {image: 'medias/FormationAréas.jpg', media: { type: 'video', src: 'medias/FormationAréas.mp4', title: 'Tutoriaux internes d\'entreprise' } }
+                    { image: 'medias/FormationOrthochansons.jpg', media: { type: 'video', src: 'medias/FormationOrthochansons.mp4', title: 'Apprentissage de l\'orthographe à l\'aide de chansons' }, caption: 'Orthochansons - Méthode ludique pour apprendre l\'orthographe par la musique' },
+                    { image: 'medias/FormationAmplitudes1.jpg', media: { type: 'video', src: 'medias/FormationAmplitudes.mp4', title: 'Production de logiciels d\'e-learning' }, caption: 'Amplitudes - Développement de modules e-learning interactifs' },
+                    { image: 'medias/FormationFNAMM.jpg', media: { type: 'video', src: 'medias/FormationFNAMM.mp4', title: 'Formation en ligne de la composition musicale à l\'image' }, caption: 'FNAMM - Formation professionnelle à la composition musicale pour l\'audiovisuel' },
+                    {image: 'medias/FormationAréas.jpg', media: { type: 'video', src: 'medias/FormationAréas.mp4', title: 'Tutoriaux internes d\'entreprise' }, caption: 'Aréas - Création de tutoriels pédagogiques pour entreprises' }
                 ]
             },
             'salon': {
@@ -793,11 +931,13 @@ x<!DOCTYPE html>
             galleryContainer.innerHTML = items.map((item, index) => {
                 const hasMedia = item.media && item.media.src;
                 const mediaIcon = hasMedia ? (item.media.type === 'audio' ? '🎵' : '🎬') : '';
+                const caption = item.caption || '';
                 
                 return `
                     <div class="gallery-item ${hasMedia ? 'has-media' : ''}" onclick="openLightbox(${index})">
                         <img src="${item.image}" alt="Image ${index + 1}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Crect fill=%22%23ddd%22 width=%22300%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22%3EImage non disponible%3C/text%3E%3C/svg%3E'">
                         ${hasMedia ? `<div class="media-indicator">${mediaIcon}</div>` : ''}
+                        ${caption ? `<div class="gallery-item-caption">${caption}</div>` : ''}
                     </div>
                 `;
             }).join('');
@@ -883,6 +1023,35 @@ x<!DOCTYPE html>
         document.getElementById('lightbox').addEventListener('click', function(e) {
             if (e.target === this) closeLightbox();
         });
+
+        // Support du swipe tactile pour mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const lightbox = document.getElementById('lightbox');
+
+        lightbox.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        lightbox.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50; // Distance minimale pour considérer un swipe
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe vers la gauche - image suivante
+                    navigateLightbox(1);
+                } else {
+                    // Swipe vers la droite - image précédente
+                    navigateLightbox(-1);
+                }
+            }
+        }
 
         // Charger le projet au chargement de la page
         window.addEventListener('load', loadProject);
