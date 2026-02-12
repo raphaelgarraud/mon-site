@@ -1581,7 +1581,7 @@
     <section id="contact">
         <h2>Contact</h2>
         <div class="contact-info">
-            <p>📧 <a href="/cdn-cgi/l/email-protection#14777b7a60757760546675647c757178737566667561703a777b79" style="color: var(--primary); text-decoration: none; font-weight: 600;"><span class="__cf_email__" data-cfemail="contact@raphaelgarraud.com"><span class="__cf_email__" data-cfemail="7a1915140e1b190e3a081b0a121b1f161d1b08081b0f1e54191517">[email&#160;protected]</span></span></a></p>
+            <p>📧 <span id="email"></span></p>
             <p>📱 06 62 81 09 60</p>
             <p style="margin-top: 2rem; font-style: italic; color: var(--secondary);">Disponible pour projets collaboratifs, formations, compositions musicales et partage de compétences</p>
         </div>
@@ -1609,8 +1609,8 @@
             <div class="parcours-modal-year" id="parcoursModalYear"></div>
             <h2 class="parcours-modal-title" id="parcoursModalTitle"></h2>
             <p class="parcours-modal-description" id="parcoursModalDescription"></p>
-            <div id="parcoursModalLinkContainer">
-                <a id="parcoursModalLink" href="#" target="_blank" class="parcours-modal-link">En savoir plus</a>
+            <div id="parcoursModalLinkContainer" style="display: none;">
+                <a id="parcoursModalLink" href="" target="_blank" rel="noopener noreferrer" class="parcours-modal-link">En savoir plus</a>
             </div>
         </div>
     </div>
@@ -1954,8 +1954,10 @@
             
             // Gérer le lien
             const linkContainer = document.getElementById('parcoursModalLinkContainer');
+            const linkElement = document.getElementById('parcoursModalLink');
             if (data.link) {
-                document.getElementById('parcoursModalLink').href = data.link;
+                linkElement.href = data.link;
+                linkElement.onclick = null; // Retirer tout gestionnaire d'événement qui pourrait bloquer
                 linkContainer.style.display = 'block';
             } else {
                 linkContainer.style.display = 'none';
@@ -2039,6 +2041,17 @@
                 }
             });
         });
+
+        // Protection anti-spam pour l'email
+        (function() {
+            const u = 'contact';
+            const d = 'raphaelgarraud.com';
+            const e = u + '@' + d;
+            const emailElement = document.getElementById('email');
+            if (emailElement) {
+                emailElement.innerHTML = '<a href="mailto:' + e + '" style="color: var(--primary); text-decoration: none; font-weight: 600;">' + e + '</a>';
+            }
+        })();
     </script>
 </body>
 </html>
