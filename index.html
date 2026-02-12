@@ -428,8 +428,8 @@
 
         .parcours-modal-close {
             position: absolute;
-            top: 15px;
-            right: 25px;
+            top: 2px;
+            right: 5px;
             color: var(--dark);
             font-size: 35px;
             font-weight: bold;
@@ -549,6 +549,98 @@
             background: var(--secondary);
         }
 
+        /* Conteneur média dans la modale parcours */
+        .parcours-modal-media-container {
+            width: 100%;
+            margin: 1.5rem 0;
+            background: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .parcours-modal-media-title {
+            padding: 0.75rem 1rem;
+            background: var(--secondary);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .parcours-modal-audio-player,
+        .parcours-modal-video-player {
+            width: 100%;
+            outline: none;
+        }
+
+        .parcours-modal-audio-player {
+            padding: 1rem;
+            height: 54px;
+        }
+
+        .parcours-modal-video-player {
+            display: block;
+            max-height: 400px;
+            background: #000;
+        }
+
+        /* Navigation entre médias */
+        .media-nav-buttons {
+            display: flex;
+            justify-content: flex-start;
+            gap: 1rem;
+            margin: 0 0 1.5rem 0;
+            padding: 1rem;
+            border-bottom: 2px solid var(--light);
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollbar personnalisée pour les boutons de navigation */
+        .media-nav-buttons::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .media-nav-buttons::-webkit-scrollbar-track {
+            background: var(--light);
+            border-radius: 3px;
+        }
+
+        .media-nav-buttons::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+
+        .media-nav-buttons::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        .media-nav-btn {
+            padding: 0.5rem 1rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            min-width: 60px;
+            flex-shrink: 0;
+        }
+
+        .media-nav-btn:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .media-nav-btn.active {
+            background: var(--primary);
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(44, 95, 45, 0.3);
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -593,14 +685,14 @@
     <section id="portraits">
         <div class="portfolio-card" onclick="window.location.href='detail.html?project=portraits'">
             <div class="portfolio-image">
-                <img src="medias/Portrait_Inge_son_07.jpg" alt="Portraits">
+                <img src="medias/Portrait_KingArthur.jpg" alt="Portraits">
             </div>
         </div>
     </section>
 
     <!-- About -->
     <section id="apropos">
-         <!--<h2>À Propos</h2>-->
+         <h2>À Propos</h2>
         <div class="about-content">
             <div class="about-text">
                 <h3>Qui suis-je ?</h3>
@@ -693,7 +785,7 @@
                 <div class="timeline-content" data-parcours-id="square">
                     <div class="timeline-year">1994-1995</div>
                     <h3>🎙️ Square Prod</h3>
-                    <p>Prise de son, réalisation et mixage de bandes-annonces - Remix (Skoops, Black People, Alabina)</p>
+                    <p>Réalisation de remix et bandes-annonces</p>
                 </div>
             </div>
 
@@ -701,7 +793,7 @@
                 <div class="timeline-content" data-parcours-id="europe1">
                     <div class="timeline-year">1995-1996</div>
                     <h3>📻 Europe 1</h3>
-                    <p>Service auto-promotion et habillage sonore de l'antenne</p>
+                    <p>Production des auto-promotions et de l'habillage sonore de l'antenne</p>
                 </div>
             </div>
 
@@ -722,21 +814,12 @@
                 </div>
             </div>
 
-            <!-- Réalisation e-learning -->
+            <!-- Intermittent -->
             <div class="timeline-item">
-                <div class="timeline-content" data-parcours-id="amplitudes">
-                    <div class="timeline-year">2003-2008</div>
-                    <h3>💾 Amplitudes</h3>
-                    <p>Production de programmes d'e-learning</p>
-                </div>
-            </div>
-
-            <!-- Chez Jean -->
-            <div class="timeline-item">
-                <div class="timeline-content" data-parcours-id="chezjean">
+                <div class="timeline-content" data-parcours-id="intermittent">
                     <div class="timeline-year">2003-2013</div>
-                    <h3>🎧 Chez Jean</h3>
-                    <p>Réalisation de pubs, habillages (Radio, TV, Cinéma) et de multiples albums</p>
+                    <h3>🎧 Intermittent du spectacle</h3>
+                    <p>Mixage et réalisation de pubs Radio, TV, Cinéma dans de nombreux studios</p>
                 </div>
             </div>
 
@@ -745,45 +828,37 @@
                 <div class="timeline-content" data-parcours-id="bibi">
                     <div class="timeline-year">2007-2008</div>
                     <h3>🎹 Bibi Tanga et le Professeur Inlassable</h3>
-                    <p>Claviers - Tournée de 40 dates - Albums "Yellow Gauze"</p>
+                    <p>Claviers sur une tournée de 40 dates - Album "Yellow Gauze"</p>
                 </div>
             </div>
 
+            <!-- RFI -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="rfi">
+                    <div class="timeline-year">2008-2018</div>
+                    <h3>📻 RFI</h3>
+                    <p>Production de génériques pour l'antenne de RFI</p>
+                </div>
+            </div> 
+            
             <!-- Formation technique -->
             <div class="timeline-item">
                 <div class="timeline-content" data-parcours-id="infa">
                     <div class="timeline-year">2009-2010</div>
-                    <h3>🎓 Formateur Technicien du son</h3>
-                    <p>Institut National de la Formation Appliquée</p>
+                    <h3>🎓 Institut National de la Formation Appliquée</h3>
+                    <p>Formateur Technicien du son</p>
                 </div>
             </div>
 
-            <!-- Théâtre 
-            <div class="timeline-item">
-                <div class="timeline-content" data-parcours-id="ubu">
-                    <div class="timeline-year">2011</div>
-                    <h3>🎭 Ubu Roi</h3>
-                    <p>Co-composition et ambiances sonores - Mise en scène Pierre Pradinas</p>
-                </div>
-            </div> -->
-
+            
             <!-- King Arthur -->
             <div class="timeline-item">
                 <div class="timeline-content" data-parcours-id="kingarthur">
-                    <div class="timeline-year">2013</div>
+                    <div class="timeline-year">Depuis 2013</div>
                     <h3>👑 King Arthur</h3>
-                    <p>Création d'entreprise - Production musicale et sonore - Live Youtube/Facebook</p>
+                    <p>Création d'entreprise - Production musicale et sonore</p>
                 </div>
             </div>
-
-            <!-- Production livres-CD 
-            <div class="timeline-item">
-                <div class="timeline-content" data-parcours-id="lito">
-                    <div class="timeline-year">2013-2017</div>
-                    <h3>📚 Éditions LITO</h3>
-                    <p>Production de plus de 30 livres de comptines pour enfants</p>
-                </div>
-            </div> -->
 
             <!-- Albums personnels 
             <div class="timeline-item">
@@ -821,15 +896,6 @@
                 </div>
             </div>
 
-            <!-- Éco-lieu Sol Majeur -->
-            <div class="timeline-item">
-                <div class="timeline-content" data-parcours-id="jardineurs">
-                    <div class="timeline-year">Depuis 2018</div>
-                    <h3>🌱 Les Jardineurs Sartrouvillois</h3>
-                    <p>Création d'association - Valorisation d'une friche industrielle en "Sol Majeur", la Maison de l'Écologie de Sartrouville</p>
-                </div>
-            </div>
-
             <!-- Formation internationale -->
             <div class="timeline-item">
                 <div class="timeline-content" data-parcours-id="ortc">
@@ -839,50 +905,24 @@
                 </div>
             </div>
 
-            <!-- Documentaires INA 
-            <div class="timeline-item">
-                <div class="timeline-content" data-parcours-id="ina">
-                    <div class="timeline-year">2019</div>
-                    <h3>📺 INA</h3>
-                    <p>Composition musicale pour documentaires : "L'hôtel de la Marine", "Léonard de Vinci : Un homme en mouvement"</p>
-                </div>
-            </div> -->
 
-            <!-- Engagement écologique -->
+            <!-- Éco-lieu Sol Majeur -->
+            <div class="timeline-item">
+                <div class="timeline-content" data-parcours-id="jardineurs">
+                    <div class="timeline-year">Depuis 2018</div>
+                    <h3>🌱 Les Jardineurs</h3>
+                    <p>Création d'association - Valorisation d'une friche industrielle en "Sol Majeur", la Maison de l'Écologie de Sartrouville</p>
+                </div>
+            </div>
+
+            <!-- Engagement écologique 
             <div class="timeline-item">
                 <div class="timeline-content" data-parcours-id="ecopreneur">
                     <div class="timeline-year">Depuis 2019</div>
                     <h3>♻️ Écopreneur & Formateur</h3>
                     <p>Pacte pour la Transition Écologique - Sensibilisation à la vie du sol - Compostage</p>
                 </div>
-            </div>
-
-            <!-- Areas Assurances 
-            <div class="timeline-item">
-                <div class="timeline-content" data-parcours-id="areas">
-                    <div class="timeline-year">Depuis 2020</div>
-                    <h3>🎥 Aréas Assurances</h3>
-                    <p>Réalisation audio/vidéo de tutoriaux internes</p>
-                </div>
-            </div> -->
-
-            <!-- Animation Akissi 
-            <div class="timeline-item">
-                <div class="timeline-content" data-parcours-id="akissi">
-                    <div class="timeline-year">2021</div>
-                    <h3>🎬 Ellipsanime Productions</h3>
-                    <p>Composition musicale pour la série d'animés "Akissi"</p>
-                </div>
-            </div> -->
-
-            <!-- FNAMM 
-            <div class="timeline-item">
-                <div class="timeline-content" data-parcours-id="fnamm">
-                    <div class="timeline-year">2023</div>
-                    <h3>🎬 FNAMM</h3>
-                    <p>Réalisation de tutoriaux sur la composition musicale à l'image</p>
-                </div>
-            </div> -->
+            </div>-->
         </div>
     </section>
 
@@ -1245,28 +1285,81 @@
         <div class="category-section">
             <h3 class="category-title">🪚 Constructions</h3>
             <div class="portfolio-grid">
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=terrasse'">
-                    <div class="portfolio-image">
-                        <img src="medias/Terrasse_4.jpg" alt="Terrasse">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Terrasse</h3>
-                        <p>Construction extérieure</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Extérieur</span>
-                        </div>
-                    </div>
-                </div>
                 
                 <div class="portfolio-card" onclick="window.location.href='detail.html?project=cuisine'">
                     <div class="portfolio-image">
-                        <img src="medias/Cuisine_17.jpg" alt="Cuisine">
+                        <img src="medias/Cuisine_19.jpg" alt="Cuisine">
                     </div>
                     <div class="portfolio-info">
                         <h3>Cuisine extérieure</h3>
                         <p>Fonctionnelle et élégante</p>
                         <div class="portfolio-tags">
                             <span class="tag">Agencement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=atelier'">
+                    <div class="portfolio-image">
+                        <img src="medias/Atelier10.jpg" alt="Atelier">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Atelier</h3>
+                        <p>Espace de travail</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Construction</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=bureau'">
+                    <div class="portfolio-image">
+                        <img src="medias/Grainotheque_et_bureau6.jpg" alt="Grainothèque">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Bureau et Grainothèque</h3>
+                        <p>Deux pièces dans un bâtiment en palettes</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Pratique</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=poulailler'">
+                    <div class="portfolio-image">
+                        <img src="medias/Poulailler8.jpg" alt="Poulailler">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Poulailler</h3>
+                        <p>Confortable et sécurisé</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Animaux</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cabane-rucher'">
+                    <div class="portfolio-image">
+                        <img src="medias/Cabane_du_rucher5.jpg" alt="Rucher">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Cabane Rucher</h3>
+                        <p>Abri apiculture</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Apiculture</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=solaire'">
+                    <div class="portfolio-image">
+                        <img src="medias/Installation_solaire_3.jpg" alt="Solaire">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Installation Solaire</h3>
+                        <p>Système autonome</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Énergie</span>
                         </div>
                     </div>
                 </div>
@@ -1284,61 +1377,9 @@
                     </div>
                 </div>
 
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=poulailler'">
-                    <div class="portfolio-image">
-                        <img src="medias/Poulailler_exterieur.jpg" alt="Poulailler">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Poulailler</h3>
-                        <p>Confortable et sécurisé</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Animaux</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=cabane-rucher'">
-                    <div class="portfolio-image">
-                        <img src="medias/Cabane_du_rucher2.jpg" alt="Rucher">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Cabane Rucher</h3>
-                        <p>Abri apiculture</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Apiculture</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=atelier'">
-                    <div class="portfolio-image">
-                        <img src="medias/Atelier_exterieur.jpg" alt="Atelier">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Atelier Extérieur</h3>
-                        <p>Espace de travail</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Construction</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="portfolio-card" onclick="window.location.href='detail.html?project=bureau'">
-                    <div class="portfolio-image">
-                        <img src="medias/Grainotheque_et_bureau.jpg" alt="Grainothèque">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Bureau et Grainothèque</h3>
-                        <p>Deux pièces dans un bâtiment en palettes</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Pratique</span>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="portfolio-card" onclick="window.location.href='detail.html?project=toilettes-seches'">
                     <div class="portfolio-image">
-                        <img src="medias/Toilettes_seches_1.jpg" alt="Toilettes">
+                        <img src="medias/Toilettes_seches_5.jpg" alt="Toilettes">
                     </div>
                     <div class="portfolio-info">
                         <h3>Toilettes Sèches</h3>
@@ -1349,28 +1390,28 @@
                     </div>
                 </div>
 
-               <div class="portfolio-card" onclick="window.location.href='detail.html?project=solaire'">
-                    <div class="portfolio-image">
-                        <img src="medias/Installation_solaire_3.jpg" alt="Solaire">
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Installation Solaire</h3>
-                        <p>Système autonome</p>
-                        <div class="portfolio-tags">
-                            <span class="tag">Énergie</span>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="portfolio-card" onclick="window.location.href='detail.html?project=cinema-plein-air'">
                     <div class="portfolio-image">
-                        <img src="medias/Cinema_en_plein_air_1.jpg" alt="Cinéma">
+                        <img src="medias/Cinema_en_plein_air_4.jpg" alt="Cinéma">
                     </div>
                     <div class="portfolio-info">
                         <h3>Cinéma Plein Air</h3>
                         <p>Projection extérieure</p>
                         <div class="portfolio-tags">
                             <span class="tag">Loisirs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card" onclick="window.location.href='detail.html?project=terrasse'">
+                    <div class="portfolio-image">
+                        <img src="medias/Terrasse_4.jpg" alt="Terrasse">
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Terrasse</h3>
+                        <p>Construction extérieure</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Extérieur</span>
                         </div>
                     </div>
                 </div>
@@ -1400,12 +1441,13 @@
     <div id="parcoursModal" class="parcours-modal">
         <div class="parcours-modal-content">
             <span class="parcours-modal-close">&times;</span>
-            <div class="parcours-modal-gallery">
-                <button class="gallery-nav prev" onclick="changeGalleryImage(-1)">&#10094;</button>
-                <img id="parcoursModalImage" src="" alt="Parcours" class="parcours-modal-image">
-                <button class="gallery-nav next" onclick="changeGalleryImage(1)">&#10095;</button>
-            </div>
-            <div id="galleryDots" class="gallery-dots"></div>
+            
+            <!-- Navigation entre médias multiples - EN HAUT -->
+            <div id="mediaNavButtons" class="media-nav-buttons" style="display: none;"></div>
+            
+            <!-- Conteneur pour les médias (images, audio, vidéo) -->
+            <div id="parcoursMediaContainer"></div>
+            
             <div class="parcours-modal-year" id="parcoursModalYear"></div>
             <h2 class="parcours-modal-title" id="parcoursModalTitle"></h2>
             <p class="parcours-modal-description" id="parcoursModalDescription"></p>
@@ -1415,220 +1457,299 @@
         </div>
     </div>
 
+
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 
     <script>
-        // Données du parcours avec images et liens
+        // Variables globales pour la gestion des médias
+        let currentMediaItems = [];
+        let currentMediaIndex = 0;
+
+        // Données du parcours avec images, audio et vidéo
         const parcoursData = {
             'conservatoire': {
                 year: '1980-1993',
                 title: '🎵 Formation musicale',
                 description: 'Conservatoire de Nantes - Piano classique, jazz, variété',
-                images: ['medias/Portrait_Inge_son_07.jpg'],
-                link: 'https://www.conservatoirenantes.fr'
+                media: [
+                    { type: 'image', src: 'medias/Parcours1980_Pianiste.jpg' },
+                    { type: 'image', src: 'medias/Parcours1980Diplome.jpg' },
+                    { type: 'image', src: 'medias/Parcours1981Diplome.jpg' }
+                ]
             },
             'pianiste': {
                 year: '1990-1994',
                 title: '🎹 Pianiste',
                 description: 'Piano-bars dans la région nantaise - Premiers pas professionnels',
-                images: ['medias/Portrait_1992_Pianiste.jpg', 'medias/Portrait_1991_Musicien.jpg', 'medias/Portrait_1990_Musicien.jpg'],
-                link: ''
+                media: [
+                    { type: 'image', src: 'medias/Parcours1990_Pianiste.jpg' },
+                    { type: 'image', src: 'medias/Parcours1991_Pianiste.jpg' },
+                    { type: 'image', src: 'medias/Parcours1992_Pianiste.jpg' }
+                ]
             },
             'square': {
                 year: '1994-1995',
                 title: '🎙️ Square Prod',
-                description: 'Prise de son, réalisation et mixage de bandes-annonces - Remix (Skoops, Black People, Alabina)',
-                images: ['medias/SquareProd.jpg'],
-                link: ''
+                description: 'Réalisation de remix et de bandes-annonces',
+                media: [
+                    { type: 'image', src: 'medias/Parcours1994SquareProd.jpg' },
+                    { type: 'image', src: 'medias/MusicRemixBaker.jpg' },
+                    { type: 'image', src: 'medias/MusicRemixMother.jpg' },
+                    { type: 'image', src: 'medias/MusicRemixAlabina.jpg' },
+                    { type: 'image', src: 'medias/MusicRemixBlackPeople.jpg' },
+                    { type: 'image', src: 'medias/MusicRemixTranceToDance.jpg' },
+                    { type: 'image', src: 'medias/MusicRemixSkoops.jpg' },
+                    { type: 'image', src: 'medias/MusicRemixHakuna.jpg' }
+                ]
             },
             'europe1': {
                 year: '1995-1996',
                 title: '📻 Europe 1',
                 description: 'Service auto-promotion et habillage sonore de l\'antenne',
-                images: ['medias/Europe1.jpg'],
+                media: [
+                    { type: 'image', src: 'medias/Parcours1995Europe1.jpg' },
+                    { type: 'image', src: 'medias/Parcours1995Europe2.jpg' },
+                    { type: 'image', src: 'medias/Parcours1995Europe3.jpg' },
+                    { type: 'image', src: 'medias/Parcours1995Europe4.jpg' }
+                ],
                 link: 'https://www.europe1.fr'
             },
             'graffiti': {
                 year: '1996-1999',
                 title: '🎬 Graffiti 5&21',
                 description: 'Réalisation publicitaire radio',
-                images: ['medias/Graffiti.jpg'],
-                link: ''
+                media: [
+                    { type: 'image', src: 'medias/ParcoursGraffiti.jpg' }
+                ]
             },
             'trafalgar': {
                 year: '1999-2003',
                 title: '📢 Trafalgar Créations',
                 description: 'Directeur associé - Écriture et production de spots radio',
-                images: ['medias/Trafalgar.jpg'],
-                link: ''
+                media: [
+                    { type: 'image', src: 'medias/Parcours1999Trafalgar.jpg' },
+                    { type: 'audio', src: 'medias/Parcours1999Trafalgar.mp3', title: 'À Trafalgar, c\'est vous qui êtes la star 😁' }
+                ]
             },
-            'amplitudes': {
-                year: '2003-2008',
-                title: '💾 Amplitudes',
-                description: 'production de programmes d\'e-learning',
-                images: ['medias/FormationAmplitudes.jpg'],
-                link: 'https://www.jeanmicheljarre.com'
-            },
-            'chezjean': {
+            'intermittent': {
                 year: '2003-2013',
-                title: '🎧 Chez Jean',
-                description: 'Réalisation de pubs, habillages (Radio, TV, Cinéma) et de multiples albums',
-                images: ['medias/ChezJean.jpg'],
-                link: ''
+                title: '🎧 Intermittent du spectacle',
+                description: 'Mixage, réalisation d\'albums et de pubs (Radio, TV, Cinéma) dans de nombreux studios (RFI, Regie 1, Aurevoircharlie, Chez Jean, Graffiti 5&21, Medialab, La Maison de Production, Musicalement Votre...)',
+                media: [
+                    { type: 'image', src: 'medias/Parcours2003_Ingeson.jpg' },
+                    { type: 'image', src: 'medias/Parcours2005_Ingeson.jpg' },                    
+                    { type: 'image', src: 'medias/Parcours2010_Ingeson.jpg' },
+                    { type: 'image', src: 'medias/Parcours2011_Ingeson.jpg' },
+                    { type: 'image', src: 'medias/Parcours2012_Ingeson.jpg' },
+                    { type: 'image', src: 'medias/Parcours2007_Ingeson.jpg' },
+                    { type: 'image', src: 'medias/Parcours2006_Ingeson.jpg' },
+                    { type: 'image', src: 'medias/Parcours2008_Ingeson.jpg' }
+                ]
             },
             'bibi': {
                 year: '2007-2008',
                 title: '🎹 Bibi Tanga et le Professeur Inlassable',
-                description: 'Claviers - Tournée de 40 dates - Albums "Yellow Gauze"',
-                images: ['medias/Portrait_Inge_son_07.jpg'],
-                link: ''
+                description: 'Claviers sur une tournée en Europe - Album "Yellow Gauze"',
+                media: [
+                    { type: 'image', src: 'medias/Parcours2007Bibi1.jpg' },
+                    { type: 'image', src: 'medias/Parcours2007Bibi2.jpg' },
+                    { type: 'image', src: 'medias/Parcours2007Bibi3.jpg' },
+                    { type: 'video', src: 'medias/Parcours2007Bibi.mp4' }
+                ]
             },
             'infa': {
                 year: '2009-2010',
                 title: '🎓 Formateur Technicien du son',
                 description: 'Institut National de la Formation Appliquée',
-                images: ['medias/FormationINFA.jpg'],
-                link: ''
+                media: [
+                    { type: 'image', src: 'medias/ParcoursFormationINFA.jpg' },
+                    { type: 'image', src: 'medias/ParcoursFormationINFA1.jpg' },
+                    { type: 'image', src: 'medias/ParcoursFormationINFA2.jpg' }
+                ]
             },
-            //'ubu': {
-              //  year: '2011',
-                //title: '🎭 Ubu Roi',
-            //    description: 'Co-composition et ambiances sonores - Mise en scène Pierre Pradinas',
-              //  images: ['medias/Portrait_Inge_son_07.jpg'],
-                //link: ''
-            //},
             'kingarthur': {
                 year: '2013',
                 title: '👑 King Arthur',
                 description: 'Création d\'entreprise - Production musicale et sonore',
-                images: ['medias/KingArthur.jpg'],
-                link: ''
+                media: [
+                    { type: 'image', src: 'medias/Parcours2015KingArthur1.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur2.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur3.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur4.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur5.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur6.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur7.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur8.jpg' },
+                    { type: 'image', src: 'medias/Parcours2015KingArthur9.jpg' }
+                ]
             },
-            //'lito': {
-              //  year: '2013-2017',
-                //title: '📚 Éditions LITO',
-            //    description: 'Production de plus de 30 livres de comptines pour enfants',
-              //  images: ['medias/Portrait_Inge_son_07.jpg'],
-                //link: 'https://www.editionslito.com'
-            //},
-            //'albums': {
-            //    year: '2014-2018',
-            //    title: '🎼 Albums solo',
-            //    description: '"Flying World" (2014), "En Trance" (2016), "After the Storm" (2017), "Movies" (2018)',
-            //    images: ['medias/AlbumMovies.jpg'],
-            //    link: 'https://raphaelgarraud.bandcamp.com'
-            //},
             'ebc': {
                 year: '2015',
                 title: '🌍 Formateur en Éthiopie',
                 description: 'Formation à la réalisation d\'habillage radio en Éthiopie (EBC)',
-                images: ['medias/FormationEBC.jpg'],
-                link: ''
+                media: [
+                    { type: 'image', src: 'medias/ParcoursFormationEBC1.jpg'},
+                    { type: 'image', src: 'medias/ParcoursFormationEBC3.jpg'},
+                    { type: 'image', src: 'medias/ParcoursFormationEBC2.jpg'},
+                    { type: 'image', src: 'medias/ParcoursFormationEBC4.jpg'},
+                    { type: 'audio', src: 'medias/ParcoursFormationEBC.mp3', title: 'Habillages réalisés par les stagiaires'}
+                ]
+            },
+            'rfi': {
+                year: '2010-2018',
+                title: '📻 Habillage antenne pour RFI',
+                description: 'Production musicale pour l\'antenne de Radio France International',
+                media: [
+                    { type: 'image', src: 'medias/ParcoursRFI.jpg'},
+                    { type: 'audio', src: 'medias/ParcoursRFI.mp3', title: 'Quelques génériques et bandes-annonces' }
+                ]
             },
             'ortc': {
                 year: '2018',
                 title: '🌍 Formateur aux Comores',
                 description: 'Formation à la réalisation d\'habillage radio à Grande Comores (ORTC)',
-                images: ['medias/FormationORTC.jpg'],
-                link: ''
+                media: [
+                    { type: 'image', src: 'medias/Parcours2018FormationORTC.jpg', title: 'Devant la radio' },
+                    { type: 'image', src: 'medias/Parcours2018FormationORTC1.jpg', title: 'Les stagiaires' },
+                    { type: 'image', src: 'medias/Parcours2018FormationORTC2.jpg', title: 'Dans le studio de la radio' },
+                    { type: 'image', src: 'medias/Parcours2018FormationORTC3.jpg', title: 'Une des salle de classe 😁' },
+                    { type: 'audio', src: 'medias/Parcours2018FormationORTC.mp3', title: 'Habillages réalisés par les stagiaires' }
+                ]
             },
             'presidentielle': {
                 year: '2017',
-                title: '🗳️ Campagne Présidentielle',
-                description: 'Direction artistique de la communication d\'un candidat',
-                images: ['medias/Portrait_Inge_son_07.jpg'],
-                link: ''
+                title: '🗳️ Campagne présidentielle',
+                description: 'Mise en place de directs sur Youtube et facebook, réalisations d\'infographies sur quelques points du programme, réalisation d\'une application mobile, régisseur son sur les réunions publiques',
+                media: [
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle3.jpg' },
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle1.jpg' },
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle2.jpg' },
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle4.jpg' },
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle5.jpg' },
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle6.jpg' },
+                    { type: 'image', src: 'medias/Parcours2017Presidentielle7.jpg' }
+                ]
             },
             'coachs': {
                 year: 'Depuis 2017',
                 title: '🎤 Les Coachs Associés',
                 description: 'Formateur à la voix off en studio professionnel',
-                images: ['medias/FormationCoachs.jpg'],
+                media: [
+                    { type: 'image', src: 'medias/ParcoursFormationCoachs.jpg' }
+                ],
                 link: 'https://lescoachsassocies.com'
             },
             'jardineurs': {
                 year: 'Depuis 2018',
-                title: '🌱 Les Jardineurs Sartrouvillois',
-                description: 'Création d\'association - Valorisation d\'une friche industrielle en "Sol Majeur", la Maison de l\'Écologie de Sartrouville',
-                images: [
-                    'medias/LesJardineurs.jpg',
-                    'medias/Systeme_aquaponique_banc.jpg',
-                    'medias/Poulailler_exterieur.jpg'
+                title: '🌱 Les Jardineurs',
+                description: 'Fondateur et président de l\'association - Création et animation d\'un éco-lieu de 5600m² en permaculture, accueil des écoles, des scouts et des collaborateurs d\'entreprises lors de journées team-building',
+                media: [
+                    { type: 'image', src: 'medias/Parcours2018LesJardineurs.jpg' },
+                    { type: 'image', src: 'medias/Systeme_aquaponique_banc.jpg' },
+                    { type: 'image', src: 'medias/Poulailler_exterieur.jpg' },
+                    { type: 'image', src: 'medias/Portrait_2024_Guide1.jpg' },
+                    { type: 'image', src: 'medias/Portrait_2024_Guide2.jpg' },
+                    { type: 'image', src: 'medias/Portrait_Bricoleur_1.jpg' },
+                    { type: 'image', src: 'medias/Portrait_Bricoleur_2.jpg' },
+                    { type: 'image', src: 'medias/Jardinier.jpg' },
+                    { type: 'image', src: 'medias/Portrait_2025_Bricoleur.jpg' },
                 ],
-                link: 'https://lesjardineurs.fr'
-            },
-            //'ina': {
-              //  year: '2019',
-                //title: '📺 INA',
-            //    description: 'Composition musicale pour documentaires : "L\'hôtel de la Marine", "Léonard de Vinci : Un homme en mouvement"',
-              //  images: ['medias/Portrait_Inge_son_07.jpg'],
-                //link: 'https://www.ina.fr'
-            //},
-            'ecopreneur': {
-                year: 'Depuis 2019',
-                title: '♻️ Écopreneur & Formateur',
-                description: 'Pacte pour la Transition Écologique - Sensibilisation à la vie du sol - Compostage',
-                images: ['medias/Compost_atelier.jpg'],
-                link: ''
             }
-            //'areas': {
-              //  year: 'Depuis 2020',
-                //title: '🎥 Aréas Assurances',
-            //    description: 'Réalisation audio/vidéo de tutoriaux internes',
-              //  images: ['medias/Portrait_Inge_son_07.jpg'],
-                //link: ''
-            //},
-            //'akissi': {
-              //  year: '2021',
-                //title: '🎬 Ellipsanime Productions',
-            //    description: 'Composition musicale pour la série d\'animés "Akissi"',
-              //  images: ['medias/Portrait_Inge_son_07.jpg'],
-                //link: ''
-            //},
-            //'fnamm': {
-              //  year: '2023',
-                //title: '🎬 FNAMM',
-            //    description: 'Formation à la composition musicale à l\'image',
-              //  images: ['medias/Portrait_Inge_son_07.jpg'],
-                //link: 'https://www.fnamm.com'
-            //}
         };
 
-        let currentGalleryIndex = 0;
-        let currentGalleryImages = [];
-
-        // Fonction pour changer l'image de la galerie
-        function changeGalleryImage(direction) {
-            currentGalleryIndex += direction;
+        // Fonction pour créer l'élément média (image, audio ou vidéo)
+        function createMediaElement(mediaItem) {
+            const container = document.createElement('div');
             
-            if (currentGalleryIndex < 0) {
-                currentGalleryIndex = currentGalleryImages.length - 1;
-            } else if (currentGalleryIndex >= currentGalleryImages.length) {
-                currentGalleryIndex = 0;
+            if (mediaItem.type === 'image') {
+                container.className = 'parcours-modal-gallery';
+                container.innerHTML = `
+                    <img src="${mediaItem.src}" alt="Parcours" class="parcours-modal-image">
+                `;
+            } else if (mediaItem.type === 'audio') {
+                container.className = 'parcours-modal-media-container';
+                container.innerHTML = `
+                    ${mediaItem.title ? `<div class="parcours-modal-media-title">🎵 ${mediaItem.title}</div>` : ''}
+                    <audio controls class="parcours-modal-audio-player">
+                        <source src="${mediaItem.src}" type="audio/mpeg">
+                        Votre navigateur ne supporte pas la lecture audio.
+                    </audio>
+                `;
+            } else if (mediaItem.type === 'video') {
+                container.className = 'parcours-modal-media-container';
+                container.innerHTML = `
+                    ${mediaItem.title ? `<div class="parcours-modal-media-title">🎬 ${mediaItem.title}</div>` : ''}
+                    <video controls class="parcours-modal-video-player">
+                        <source src="${mediaItem.src}" type="video/mp4">
+                        Votre navigateur ne supporte pas la lecture vidéo.
+                    </video>
+                `;
             }
             
-            updateGalleryDisplay();
+            return container;
         }
 
-        // Fonction pour aller à une image spécifique
-        function goToGalleryImage(index) {
-            currentGalleryIndex = index;
-            updateGalleryDisplay();
-        }
-
-        // Mettre à jour l'affichage de la galerie
-        function updateGalleryDisplay() {
-            document.getElementById('parcoursModalImage').src = currentGalleryImages[currentGalleryIndex];
+        // Fonction pour afficher le média actuel
+        function displayCurrentMedia() {
+            const container = document.getElementById('parcoursMediaContainer');
+            container.innerHTML = '';
             
-            // Mettre à jour les dots
-            const dots = document.querySelectorAll('.gallery-dot');
-            dots.forEach((dot, index) => {
-                if (index === currentGalleryIndex) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
+            if (currentMediaItems.length > 0) {
+                const mediaElement = createMediaElement(currentMediaItems[currentMediaIndex]);
+                container.appendChild(mediaElement);
+            }
+            
+            // Mettre à jour les boutons de navigation
+            updateMediaNavButtons();
+        }
+
+        // Fonction pour mettre à jour les boutons de navigation entre médias
+        function updateMediaNavButtons() {
+            const navContainer = document.getElementById('mediaNavButtons');
+            navContainer.innerHTML = '';
+            
+            if (currentMediaItems.length > 1) {
+                navContainer.style.display = 'flex';
+                
+                currentMediaItems.forEach((item, index) => {
+                    const button = document.createElement('button');
+                    button.className = 'media-nav-btn' + (index === currentMediaIndex ? ' active' : '');
+                    
+                    // Icône selon le type
+                    let icon = '📷';
+                    if (item.type === 'audio') icon = '🎵';
+                    if (item.type === 'video') icon = '🎬';
+                    
+                    button.textContent = `${icon} ${index + 1}`;
+                    button.onclick = () => goToMedia(index);
+                    navContainer.appendChild(button);
+                    
+                    // Scroller vers le bouton actif
+                    if (index === currentMediaIndex) {
+                        setTimeout(() => {
+                            button.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'nearest',
+                                inline: 'center'
+                            });
+                        }, 100);
+                    }
+                });
+            } else {
+                navContainer.style.display = 'none';
+            }
+        }
+
+        // Fonction pour aller à un média spécifique
+        function goToMedia(index) {
+            // Arrêter la lecture audio/vidéo en cours
+            const audioPlayer = document.querySelector('.parcours-modal-audio-player');
+            const videoPlayer = document.querySelector('.parcours-modal-video-player');
+            if (audioPlayer) audioPlayer.pause();
+            if (videoPlayer) videoPlayer.pause();
+            
+            currentMediaIndex = index;
+            displayCurrentMedia();
         }
 
         // Fonction pour ouvrir la modale du parcours
@@ -1641,37 +1762,12 @@
             document.getElementById('parcoursModalTitle').textContent = data.title;
             document.getElementById('parcoursModalDescription').textContent = data.description;
             
-            // Gérer les images (simple ou galerie)
-            currentGalleryImages = data.images || [data.image];
-            currentGalleryIndex = 0;
-            document.getElementById('parcoursModalImage').src = currentGalleryImages[0];
+            // Charger les médias
+            currentMediaItems = data.media || [];
+            currentMediaIndex = 0;
+            displayCurrentMedia();
             
-            // Afficher/masquer les contrôles de galerie
-            const prevBtn = document.querySelector('.gallery-nav.prev');
-            const nextBtn = document.querySelector('.gallery-nav.next');
-            const dotsContainer = document.getElementById('galleryDots');
-            
-            if (currentGalleryImages.length > 1) {
-                // Afficher les boutons de navigation
-                prevBtn.classList.add('active');
-                nextBtn.classList.add('active');
-                
-                // Créer les dots
-                dotsContainer.innerHTML = '';
-                currentGalleryImages.forEach((img, index) => {
-                    const dot = document.createElement('span');
-                    dot.className = 'gallery-dot' + (index === 0 ? ' active' : '');
-                    dot.onclick = () => goToGalleryImage(index);
-                    dotsContainer.appendChild(dot);
-                });
-                dotsContainer.classList.add('active');
-            } else {
-                // Masquer les contrôles pour une seule image
-                prevBtn.classList.remove('active');
-                nextBtn.classList.remove('active');
-                dotsContainer.classList.remove('active');
-            }
-            
+            // Gérer le lien
             const linkContainer = document.getElementById('parcoursModalLinkContainer');
             if (data.link) {
                 document.getElementById('parcoursModalLink').href = data.link;
@@ -1685,6 +1781,12 @@
 
         // Fonction pour fermer la modale
         function closeParcoursModal() {
+            // Arrêter toute lecture audio/vidéo
+            const audioPlayer = document.querySelector('.parcours-modal-audio-player');
+            const videoPlayer = document.querySelector('.parcours-modal-video-player');
+            if (audioPlayer) audioPlayer.pause();
+            if (videoPlayer) videoPlayer.pause();
+            
             document.getElementById('parcoursModal').style.display = 'none';
         }
 
